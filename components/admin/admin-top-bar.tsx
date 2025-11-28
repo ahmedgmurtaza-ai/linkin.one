@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { QRCodeDialog } from "@/components/qr-code-dialog";
+import { UserNav } from "@/components/auth/user-nav";
 import {
   Check,
   Copy,
@@ -39,7 +40,8 @@ export function AdminTopBar({ profile }: AdminTopBarProps) {
   return (
     <>
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-lg border-b border-border shadow-sm">
-        <div className="px-6 py-4 flex items-center justify-end gap-4">
+        <div className="px-6 py-4 flex items-center justify-between gap-4">
+          <UserNav />
           <div className="flex items-center gap-2">
             {/* URL Copy */}
             <div className="hidden sm:flex items-center gap-2 bg-card border border-border rounded-lg px-3 py-1.5">
