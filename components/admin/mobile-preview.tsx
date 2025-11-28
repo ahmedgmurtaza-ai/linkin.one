@@ -1,24 +1,23 @@
-"use client"
+"use client";
 
-import { ProfileLayoutRenderer } from "@/components/profile-layout"
-import type { Profile } from "@/lib/types"
+import { ProfileLayoutRenderer } from "@/components/profile-layout";
+import type { Profile } from "@/lib/types";
 
 interface MobilePreviewProps {
-  profile: Profile
+  profile: Profile;
 }
 
 export function MobilePreview({ profile }: MobilePreviewProps) {
   return (
-    <div className="flex flex-col items-center">
-      <p className="text-sm text-muted-foreground mb-4">Live Preview</p>
-      <div className="relative">
+    <div className="flex flex-col items-center h-full w-full py-4">
+      <div className="relative w-full max-w-[420px] flex justify-center flex-1 max-h-[calc(100vh-12rem)] min-h-[600px]">
         {/* Phone frame */}
-        <div className="w-[280px] h-[580px] bg-card rounded-[40px] border-4 border-border p-2 shadow-xl">
+        <div className="w-full min-w-[320px] max-w-[420px] h-full bg-card rounded-[48px] border-4 border-border p-3 shadow-2xl">
           {/* Screen */}
-          <div className="w-full h-full bg-background rounded-[32px] overflow-hidden flex flex-col">
+          <div className="w-full h-full bg-background rounded-[40px] overflow-hidden flex flex-col">
             {/* Status bar */}
-            <div className="h-6 bg-background flex items-center justify-center">
-              <div className="w-20 h-5 bg-card rounded-full" />
+            <div className="h-8 bg-background flex items-center justify-center shrink-0">
+              <div className="w-24 h-6 bg-card rounded-full" />
             </div>
             {/* Content - Use ProfileLayoutRenderer for dynamic layouts */}
             <div className="flex-1 overflow-y-auto">
@@ -28,5 +27,5 @@ export function MobilePreview({ profile }: MobilePreviewProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }

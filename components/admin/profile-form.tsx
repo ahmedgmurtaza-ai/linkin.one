@@ -1,20 +1,18 @@
-"use client"
+"use client";
 
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import type { Profile } from "@/lib/types"
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import type { Profile } from "@/lib/types";
 
 interface ProfileFormProps {
-  profile: Profile
-  onUpdate: (updates: Partial<Profile>) => void
+  profile: Profile;
+  onUpdate: (updates: Partial<Profile>) => void;
 }
 
 export function ProfileForm({ profile, onUpdate }: ProfileFormProps) {
   return (
-    <div className="space-y-4">
-      <h2 className="text-lg font-semibold text-foreground">Profile Details</h2>
-
+    <div className="space-y-6">
       <div className="space-y-2">
         <Label htmlFor="username">Username</Label>
         <div className="flex items-center gap-2">
@@ -22,7 +20,13 @@ export function ProfileForm({ profile, onUpdate }: ProfileFormProps) {
           <Input
             id="username"
             value={profile.username}
-            onChange={(e) => onUpdate({ username: e.target.value.toLowerCase().replace(/[^a-z0-9]/g, "") })}
+            onChange={(e) =>
+              onUpdate({
+                username: e.target.value
+                  .toLowerCase()
+                  .replace(/[^a-z0-9]/g, ""),
+              })
+            }
             placeholder="yourname"
             className="flex-1"
           />
@@ -60,5 +64,5 @@ export function ProfileForm({ profile, onUpdate }: ProfileFormProps) {
         />
       </div>
     </div>
-  )
+  );
 }

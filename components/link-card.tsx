@@ -1,33 +1,37 @@
-"use client"
+"use client";
 
-import { PLATFORM_ICONS, type ProfileLink } from "@/lib/types"
-import { ExternalLink, Download } from "lucide-react"
-import { useAnalytics } from "@/lib/analytics-store"
+import { type ProfileLink } from "@/lib/types";
+import { ExternalLink, Download } from "lucide-react";
+import { useAnalytics } from "@/lib/analytics-store";
+import { PlatformIcon, getPlatformColors } from "@/components/platform-icon";
 
 interface LinkCardProps {
-  link: ProfileLink
-  compact?: boolean
+  link: ProfileLink;
+  compact?: boolean;
 }
 
 export function LinkCard({ link, compact = false }: LinkCardProps) {
-  const iconLabel = PLATFORM_ICONS[link.platform.toLowerCase()] || PLATFORM_ICONS.default
-  const isDownloadable = link.isDownloadable || link.platform === "resume" || link.platform === "pdf"
-  const { trackClick, trackDownload } = useAnalytics()
+  const isDownloadable =
+    link.isDownloadable ||
+    link.platform === "resume" ||
+    link.platform === "pdf";
+  const { trackClick, trackDownload } = useAnalytics();
+  const colors = getPlatformColors(link.platform);
 
   const handleClick = () => {
     if (isDownloadable) {
-      trackDownload(link.id)
-      const a = document.createElement("a")
-      a.href = link.url
-      a.download = link.title.replace(/\s+/g, "_") + ".pdf"
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
+      trackDownload(link.id);
+      const a = document.createElement("a");
+      a.href = link.url;
+      a.download = link.title.replace(/\s+/g, "_") + ".pdf";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     } else {
-      trackClick(link.id)
-      window.open(link.url, "_blank", "noopener,noreferrer")
+      trackClick(link.id);
+      window.open(link.url, "_blank", "noopener,noreferrer");
     }
-  }
+  };
 
   return (
     <button
@@ -37,13 +41,20 @@ export function LinkCard({ link, compact = false }: LinkCardProps) {
       }`}
     >
       <div
-        className={`flex items-center justify-center bg-secondary text-primary font-semibold rounded-lg ${
-          compact ? "h-8 w-8 text-xs" : "h-10 w-10 text-sm"
+        className={`flex items-center justify-center ${colors.bg} ${
+          colors.text
+        } rounded-lg ${compact ? "h-8 w-8" : "h-10 w-10"}`}
+      >
+        <PlatformIcon
+          platform={link.platform}
+          className={compact ? "h-4 w-4" : "h-5 w-5"}
+        />
+      </div>
+      <span
+        className={`flex-1 text-left font-medium text-foreground ${
+          compact ? "text-sm" : "text-base"
         }`}
       >
-        {iconLabel}
-      </div>
-      <span className={`flex-1 text-left font-medium text-foreground ${compact ? "text-sm" : "text-base"}`}>
         {link.title}
       </span>
       {isDownloadable ? (
@@ -60,5 +71,5 @@ export function LinkCard({ link, compact = false }: LinkCardProps) {
         />
       )}
     </button>
-  )
+  );
 }
