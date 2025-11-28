@@ -1,16 +1,26 @@
-"use client"
+"use client";
 
-import { LinkCard } from "@/components/link-card"
-import { CATEGORY_LABELS, type LinkCategory, type ProfileLink, type ProfileLayout } from "@/lib/types"
+import { LinkCard } from "@/components/link-card";
+import {
+  CATEGORY_LABELS,
+  type LinkCategory,
+  type ProfileLink,
+  type ProfileLayout,
+} from "@/lib/types";
 
 interface LinkListProps {
-  links: ProfileLink[]
-  compact?: boolean
-  groupByCategory?: boolean
-  layout?: ProfileLayout
+  links: ProfileLink[];
+  compact?: boolean;
+  groupByCategory?: boolean;
+  layout?: ProfileLayout;
 }
 
-export function LinkList({ links, compact = false, groupByCategory = true, layout = "classic" }: LinkListProps) {
+export function LinkList({
+  links,
+  compact = false,
+  groupByCategory = true,
+  layout = "classic",
+}: LinkListProps) {
   if (layout === "grid") {
     return (
       <div className={`grid grid-cols-2 ${compact ? "gap-2" : "gap-3"}`}>
@@ -18,7 +28,7 @@ export function LinkList({ links, compact = false, groupByCategory = true, layou
           <LinkCard key={link.id} link={link} compact={compact} />
         ))}
       </div>
-    )
+    );
   }
 
   if (!groupByCategory) {
@@ -28,27 +38,24 @@ export function LinkList({ links, compact = false, groupByCategory = true, layou
           <LinkCard key={link.id} link={link} compact={compact} />
         ))}
       </div>
-    )
+    );
   }
 
-  const groupedLinks = links.reduce(
-    (acc, link) => {
-      if (!acc[link.category]) {
-        acc[link.category] = []
-      }
-      acc[link.category].push(link)
-      return acc
-    },
-    {} as Record<LinkCategory, ProfileLink[]>,
-  )
+  const groupedLinks = links.reduce((acc, link) => {
+    if (!acc[link.category]) {
+      acc[link.category] = [];
+    }
+    acc[link.category].push(link);
+    return acc;
+  }, {} as Record<LinkCategory, ProfileLink[]>);
 
-  const categoryOrder: LinkCategory[] = ["social", "business", "personal"]
+  const categoryOrder: LinkCategory[] = ["social", "business", "personal"];
 
   return (
     <div className={`flex flex-col ${compact ? "gap-4" : "gap-6"}`}>
       {categoryOrder.map((category) => {
-        const categoryLinks = groupedLinks[category]
-        if (!categoryLinks || categoryLinks.length === 0) return null
+        const categoryLinks = groupedLinks[category];
+        if (!categoryLinks || categoryLinks.length === 0) return null;
 
         return (
           <div key={category} className="space-y-2">
@@ -65,8 +72,8 @@ export function LinkList({ links, compact = false, groupByCategory = true, layou
               ))}
             </div>
           </div>
-        )
+        );
       })}
     </div>
-  )
+  );
 }
