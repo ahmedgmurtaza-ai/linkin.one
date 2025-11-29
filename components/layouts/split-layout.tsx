@@ -20,7 +20,7 @@ export function SplitLayout({ profile, compact = false }: SplitLayoutProps) {
     .slice(0, 2);
 
   return (
-    <div className={compact ? "px-3 py-3" : "max-w-4xl mx-auto px-4 py-8"}>
+    <div className={compact ? "px-3 py-3" : "max-w-4xl mx-auto px-4 py-12"}>
       <div
         className={`grid ${
           compact ? "grid-cols-1 gap-4" : "md:grid-cols-2 gap-8"

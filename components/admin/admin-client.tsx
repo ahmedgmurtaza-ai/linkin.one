@@ -11,7 +11,16 @@ import { LayoutSelector } from "@/components/admin/layout-selector";
 import { AdminSidebar } from "@/components/admin/admin-sidebar";
 import { AnalyticsPanel } from "@/components/admin/analytics-panel";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
+import { Separator } from "@/components/ui/separator";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 type AdminTab = "profile" | "links" | "layout" | "analytics";
 
@@ -20,7 +29,6 @@ export default function AdminClient() {
   const router = useRouter();
   const tabFromUrl = (searchParams.get("tab") as AdminTab) || "profile";
   const [activeTab, setActiveTab] = useState<AdminTab>(tabFromUrl);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const {
     profile,
     loading,
@@ -46,125 +54,115 @@ export default function AdminClient() {
 
   const handleTabChange = (tab: AdminTab) => {
     setActiveTab(tab);
-    setMobileMenuOpen(false); // Close mobile menu after selecting tab
     router.push(`/admin?tab=${tab}`);
+  };
+
+  const getTabTitle = () => {
+    switch (activeTab) {
+      case "profile":
+        return "Profile";
+      case "links":
+        return "Links";
+      case "layout":
+        return "Layout";
+      case "analytics":
+        return "Analytics";
+      default:
+        return "Dashboard";
+    }
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-primary/5 via-accent/10 to-secondary/15 flex">
-        {/* Desktop Sidebar */}
-        <div className="hidden md:block w-64 border-r border-border/40 bg-card/50 backdrop-blur-md p-6">
-          <Skeleton className="h-12 w-full mb-8" />
-          <div className="space-y-2">
-            <Skeleton className="h-10 w-full" />
-            <Skeleton className="h-10 w-full" />
-            <Skeleton className="h-10 w-full" />
-            <Skeleton className="h-10 w-full" />
-          </div>
-        </div>
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <div className="border-b border-border/40 bg-card/50 backdrop-blur-md p-4">
+      <>
+        <AdminSidebar activeTab={activeTab} onTabChange={handleTabChange} />
+        <SidebarInset>
+          <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+            <SidebarTrigger className="-ml-1" />
+            <Separator orientation="vertical" className="mr-2 h-4" />
             <Skeleton className="h-8 w-48" />
-          </div>
-          <main className="flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto">
-            <Skeleton className="h-10 w-64 mb-4" />
-            <Skeleton className="h-6 w-96 mb-8" />
-            <div className="space-y-4">
+          </header>
+          <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+            <div className="mt-4 space-y-4">
+              <Skeleton className="h-10 w-64" />
+              <Skeleton className="h-6 w-96" />
               <Skeleton className="h-24 w-full" />
               <Skeleton className="h-24 w-full" />
               <Skeleton className="h-24 w-full" />
             </div>
-          </main>
-        </div>
-      </div>
+          </div>
+        </SidebarInset>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-primary/5 via-accent/10 to-secondary/15 flex">
-      {/* Mobile Sidebar Sheet */}
-      <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-        <SheetContent side="left" className="p-0 w-64">
-          <AdminSidebar activeTab={activeTab} onTabChange={handleTabChange} />
-        </SheetContent>
-      </Sheet>
+    <>
+      <AdminSidebar activeTab={activeTab} onTabChange={handleTabChange} />
+      <SidebarInset>
+        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
+          <SidebarTrigger className="-ml-1" />
+          <Separator orientation="vertical" className="mr-2 h-4" />
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem className="hidden md:block">
+                <BreadcrumbLink href="/admin">Dashboard</BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator className="hidden md:block" />
+              <BreadcrumbItem>
+                <BreadcrumbPage>{getTabTitle()}</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+          <div className="ml-auto">
+            <AdminTopBar profile={profile} saving={saving} />
+          </div>
+        </header>
 
-      {/* Desktop Sidebar - hidden on mobile */}
-      <div className="hidden md:block">
-        <AdminSidebar activeTab={activeTab} onTabChange={handleTabChange} />
-      </div>
+        <div className="flex flex-1 overflow-hidden">
+          {/* Main content area */}
+          <div className="flex-1 overflow-y-auto">
+            <div className="p-4 md:p-6 lg:p-8">
+              {/* Content Area */}
+              <div className="space-y-6 max-w-4xl">
+                {activeTab === "profile" && (
+                  <ProfileForm profile={profile} onUpdate={updateProfile} />
+                )}
 
-      {/* Main content area */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <AdminTopBar
-          profile={profile}
-          saving={saving}
-          onMenuClick={() => setMobileMenuOpen(true)}
-        />
+                {activeTab === "links" && (
+                  <LinkListEditor
+                    links={profile.links}
+                    showCategories={profile.showCategories || false}
+                    onShowCategoriesChange={setShowCategories}
+                    onAdd={addLink}
+                    onUpdate={updateLink}
+                    onDelete={deleteLink}
+                    onReorder={reorderLinks}
+                  />
+                )}
 
-        {/* Content wrapper */}
-        <main className="flex-1 flex overflow-hidden">
-          <div className="flex-1 p-4 md:p-6 lg:p-10 overflow-y-auto bg-linear-to-b from-transparent via-accent/8 to-primary/8">
-            {/* Page Header */}
-            <div className="mb-6 md:mb-8">
-              <h1 className="text-2xl md:text-3xl font-bold tracking-tight mb-2">
-                {activeTab === "profile" && "Profile Settings"}
-                {activeTab === "links" && "Manage Links"}
-                {activeTab === "layout" && "Choose Layout"}
-                {activeTab === "analytics" && "Analytics"}
-              </h1>
-              <p className="text-sm md:text-base text-muted-foreground">
-                {activeTab === "profile" &&
-                  "Customize your profile information and appearance"}
-                {activeTab === "links" &&
-                  "Add, edit, and organize your social media links"}
-                {activeTab === "layout" &&
-                  "Select a layout style for your profile page"}
-                {activeTab === "analytics" &&
-                  "Track your profile performance and link engagement"}
-              </p>
-            </div>
+                {activeTab === "layout" && (
+                  <LayoutSelector
+                    currentLayout={profile.layout}
+                    onSelect={setLayout}
+                  />
+                )}
 
-            {/* Content Area */}
-            <div className="space-y-6">
-              {activeTab === "profile" && (
-                <ProfileForm profile={profile} onUpdate={updateProfile} />
-              )}
-
-              {activeTab === "links" && (
-                <LinkListEditor
-                  links={profile.links}
-                  showCategories={profile.showCategories || false}
-                  onShowCategoriesChange={setShowCategories}
-                  onAdd={addLink}
-                  onUpdate={updateLink}
-                  onDelete={deleteLink}
-                  onReorder={reorderLinks}
-                />
-              )}
-
-              {activeTab === "layout" && (
-                <LayoutSelector
-                  currentLayout={profile.layout}
-                  onSelect={setLayout}
-                />
-              )}
-
-              {activeTab === "analytics" && (
-                <AnalyticsPanel links={profile.links} />
-              )}
+                {activeTab === "analytics" && (
+                  <AnalyticsPanel links={profile.links} />
+                )}
+              </div>
             </div>
           </div>
 
           {/* Preview panel - separate full-height column */}
-          <div className="hidden lg:flex min-w-[400px] max-w-[600px] w-[35vw] border-l border-primary/10 bg-linear-to-b from-primary/8 via-accent/12 to-secondary/10 shadow-inner">
+          <div className="hidden xl:flex w-[400px] 2xl:w-[500px] border-l bg-muted/20">
             <div className="flex-1 flex items-center justify-center p-8">
               <MobilePreview profile={profile} />
             </div>
           </div>
-        </main>
-      </div>
-    </div>
+        </div>
+      </SidebarInset>
+    </>
   );
 }

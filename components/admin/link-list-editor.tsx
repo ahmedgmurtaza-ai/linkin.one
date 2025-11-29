@@ -6,7 +6,11 @@ import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { type ProfileLink } from "@/lib/types";
+import {
+  type ProfileLink,
+  type LinkCategory,
+  CATEGORY_LABELS,
+} from "@/lib/types";
 import { LinkEditor } from "./link-editor";
 import { GripVertical, Pencil, Plus, Trash2 } from "lucide-react";
 import { PlatformIcon, getPlatformColors } from "@/components/platform-icon";
@@ -37,6 +41,12 @@ export function LinkListEditor({
   >();
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+  const [draggedCategory, setDraggedCategory] = useState<LinkCategory | null>(
+    null
+  );
+  const [dragOverCategory, setDragOverCategory] = useState<LinkCategory | null>(
+    null
+  );
   const dragNodeRef = useRef<HTMLDivElement | null>(null);
 
   const handleEdit = (link: ProfileLink) => {
@@ -87,8 +97,116 @@ export function LinkListEditor({
     }
     setDraggedIndex(null);
     setDragOverIndex(null);
+    setDraggedCategory(null);
+    setDragOverCategory(null);
     dragNodeRef.current = null;
   };
+
+  // Category drag handlers
+  const handleCategoryDragStart = (
+    e: React.DragEvent,
+    category: LinkCategory
+  ) => {
+    setDraggedCategory(category);
+    dragNodeRef.current = e.target as HTMLDivElement;
+    e.dataTransfer.effectAllowed = "move";
+    setTimeout(() => {
+      if (dragNodeRef.current) {
+        dragNodeRef.current.style.opacity = "0.5";
+      }
+    }, 0);
+  };
+
+  const handleCategoryDragEnter = (
+    e: React.DragEvent,
+    category: LinkCategory
+  ) => {
+    e.preventDefault();
+    if (draggedCategory === null || draggedCategory === category) return;
+    setDragOverCategory(category);
+  };
+
+  const handleCategoryDrop = (
+    e: React.DragEvent,
+    targetCategory: LinkCategory
+  ) => {
+    e.preventDefault();
+    if (draggedCategory === null || draggedCategory === targetCategory) return;
+
+    // Get all links grouped by category
+    const groupedLinks = links.reduce((acc, link) => {
+      if (!acc[link.category]) {
+        acc[link.category] = [];
+      }
+      acc[link.category].push(link);
+      return acc;
+    }, {} as Record<LinkCategory, ProfileLink[]>);
+
+    const draggedCategoryLinks = groupedLinks[draggedCategory];
+    const targetCategoryLinks = groupedLinks[targetCategory];
+
+    if (!draggedCategoryLinks?.length || !targetCategoryLinks?.length) return;
+
+    // Find where each category starts
+    const draggedStartIdx = links.findIndex(
+      (l) => l.id === draggedCategoryLinks[0].id
+    );
+    const targetStartIdx = links.findIndex(
+      (l) => l.id === targetCategoryLinks[0].id
+    );
+
+    if (draggedStartIdx === -1 || targetStartIdx === -1) return;
+
+    // Move each link in the dragged category sequentially
+    // We need to account for how indices shift after each move
+    const movingDown = draggedStartIdx < targetStartIdx;
+
+    if (movingDown) {
+      // When moving down, move from last to first to maintain positions
+      for (let i = draggedCategoryLinks.length - 1; i >= 0; i--) {
+        const linkId = draggedCategoryLinks[i].id;
+        const currentIdx = links.findIndex((l) => l.id === linkId);
+        if (currentIdx !== -1) {
+          // Target is after the target category
+          const targetIdx = targetStartIdx + targetCategoryLinks.length - 1;
+          onReorder(currentIdx, targetIdx);
+        }
+      }
+    } else {
+      // When moving up, move from first to last
+      for (let i = 0; i < draggedCategoryLinks.length; i++) {
+        const linkId = draggedCategoryLinks[i].id;
+        const currentIdx = links.findIndex((l) => l.id === linkId);
+        if (currentIdx !== -1) {
+          onReorder(currentIdx, targetStartIdx);
+        }
+      }
+    }
+  };
+
+  // Group links by category
+  const groupedLinks = showCategories
+    ? links.reduce((acc, link) => {
+        if (!acc[link.category]) {
+          acc[link.category] = [];
+        }
+        acc[link.category].push(link);
+        return acc;
+      }, {} as Record<LinkCategory, ProfileLink[]>)
+    : null;
+
+  const categoryOrder: LinkCategory[] = [
+    "social",
+    "professional",
+    "portfolio",
+    "content",
+    "shop",
+    "music",
+    "video",
+    "contact",
+    "resources",
+    "others",
+  ];
 
   return (
     <div className="space-y-6">
@@ -104,12 +222,13 @@ export function LinkListEditor({
           </Label>
         </div>
         <Button
-          size="sm"
+          size="lg"
           onClick={() => {
             setEditingLink(undefined);
             setSelectedPlatform(undefined);
             setEditorOpen(true);
           }}
+          className="shadow-lg hover:shadow-xl transition-all"
         >
           <Plus className="h-4 w-4 mr-1" />
           Add Link
@@ -178,7 +297,11 @@ export function LinkListEditor({
                 <div
                   className={`flex items-center justify-center h-9 w-9 ${colors.bg} ${colors.text} rounded-md shrink-0`}
                 >
-                  <PlatformIcon platform={link.platform} className="h-5 w-5" />
+                  <PlatformIcon
+                    platform={link.platform}
+                    url={link.url}
+                    className="h-5 w-5"
+                  />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-foreground truncate">
@@ -201,6 +324,126 @@ export function LinkListEditor({
                   <Plus className="h-3.5 w-3.5 mr-1" />
                   Add
                 </Button>
+              </div>
+            );
+          })}
+        </div>
+      ) : showCategories && groupedLinks ? (
+        <div className="space-y-6">
+          <p className="text-xs text-muted-foreground">
+            Drag categories or individual links to reorder
+          </p>
+          {categoryOrder.map((category) => {
+            const categoryLinks = groupedLinks[category];
+            if (!categoryLinks || categoryLinks.length === 0) return null;
+
+            const isCategoryDragging = draggedCategory === category;
+            const isCategoryDragOver =
+              dragOverCategory === category && draggedCategory !== category;
+
+            return (
+              <div
+                key={category}
+                draggable
+                onDragStart={(e) => handleCategoryDragStart(e, category)}
+                onDragEnter={(e) => handleCategoryDragEnter(e, category)}
+                onDragOver={handleDragOver}
+                onDrop={(e) => handleCategoryDrop(e, category)}
+                onDragEnd={handleDragEnd}
+                className={`space-y-2 rounded-lg border p-3 transition-all duration-200 ${
+                  isCategoryDragging
+                    ? "opacity-50 scale-[0.98] border-primary bg-primary/5"
+                    : isCategoryDragOver
+                    ? "border-primary bg-primary/10 scale-[1.02]"
+                    : "border-border/40 bg-card/30"
+                } cursor-grab active:cursor-grabbing`}
+              >
+                <div className="flex items-center gap-2 mb-3">
+                  <GripVertical className="h-4 w-4 text-muted-foreground shrink-0" />
+                  <h3 className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                    {CATEGORY_LABELS[category]}
+                  </h3>
+                  <span className="text-xs text-muted-foreground/60">
+                    ({categoryLinks.length})
+                  </span>
+                </div>
+                <div className="space-y-2">
+                  {categoryLinks.map((link) => {
+                    const linkIndex = links.findIndex((l) => l.id === link.id);
+                    const isDragging = draggedIndex === linkIndex;
+                    const isDragOver =
+                      dragOverIndex === linkIndex && draggedIndex !== linkIndex;
+                    const colors = getPlatformColors(link.platform);
+
+                    return (
+                      <div
+                        key={link.id}
+                        draggable
+                        onDragStart={(e) => {
+                          e.stopPropagation();
+                          handleDragStart(e, linkIndex);
+                        }}
+                        onDragEnter={(e) => {
+                          e.stopPropagation();
+                          handleDragEnter(e, linkIndex);
+                        }}
+                        onDragOver={(e) => {
+                          e.stopPropagation();
+                          handleDragOver(e);
+                        }}
+                        onDrop={(e) => {
+                          e.stopPropagation();
+                          handleDrop(e, linkIndex);
+                        }}
+                        onDragEnd={handleDragEnd}
+                        className={`flex items-center gap-3 bg-card/50 border border-border/40 rounded-lg px-3 py-2.5 group transition-all duration-200 ${
+                          isDragging
+                            ? "opacity-50 scale-[0.98] border-primary"
+                            : isDragOver
+                            ? "border-primary bg-primary/5 scale-[1.02]"
+                            : "border-border hover:border-muted-foreground/50"
+                        } cursor-grab active:cursor-grabbing`}
+                      >
+                        <GripVertical className="h-4 w-4 text-muted-foreground shrink-0" />
+                        <div
+                          className={`flex items-center justify-center h-9 w-9 ${colors.bg} ${colors.text} rounded-md shrink-0`}
+                        >
+                          <PlatformIcon
+                            platform={link.platform}
+                            url={link.url}
+                            className="h-5 w-5"
+                          />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-foreground truncate">
+                            {link.title}
+                          </p>
+                          <p className="text-xs text-muted-foreground truncate">
+                            {link.url}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8"
+                            onClick={() => handleEdit(link)}
+                          >
+                            <Pencil className="h-3.5 w-3.5" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-destructive hover:text-destructive"
+                            onClick={() => onDelete(link.id)}
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </Button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             );
           })}
@@ -237,7 +480,11 @@ export function LinkListEditor({
                 <div
                   className={`flex items-center justify-center h-9 w-9 ${colors.bg} ${colors.text} rounded-md shrink-0`}
                 >
-                  <PlatformIcon platform={link.platform} className="h-5 w-5" />
+                  <PlatformIcon
+                    platform={link.platform}
+                    url={link.url}
+                    className="h-5 w-5"
+                  />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-foreground truncate">

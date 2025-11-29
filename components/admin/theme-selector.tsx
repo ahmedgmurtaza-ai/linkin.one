@@ -42,13 +42,6 @@ export function ThemeSelector({
 
   return (
     <div className="space-y-4">
-      <div>
-        <Label className="text-base font-semibold">Profile Theme</Label>
-        <p className="text-sm text-muted-foreground mt-1">
-          Choose how visitors will see your profile
-        </p>
-      </div>
-
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {themes.map((theme) => (
           <Button

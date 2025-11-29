@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Check, Copy, QrCode, Settings } from "lucide-react";
 import { QRCodeDialog } from "@/components/qr-code-dialog";
-import { ThemeToggle } from "@/components/theme-toggle";
 import Link from "next/link";
 
 interface ProfileTopBarProps {
@@ -36,30 +35,9 @@ export function ProfileTopBar({
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/30">
-        <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 bg-card border border-border rounded-lg px-3 py-2">
-              <span className="text-sm text-muted-foreground truncate flex-1">
-                linkin.one/{username}
-              </span>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-6 w-6 shrink-0"
-                onClick={handleCopy}
-              >
-                {copied ? (
-                  <Check className="h-3.5 w-3.5 text-primary" />
-                ) : (
-                  <Copy className="h-3.5 w-3.5 text-muted-foreground" />
-                )}
-              </Button>
-            </div>
-          </div>
-
+      <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/30  ">
+        <div className="px-4 py-3 flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <ThemeToggle />
             {/* <Button
               variant="outline"
               size="icon"
@@ -76,6 +54,26 @@ export function ProfileTopBar({
                 </Link>
               </Button>
             )}
+          </div>
+
+          <div className="flex min-w-0">
+            <div className="flex items-center gap-2 rounded-lg px-3 py-2 ">
+              <span className="text-sm text-muted-foreground truncate flex-1">
+                linkin.one/{username}
+              </span>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-6 w-6 shrink-0"
+                onClick={handleCopy}
+              >
+                {copied ? (
+                  <Check className="h-3.5 w-3.5 text-primary" />
+                ) : (
+                  <Copy className="h-3.5 w-3.5 text-muted-foreground" />
+                )}
+              </Button>
+            </div>
           </div>
         </div>
       </header>

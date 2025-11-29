@@ -46,6 +46,7 @@ export function LinkCard({ link, compact = false }: LinkCardProps) {
       >
         <PlatformIcon
           platform={link.platform}
+          url={link.url}
           className={compact ? "h-4 w-4" : "h-5 w-5"}
         />
       </div>

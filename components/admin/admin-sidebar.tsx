@@ -3,21 +3,33 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import {
-  User,
-  Link2,
-  BarChart3,
-  Layout,
-  Link as LinkIcon,
-  LogOut,
-} from "lucide-react";
+import { User, Link2, BarChart3, Layout, LogOut, Home } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
-import { Logo } from "@/components/logo";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarSeparator,
+} from "@/components/ui/sidebar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 type AdminTab = "profile" | "links" | "layout" | "analytics";
 
@@ -102,69 +114,111 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
   };
 
   return (
-    <aside className="w-64 border-r border-primary/10 bg-linear-to-b from-card via-primary/5 to-accent/5 backdrop-blur-md p-6 flex flex-col overflow-y-auto shadow-lg">
-      {/* Logo */}
-      <Link href="/" className="flex items-center gap-2 px-3 py-4 mb-4 group">
-        <Logo />
-      </Link>
-      {/* Navigation */}
-      <div className="flex-1 space-y-1">
-        <div className="mb-6">
-          <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-3">
-            Dashboard
-          </p>
-        </div>
-        {tabs.map((tab) => (
-          <Link key={tab.id} href={tab.href} className="block">
-            <Button
-              variant="ghost"
-              className={cn(
-                "w-full justify-start gap-3 h-11 text-sm font-medium transition-all",
-                activeTab === tab.id
-                  ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm"
-                  : "hover:bg-muted/50"
-              )}
-            >
-              <tab.icon className="h-5 w-5" />
-              {tab.label}
-            </Button>
-          </Link>
-        ))}
-      </div>
+    <Sidebar collapsible="icon">
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton size="lg" asChild>
+              <Link href="/">
+                <div className="flex aspect-square size-8 items-center justify-center rounded-lg text-primary">
+                  <Link2 className="h-5 w-5" />
+                </div>
+                <div className="flex flex-col gap-0.5 leading-none">
+                  <span className="font-semibold">linkin.one</span>
+                  <span className="text-xs text-muted-foreground">
+                    Dashboard
+                  </span>
+                </div>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
 
-      {/* User Profile Section */}
-      <div className="mt-auto pt-4 space-y-4">
-        <Separator />
-        <div className="space-y-3">
-          {/* User Info */}
-          <div className="flex items-center gap-3 px-3 py-2">
-            <Avatar className="h-10 w-10">
-              <AvatarImage src={user?.user_metadata?.avatar_url} />
-              <AvatarFallback className="bg-primary text-primary-foreground">
-                {getUserInitials()}
-              </AvatarFallback>
-            </Avatar>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium truncate">
-                {getUserDisplayName()}
-              </p>
-              <p className="text-xs text-muted-foreground truncate">
-                {user?.email}
-              </p>
-            </div>
-          </div>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {tabs.map((tab) => (
+                <SidebarMenuItem key={tab.id}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={activeTab === tab.id}
+                    tooltip={tab.label}
+                  >
+                    <Link href={tab.href}>
+                      <tab.icon />
+                      <span>{tab.label}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
 
-          {/* Sign Out Button */}
-          <Button
-            variant="ghost"
-            className="w-full justify-start gap-3 h-11 text-sm font-medium hover:bg-destructive/10 hover:text-destructive"
-            onClick={handleSignOut}
-          >
-            <LogOut className="h-5 w-5" />
-            Sign Out
-          </Button>
-        </div>
-      </div>
-    </aside>
+        <SidebarGroup>
+          <SidebarGroupLabel>Quick Links</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild tooltip="View Profile">
+                  <Link href="/" target="_blank">
+                    <Home />
+                    <span>View Profile</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton size="lg">
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src={user?.user_metadata?.avatar_url} />
+                    <AvatarFallback className="bg-primary text-primary-foreground">
+                      {getUserInitials()}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col gap-0.5 leading-none">
+                    <span className="font-medium text-sm">
+                      {getUserDisplayName()}
+                    </span>
+                    <span className="text-xs text-muted-foreground truncate max-w-[150px]">
+                      {user?.email}
+                    </span>
+                  </div>
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="end" side="top">
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/" target="_blank">
+                    <Home className="mr-2 h-4 w-4" />
+                    View Profile
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={handleSignOut}
+                  className="text-destructive focus:text-destructive"
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Sign Out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
+    </Sidebar>
   );
 }

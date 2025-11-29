@@ -340,39 +340,41 @@ export function LinkEditor({
             </TabsList>
 
             <TabsContent value="url" className="space-y-4 mt-4">
-              <div className="space-y-2">
-                <Label>Platform</Label>
-                <Select value={platform} onValueChange={handlePlatformChange}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {PLATFORM_OPTIONS.map((opt) => (
-                      <SelectItem key={opt.value} value={opt.value}>
-                        {opt.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label>Platform</Label>
+                  <Select value={platform} onValueChange={handlePlatformChange}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {PLATFORM_OPTIONS.map((opt) => (
+                        <SelectItem key={opt.value} value={opt.value}>
+                          {opt.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
 
-              <div className="space-y-2">
-                <Label>Category (Optional)</Label>
-                <Select
-                  value={category}
-                  onValueChange={(v) => setCategory(v as LinkCategory)}
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {Object.entries(CATEGORY_LABELS).map(([value, label]) => (
-                      <SelectItem key={value} value={value}>
-                        {label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <div className="space-y-2">
+                  <Label>Category (Optional)</Label>
+                  <Select
+                    value={category}
+                    onValueChange={(v) => setCategory(v as LinkCategory)}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Object.entries(CATEGORY_LABELS).map(([value, label]) => (
+                        <SelectItem key={value} value={value}>
+                          {label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
               {isPredefinedPlatform ? (
@@ -418,33 +420,35 @@ export function LinkEditor({
             </TabsContent>
 
             <TabsContent value="file" className="space-y-4 mt-4">
-              <div className="space-y-2">
-                <Label htmlFor="file-title">Title</Label>
-                <Input
-                  id="file-title"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  placeholder="My Resume"
-                />
-              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="file-title">Title</Label>
+                  <Input
+                    id="file-title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="My Resume"
+                  />
+                </div>
 
-              <div className="space-y-2">
-                <Label>Category (Optional)</Label>
-                <Select
-                  value={category}
-                  onValueChange={(v) => setCategory(v as LinkCategory)}
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {Object.entries(CATEGORY_LABELS).map(([value, label]) => (
-                      <SelectItem key={value} value={value}>
-                        {label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <div className="space-y-2">
+                  <Label>Category (Optional)</Label>
+                  <Select
+                    value={category}
+                    onValueChange={(v) => setCategory(v as LinkCategory)}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Object.entries(CATEGORY_LABELS).map(([value, label]) => (
+                        <SelectItem key={value} value={value}>
+                          {label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
               {/* File Drop Zone */}
@@ -493,39 +497,41 @@ export function LinkEditor({
           </Tabs>
         ) : (
           <div className="space-y-4 mt-4">
-            <div className="space-y-2">
-              <Label>Platform</Label>
-              <Select value={platform} onValueChange={handlePlatformChange}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {PLATFORM_OPTIONS.map((opt) => (
-                    <SelectItem key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Platform</Label>
+                <Select value={platform} onValueChange={handlePlatformChange}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {PLATFORM_OPTIONS.map((opt) => (
+                      <SelectItem key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
-            <div className="space-y-2">
-              <Label>Category (Optional)</Label>
-              <Select
-                value={category}
-                onValueChange={(v) => setCategory(v as LinkCategory)}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {Object.entries(CATEGORY_LABELS).map(([value, label]) => (
-                    <SelectItem key={value} value={value}>
-                      {label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <div className="space-y-2">
+                <Label>Category (Optional)</Label>
+                <Select
+                  value={category}
+                  onValueChange={(v) => setCategory(v as LinkCategory)}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.entries(CATEGORY_LABELS).map(([value, label]) => (
+                      <SelectItem key={value} value={value}>
+                        {label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
 
             <div className="space-y-2">
