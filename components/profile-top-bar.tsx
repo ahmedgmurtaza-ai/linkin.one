@@ -1,32 +1,38 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Check, Copy, QrCode, Settings } from "lucide-react"
-import { QRCodeDialog } from "@/components/qr-code-dialog"
-import { ThemeToggle } from "@/components/theme-toggle"
-import Link from "next/link"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Check, Copy, QrCode, Settings } from "lucide-react";
+import { QRCodeDialog } from "@/components/qr-code-dialog";
+import { ThemeToggle } from "@/components/theme-toggle";
+import Link from "next/link";
 
 interface ProfileTopBarProps {
-  username: string
+  username: string;
+  isLoggedIn?: boolean;
 }
 
-export function ProfileTopBar({ username }: ProfileTopBarProps) {
-  const [copied, setCopied] = useState(false)
-  const [qrOpen, setQrOpen] = useState(false)
+export function ProfileTopBar({
+  username,
+  isLoggedIn = false,
+}: ProfileTopBarProps) {
+  const [copied, setCopied] = useState(false);
+  const [qrOpen, setQrOpen] = useState(false);
 
   const profileUrl =
-    typeof window !== "undefined" ? `${window.location.origin}/${username}` : `https://linkin.one/${username}`
+    typeof window !== "undefined"
+      ? `${window.location.origin}/${username}`
+      : `https://linkin.one/${username}`;
 
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(profileUrl)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
+      await navigator.clipboard.writeText(profileUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      console.error("Failed to copy:", err)
+      console.error("Failed to copy:", err);
     }
-  }
+  };
 
   return (
     <>
@@ -34,8 +40,15 @@ export function ProfileTopBar({ username }: ProfileTopBarProps) {
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 bg-card border border-border rounded-lg px-3 py-2">
-              <span className="text-sm text-muted-foreground truncate flex-1">linkin.one/{username}</span>
-              <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0" onClick={handleCopy}>
+              <span className="text-sm text-muted-foreground truncate flex-1">
+                linkin.one/{username}
+              </span>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-6 w-6 shrink-0"
+                onClick={handleCopy}
+              >
                 {copied ? (
                   <Check className="h-3.5 w-3.5 text-primary" />
                 ) : (
@@ -47,19 +60,31 @@ export function ProfileTopBar({ username }: ProfileTopBarProps) {
 
           <div className="flex items-center gap-2">
             <ThemeToggle />
-            <Button variant="outline" size="icon" className="shrink-0 bg-transparent" onClick={() => setQrOpen(true)}>
+            <Button
+              variant="outline"
+              size="icon"
+              className="shrink-0 bg-transparent"
+              onClick={() => setQrOpen(true)}
+            >
               <QrCode className="h-4 w-4" />
             </Button>
-            <Button variant="default" size="sm" className="shrink-0" asChild>
-              <Link href="/admin">
-                <Settings className="h-4 w-4 mr-1.5" />
-                Dashboard
-              </Link>
-            </Button>
+            {isLoggedIn && (
+              <Button variant="default" size="sm" className="shrink-0" asChild>
+                <Link href="/admin">
+                  <Settings className="h-4 w-4 mr-1.5" />
+                  Dashboard
+                </Link>
+              </Button>
+            )}
           </div>
         </div>
       </header>
-      <QRCodeDialog open={qrOpen} onOpenChange={setQrOpen} url={profileUrl} username={username} />
+      <QRCodeDialog
+        open={qrOpen}
+        onOpenChange={setQrOpen}
+        url={profileUrl}
+        username={username}
+      />
     </>
-  )
+  );
 }
