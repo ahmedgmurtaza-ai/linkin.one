@@ -12,11 +12,13 @@ This guide will help you set up Google OAuth authentication for your linkin.one 
 1. Go to the [Google Cloud Console](https://console.cloud.google.com/)
 2. Create a new project or select an existing one
 3. Enable the Google+ API:
+
    - Go to **APIs & Services** > **Library**
    - Search for "Google+ API"
    - Click **Enable**
 
 4. Create OAuth credentials:
+
    - Go to **APIs & Services** > **Credentials**
    - Click **Create Credentials** > **OAuth client ID**
    - Configure the OAuth consent screen if prompted:
@@ -26,9 +28,10 @@ This guide will help you set up Google OAuth authentication for your linkin.one 
      - Save and continue
 
 5. Create OAuth Client ID:
+
    - Application type: **Web application**
    - Name: `linkin.one` (or any name you prefer)
-   - **Authorized JavaScript origins**: 
+   - **Authorized JavaScript origins**:
      - `http://localhost:3000` (for development)
      - Your production domain (e.g., `https://linkin.one`)
    - **Authorized redirect URIs**:
@@ -65,6 +68,7 @@ For production, update `NEXT_PUBLIC_SITE_URL` to your production domain.
 ## Step 4: Test the Integration
 
 1. Restart your development server:
+
    ```bash
    npm run dev
    ```
@@ -81,7 +85,6 @@ For production, update `NEXT_PUBLIC_SITE_URL` to your production domain.
 1. Add your production domain to:
    - Google OAuth **Authorized JavaScript origins**
    - Google OAuth **Authorized redirect URIs**
-   
 2. Update `NEXT_PUBLIC_SITE_URL` in your production environment variables
 
 3. Ensure your Supabase project's **Site URL** is set correctly:
@@ -99,14 +102,17 @@ For production, update `NEXT_PUBLIC_SITE_URL` to your production domain.
 ### Troubleshooting
 
 **"Redirect URI mismatch" error:**
+
 - Ensure the redirect URI in Google Console matches the Supabase callback URL exactly
 - Check for trailing slashes
 
 **"Access blocked" error:**
+
 - Your OAuth consent screen needs to be verified by Google for production use
 - Add test users in the OAuth consent screen settings for testing
 
 **User not redirected after login:**
+
 - Check that `NEXT_PUBLIC_SITE_URL` is set correctly
 - Verify the callback route at `/auth/callback` is working
 - Check browser console for errors

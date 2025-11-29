@@ -83,15 +83,7 @@ export function LinkListEditor({
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-xl font-semibold text-foreground mb-1">
-            Your Links
-          </h2>
-          <p className="text-sm text-muted-foreground">
-            Manage your social media connections
-          </p>
-        </div>
+      <div className="flex items-center justify-end">
         <Button
           size="sm"
           onClick={() => {
@@ -105,9 +97,92 @@ export function LinkListEditor({
       </div>
 
       {links.length === 0 ? (
-        <div className="text-center py-8 text-muted-foreground border-2 border-dashed border-border rounded-lg">
-          <p className="mb-2">No links yet</p>
-          <p className="text-sm">Click "Add Link" to get started</p>
+        <div className="space-y-2">
+          <p className="text-xs text-muted-foreground mb-3">
+            Add your social links below - here are some suggestions:
+          </p>
+          {[
+            {
+              platform: "twitter",
+              title: "Twitter",
+              url: "https://twitter.com/yourusername",
+            },
+            {
+              platform: "instagram",
+              title: "Instagram",
+              url: "https://instagram.com/yourusername",
+            },
+            {
+              platform: "tiktok",
+              title: "TikTok",
+              url: "https://tiktok.com/@yourusername",
+            },
+            {
+              platform: "youtube",
+              title: "YouTube",
+              url: "https://youtube.com/@yourusername",
+            },
+            {
+              platform: "linkedin",
+              title: "LinkedIn",
+              url: "https://linkedin.com/in/yourusername",
+            },
+            {
+              platform: "facebook",
+              title: "Facebook",
+              url: "https://facebook.com/yourusername",
+            },
+            {
+              platform: "github",
+              title: "GitHub",
+              url: "https://github.com/yourusername",
+            },
+            { platform: "email", title: "Email", url: "mailto:your@email.com" },
+            {
+              platform: "website",
+              title: "Website",
+              url: "https://yourwebsite.com",
+            },
+            {
+              platform: "link",
+              title: "Resume",
+              url: "https://yourresume.com",
+            },
+          ].map((link, index) => {
+            const colors = getPlatformColors(link.platform);
+            return (
+              <div
+                key={index}
+                className="flex items-center gap-3 bg-card/50 border-2 border-dashed border-border rounded-lg px-3 py-2.5 opacity-60"
+              >
+                <div
+                  className={`flex items-center justify-center h-9 w-9 ${colors.bg} ${colors.text} rounded-md shrink-0`}
+                >
+                  <PlatformIcon platform={link.platform} className="h-5 w-5" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-foreground truncate">
+                    {link.title}
+                  </p>
+                  <p className="text-xs text-muted-foreground truncate">
+                    {link.url}
+                  </p>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    setEditingLink(undefined);
+                    setEditorOpen(true);
+                  }}
+                  className="shrink-0"
+                >
+                  <Plus className="h-3.5 w-3.5 mr-1" />
+                  Add
+                </Button>
+              </div>
+            );
+          })}
         </div>
       ) : (
         <div className="space-y-2">
@@ -129,7 +204,7 @@ export function LinkListEditor({
                 onDragOver={handleDragOver}
                 onDrop={(e) => handleDrop(e, index)}
                 onDragEnd={handleDragEnd}
-                className={`flex items-center gap-3 bg-card border rounded-lg px-3 py-2.5 group transition-all duration-200 ${
+                className={`flex items-center gap-3 bg-card border-2 rounded-lg px-3 py-2.5 group transition-all duration-200 ${
                   isDragging
                     ? "opacity-50 scale-[0.98] border-primary"
                     : isDragOver

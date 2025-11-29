@@ -2,7 +2,7 @@
 
 import { type ProfileLink } from "@/lib/types";
 import { ExternalLink, Download } from "lucide-react";
-import { useAnalytics } from "@/lib/analytics-store";
+import { trackLinkEvent } from "@/lib/database-client";
 import { PlatformIcon, getPlatformColors } from "@/components/platform-icon";
 
 interface LinkCardProps {
@@ -15,12 +15,11 @@ export function LinkCard({ link, compact = false }: LinkCardProps) {
     link.isDownloadable ||
     link.platform === "resume" ||
     link.platform === "pdf";
-  const { trackClick, trackDownload } = useAnalytics();
   const colors = getPlatformColors(link.platform);
 
   const handleClick = () => {
     if (isDownloadable) {
-      trackDownload(link.id);
+      trackLinkEvent(link.id, "download");
       const a = document.createElement("a");
       a.href = link.url;
       a.download = link.title.replace(/\s+/g, "_") + ".pdf";
@@ -28,7 +27,7 @@ export function LinkCard({ link, compact = false }: LinkCardProps) {
       a.click();
       document.body.removeChild(a);
     } else {
-      trackClick(link.id);
+      trackLinkEvent(link.id, "click");
       window.open(link.url, "_blank", "noopener,noreferrer");
     }
   };

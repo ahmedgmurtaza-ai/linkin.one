@@ -11,14 +11,16 @@ import {
   ExternalLink,
   QrCode,
   Link as LinkIcon,
+  Loader2,
 } from "lucide-react";
 import type { Profile } from "@/lib/types";
 
 interface AdminTopBarProps {
   profile: Profile;
+  saving?: boolean;
 }
 
-export function AdminTopBar({ profile }: AdminTopBarProps) {
+export function AdminTopBar({ profile, saving = false }: AdminTopBarProps) {
   const [copied, setCopied] = useState(false);
   const [qrOpen, setQrOpen] = useState(false);
 
@@ -41,7 +43,22 @@ export function AdminTopBar({ profile }: AdminTopBarProps) {
     <>
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-lg border-b border-border shadow-sm">
         <div className="px-6 py-4 flex items-center justify-between gap-4">
-          <UserNav />
+          <div className="flex items-center gap-3">
+            {/* <UserNav /> */}
+            {/* Save Status */}
+            {saving && (
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                <span>Saving...</span>
+              </div>
+            )}
+            {!saving && (
+              <div className="flex items-center gap-2 text-sm text-muted-foreground opacity-0 transition-opacity duration-300">
+                <Check className="h-3.5 w-3.5" />
+                <span>Saved</span>
+              </div>
+            )}
+          </div>
           <div className="flex items-center gap-2">
             {/* URL Copy */}
             <div className="hidden sm:flex items-center gap-2 bg-card border border-border rounded-lg px-3 py-1.5">

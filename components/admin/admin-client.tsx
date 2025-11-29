@@ -9,6 +9,7 @@ import { AdminTopBar } from "@/components/admin/admin-top-bar";
 import { LayoutSelector } from "@/components/admin/layout-selector";
 import { AdminSidebar } from "@/components/admin/admin-sidebar";
 import { AnalyticsPanel } from "@/components/admin/analytics-panel";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type AdminTab = "profile" | "links" | "layout" | "analytics";
 
@@ -16,13 +17,37 @@ export default function AdminClient() {
   const [activeTab, setActiveTab] = useState<AdminTab>("profile");
   const {
     profile,
+    loading,
+    saving,
     updateProfile,
     setLayout,
     addLink,
     updateLink,
     deleteLink,
     reorderLinks,
-  } = useProfileEditor("ahmedgmurtaza");
+  } = useProfileEditor();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-linear-to-br from-background via-background to-muted/20 flex">
+        <AdminSidebar activeTab={activeTab} onTabChange={setActiveTab} />
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <div className="border-b border-border bg-card/30 backdrop-blur-sm p-4">
+            <Skeleton className="h-8 w-48" />
+          </div>
+          <main className="flex-1 p-6 md:p-8 lg:p-10 overflow-y-auto">
+            <Skeleton className="h-10 w-64 mb-4" />
+            <Skeleton className="h-6 w-96 mb-8" />
+            <div className="space-y-4">
+              <Skeleton className="h-24 w-full" />
+              <Skeleton className="h-24 w-full" />
+              <Skeleton className="h-24 w-full" />
+            </div>
+          </main>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-linear-to-br from-background via-background to-muted/20 flex">
@@ -31,7 +56,7 @@ export default function AdminClient() {
 
       {/* Main content area */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        <AdminTopBar profile={profile} />
+        <AdminTopBar profile={profile} saving={saving} />
 
         {/* Content wrapper */}
         <main className="flex-1 flex overflow-hidden">
@@ -63,30 +88,24 @@ export default function AdminClient() {
               )}
 
               {activeTab === "links" && (
-                <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
-                  <LinkListEditor
-                    links={profile.links}
-                    onAdd={addLink}
-                    onUpdate={updateLink}
-                    onDelete={deleteLink}
-                    onReorder={reorderLinks}
-                  />
-                </div>
+                <LinkListEditor
+                  links={profile.links}
+                  onAdd={addLink}
+                  onUpdate={updateLink}
+                  onDelete={deleteLink}
+                  onReorder={reorderLinks}
+                />
               )}
 
               {activeTab === "layout" && (
-                <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
-                  <LayoutSelector
-                    currentLayout={profile.layout}
-                    onSelect={setLayout}
-                  />
-                </div>
+                <LayoutSelector
+                  currentLayout={profile.layout}
+                  onSelect={setLayout}
+                />
               )}
 
               {activeTab === "analytics" && (
-                <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
-                  <AnalyticsPanel links={profile.links} />
-                </div>
+                <AnalyticsPanel links={profile.links} />
               )}
             </div>
           </div>

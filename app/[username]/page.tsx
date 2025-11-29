@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getProfile } from "@/lib/profile-store";
+import { getProfileByUsername } from "@/lib/database";
 import { ProfileTopBar } from "@/components/profile-top-bar";
 import { ProfileLayoutRenderer } from "@/components/profile-layout";
 
@@ -9,7 +9,7 @@ interface ProfilePageProps {
 
 export default async function ProfilePage({ params }: ProfilePageProps) {
   const { username } = await params;
-  const profile = getProfile(username);
+  const profile = await getProfileByUsername(username);
 
   if (!profile) {
     notFound();
@@ -27,7 +27,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
 
 export async function generateMetadata({ params }: ProfilePageProps) {
   const { username } = await params;
-  const profile = getProfile(username);
+  const profile = await getProfileByUsername(username);
 
   if (!profile) {
     return {
