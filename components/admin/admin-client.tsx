@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useProfileEditor } from "@/lib/use-profile-editor";
 import { ProfileForm } from "@/components/admin/profile-form";
 import { LinkListEditor } from "@/components/admin/link-list-editor";
@@ -15,7 +16,10 @@ import { Sheet, SheetContent } from "@/components/ui/sheet";
 type AdminTab = "profile" | "links" | "layout" | "analytics";
 
 export default function AdminClient() {
-  const [activeTab, setActiveTab] = useState<AdminTab>("profile");
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const tabFromUrl = (searchParams.get("tab") as AdminTab) || "profile";
+  const [activeTab, setActiveTab] = useState<AdminTab>(tabFromUrl);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const {
     profile,
@@ -30,9 +34,20 @@ export default function AdminClient() {
     reorderLinks,
   } = useProfileEditor();
 
+  // Sync activeTab with URL parameter
+  useEffect(() => {
+    const tab = searchParams.get("tab") as AdminTab;
+    if (tab && ["profile", "links", "layout", "analytics"].includes(tab)) {
+      setActiveTab(tab);
+    } else {
+      setActiveTab("profile");
+    }
+  }, [searchParams]);
+
   const handleTabChange = (tab: AdminTab) => {
     setActiveTab(tab);
     setMobileMenuOpen(false); // Close mobile menu after selecting tab
+    router.push(`/admin?tab=${tab}`);
   };
 
   if (loading) {

@@ -57,10 +57,30 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
   };
 
   const tabs = [
-    { id: "profile" as const, label: "Profile", icon: User },
-    { id: "links" as const, label: "Links", icon: Link2 },
-    { id: "layout" as const, label: "Layout", icon: Layout },
-    { id: "analytics" as const, label: "Analytics", icon: BarChart3 },
+    {
+      id: "profile" as const,
+      label: "Profile",
+      icon: User,
+      href: "/admin?tab=profile",
+    },
+    {
+      id: "links" as const,
+      label: "Links",
+      icon: Link2,
+      href: "/admin?tab=links",
+    },
+    {
+      id: "layout" as const,
+      label: "Layout",
+      icon: Layout,
+      href: "/admin?tab=layout",
+    },
+    {
+      id: "analytics" as const,
+      label: "Analytics",
+      icon: BarChart3,
+      href: "/admin?tab=analytics",
+    },
   ];
 
   const getUserInitials = () => {
@@ -95,20 +115,20 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
           </p>
         </div>
         {tabs.map((tab) => (
-          <Button
-            key={tab.id}
-            variant="ghost"
-            className={cn(
-              "w-full justify-start gap-3 h-11 text-sm font-medium transition-all",
-              activeTab === tab.id
-                ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm"
-                : "hover:bg-muted/50"
-            )}
-            onClick={() => onTabChange(tab.id)}
-          >
-            <tab.icon className="h-5 w-5" />
-            {tab.label}
-          </Button>
+          <Link key={tab.id} href={tab.href} className="block">
+            <Button
+              variant="ghost"
+              className={cn(
+                "w-full justify-start gap-3 h-11 text-sm font-medium transition-all",
+                activeTab === tab.id
+                  ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm"
+                  : "hover:bg-muted/50"
+              )}
+            >
+              <tab.icon className="h-5 w-5" />
+              {tab.label}
+            </Button>
+          </Link>
         ))}
       </div>
 

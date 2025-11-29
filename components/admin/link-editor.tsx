@@ -252,14 +252,14 @@ export function LinkEditor({
   const handlePlatformChange = (newPlatform: string) => {
     setPlatform(newPlatform);
     const config = PLATFORM_CONFIG[newPlatform];
-    
+
     // Auto-assign category based on platform
     const autoCategory = PLATFORM_CATEGORY_MAP[newPlatform] || "others";
     // Only auto-assign if not editing or if platform changed
     if (!link || link.platform !== newPlatform) {
       setCategory(autoCategory);
     }
-    
+
     if (config) {
       // Auto-populate title for predefined platforms
       setTitle(config.title);

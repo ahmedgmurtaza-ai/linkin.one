@@ -107,41 +107,41 @@ export const PLATFORM_CATEGORY_MAP: Record<string, LinkCategory> = {
   snapchat: "social",
   discord: "social",
   telegram: "social",
-  
+
   // Professional
   linkedin: "professional",
-  
+
   // Portfolio & Work
   github: "portfolio",
   dribbble: "portfolio",
   behance: "portfolio",
-  
+
   // Content & Blog
   medium: "content",
   substack: "content",
   devto: "content",
   hashnode: "content",
-  
+
   // Music & Audio
   spotify: "music",
   soundcloud: "music",
   applemusic: "music",
-  
+
   // Video & Streaming
   youtube: "video",
   twitch: "video",
   vimeo: "video",
-  
+
   // Contact & Booking
   email: "contact",
   whatsapp: "contact",
   calendly: "contact",
-  
+
   // Resources & Downloads
   resume: "resources",
   pdf: "resources",
   file: "resources",
-  
+
   // Others (default)
   website: "others",
 };
