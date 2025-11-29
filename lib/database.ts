@@ -11,6 +11,7 @@ export interface DbProfile {
   thumbnail_url: string | null;
   layout: string;
   show_categories: boolean;
+  theme: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -39,6 +40,7 @@ function dbProfileToProfile(dbProfile: DbProfile, links: DbLink[]): Profile {
     thumbnailUrl: dbProfile.thumbnail_url || "",
     layout: dbProfile.layout as any,
     showCategories: dbProfile.show_categories || false,
+    theme: (dbProfile.theme as any) || "system",
     links: links.map((link) => ({
       id: link.id,
       title: link.title,
@@ -155,6 +157,7 @@ export async function updateProfile(
   if (updates.layout !== undefined) dbUpdates.layout = updates.layout;
   if (updates.showCategories !== undefined)
     dbUpdates.show_categories = updates.showCategories;
+  if (updates.theme !== undefined) dbUpdates.theme = updates.theme;
 
   const { error } = await supabase
     .from("profiles")

@@ -131,6 +131,7 @@ export function useProfileEditor() {
           thumbnailUrl: profileData.thumbnail_url || "",
           layout: profileData.layout as ProfileLayout,
           showCategories: profileData.show_categories || false,
+          theme: (profileData.theme as any) || "system",
           links: (linksData || []).map((link) => ({
             id: link.id,
             title: link.title,

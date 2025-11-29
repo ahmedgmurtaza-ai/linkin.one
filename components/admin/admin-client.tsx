@@ -52,9 +52,9 @@ export default function AdminClient() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-background via-background to-muted/20 flex">
+      <div className="min-h-screen bg-linear-to-br from-primary/5 via-accent/10 to-secondary/15 flex">
         {/* Desktop Sidebar */}
-        <div className="hidden md:block w-64 border-r border-border bg-card/30 backdrop-blur-sm p-6">
+        <div className="hidden md:block w-64 border-r border-border/40 bg-card/50 backdrop-blur-md p-6">
           <Skeleton className="h-12 w-full mb-8" />
           <div className="space-y-2">
             <Skeleton className="h-10 w-full" />
@@ -64,7 +64,7 @@ export default function AdminClient() {
           </div>
         </div>
         <div className="flex-1 flex flex-col overflow-hidden">
-          <div className="border-b border-border bg-card/30 backdrop-blur-sm p-4">
+          <div className="border-b border-border/40 bg-card/50 backdrop-blur-md p-4">
             <Skeleton className="h-8 w-48" />
           </div>
           <main className="flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto">
@@ -82,7 +82,7 @@ export default function AdminClient() {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-background via-background to-muted/20 flex">
+    <div className="min-h-screen bg-linear-to-br from-primary/5 via-accent/10 to-secondary/15 flex">
       {/* Mobile Sidebar Sheet */}
       <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
         <SheetContent side="left" className="p-0 w-64">
@@ -105,7 +105,7 @@ export default function AdminClient() {
 
         {/* Content wrapper */}
         <main className="flex-1 flex overflow-hidden">
-          <div className="flex-1 p-4 md:p-6 lg:p-10 overflow-y-auto">
+          <div className="flex-1 p-4 md:p-6 lg:p-10 overflow-y-auto bg-linear-to-b from-transparent via-accent/8 to-primary/8">
             {/* Page Header */}
             <div className="mb-6 md:mb-8">
               <h1 className="text-2xl md:text-3xl font-bold tracking-tight mb-2">
@@ -158,7 +158,7 @@ export default function AdminClient() {
           </div>
 
           {/* Preview panel - separate full-height column */}
-          <div className="hidden lg:flex min-w-[400px] max-w-[600px] w-[35vw] border-l bg-linear-to-b from-muted/20 via-muted/30 to-muted/20 backdrop-blur-sm">
+          <div className="hidden lg:flex min-w-[400px] max-w-[600px] w-[35vw] border-l border-primary/10 bg-linear-to-b from-primary/8 via-accent/12 to-secondary/10 shadow-inner">
             <div className="flex-1 flex items-center justify-center p-8">
               <MobilePreview profile={profile} />
             </div>

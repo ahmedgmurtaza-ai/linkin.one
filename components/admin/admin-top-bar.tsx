@@ -47,7 +47,7 @@ export function AdminTopBar({
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-lg border-b border-border shadow-sm">
+      <header className="sticky top-0 z-50 bg-linear-to-r from-card/95 via-primary/5 to-accent/8 backdrop-blur-lg border-b border-primary/10 shadow-md">
         <div className="px-3 md:px-6 py-3 md:py-4 flex items-center justify-between gap-2 md:gap-4">
           <div className="flex items-center gap-2 md:gap-3">
             {/* Mobile Menu Button */}
@@ -77,7 +77,7 @@ export function AdminTopBar({
           </div>
           <div className="flex items-center gap-1.5 md:gap-2">
             {/* URL Copy */}
-            <div className="hidden md:flex items-center gap-2 bg-card border border-border rounded-lg px-2 md:px-3 py-1.5">
+            <div className="hidden md:flex items-center gap-2 bg-card/50 border border-border/50 rounded-lg px-2 md:px-3 py-1.5">
               <span className="text-xs md:text-sm text-muted-foreground truncate max-w-[120px] md:max-w-[200px]">
                 linkin.one/{profile.username}
               </span>

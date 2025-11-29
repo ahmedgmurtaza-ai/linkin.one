@@ -32,7 +32,7 @@ export function SplitLayout({ profile, compact = false }: SplitLayoutProps) {
             compact
               ? "items-center text-center"
               : "md:items-start md:text-left items-center text-center"
-          } ${compact ? "gap-4" : "gap-6"}`}
+          } ${compact ? "gap-4 pt-4" : "gap-6 pt-8"}`}
         >
           {/* Avatar with enhanced styling */}
           <div className="relative group">
@@ -43,7 +43,9 @@ export function SplitLayout({ profile, compact = false }: SplitLayoutProps) {
             />
             <Avatar
               className={`relative ${
-                compact ? "h-20 w-20 border-4" : "h-40 w-40 border-[6px]"
+                compact
+                  ? "h-20 w-20 ring-2 ring-border/30 ring-offset-2"
+                  : "h-40 w-40 ring-4 ring-border/30 ring-offset-4"
               } border-background shadow-2xl ring-4 ring-primary/20 transition-transform group-hover:scale-105`}
             >
               <AvatarImage

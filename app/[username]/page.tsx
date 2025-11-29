@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getProfileByUsername } from "@/lib/database";
 import { ProfileTopBar } from "@/components/profile-top-bar";
 import { ProfileLayoutRenderer } from "@/components/profile-layout";
+import { ProfileThemeProvider } from "@/components/profile-theme-provider";
 import { createClient } from "@/lib/supabase/server";
 
 interface ProfilePageProps {
@@ -24,12 +25,14 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
   const isLoggedIn = !!user;
 
   return (
-    <div className="min-h-screen bg-background">
-      <ProfileTopBar username={profile.username} isLoggedIn={isLoggedIn} />
-      <main className="pt-16">
-        <ProfileLayoutRenderer profile={profile} />
-      </main>
-    </div>
+    <ProfileThemeProvider theme={profile.theme}>
+      <div className="min-h-screen bg-background">
+        <ProfileTopBar username={profile.username} isLoggedIn={isLoggedIn} />
+        <main className="pt-16">
+          <ProfileLayoutRenderer profile={profile} />
+        </main>
+      </div>
+    </ProfileThemeProvider>
   );
 }
 

@@ -10,6 +10,7 @@ export const DEMO_PROFILES: Record<string, Profile> = {
     thumbnailUrl: "/professional-man-headshot.png",
     layout: "classic",
     showCategories: false,
+    theme: "system",
     links: [
       {
         id: "1",
@@ -83,11 +84,23 @@ export function getLinkByPlatform(
   const profile = getProfile(username);
   if (!profile) return null;
 
-  const link = profile.links.find(
-    (l) => l.platform.toLowerCase() === platform.toLowerCase()
-  );
+  // Normalize platform name using aliases (e.g., "twitter" -> "x")
+  const normalizedPlatform =
+    PLATFORM_ALIASES[platform.toLowerCase()] || platform.toLowerCase();
+
+  const link = profile.links.find((l) => {
+    const linkPlatform =
+      PLATFORM_ALIASES[l.platform.toLowerCase()] || l.platform.toLowerCase();
+    return linkPlatform === normalizedPlatform;
+  });
   return link?.url || null;
 }
+
+// Platform aliases - map alternative names to canonical platform names
+const PLATFORM_ALIASES: Record<string, string> = {
+  twitter: "x",
+  x: "x",
+};
 
 export function generateId(): string {
   return Math.random().toString(36).substring(2, 11);

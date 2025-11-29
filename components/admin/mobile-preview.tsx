@@ -12,13 +12,9 @@ export function MobilePreview({ profile }: MobilePreviewProps) {
     <div className="flex flex-col items-center h-full w-full py-4">
       <div className="relative w-full max-w-[420px] flex justify-center flex-1 max-h-[calc(100vh-12rem)] min-h-[600px]">
         {/* Phone frame */}
-        <div className="w-full min-w-[320px] max-w-[420px] h-full bg-card rounded-[48px] border-4 border-border p-3 shadow-2xl">
+        <div className="w-full min-w-[320px] max-w-[420px] h-full bg-linear-to-br from-primary/15 via-accent/20 to-primary/25 rounded-[48px] border border-primary/20 p-3 shadow-2xl">
           {/* Screen */}
-          <div className="w-full h-full bg-background rounded-[40px] overflow-hidden flex flex-col">
-            {/* Status bar */}
-            <div className="h-8 bg-background flex items-center justify-center shrink-0">
-              <div className="w-24 h-6 bg-card rounded-full" />
-            </div>
+          <div className="w-full h-full bg-background rounded-[40px] overflow-hidden flex flex-col shadow-inner">
             {/* Content - Use ProfileLayoutRenderer for dynamic layouts */}
             <div className="flex-1 overflow-y-auto">
               <ProfileLayoutRenderer profile={profile} compact />

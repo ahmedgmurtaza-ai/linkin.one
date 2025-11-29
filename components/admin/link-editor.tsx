@@ -449,10 +449,10 @@ export function LinkEditor({
 
               {/* File Drop Zone */}
               <div
-                className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors cursor-pointer ${
+                className={`border border-dashed rounded-lg p-6 text-center transition-colors cursor-pointer ${
                   isDragging
                     ? "border-primary bg-primary/10"
-                    : "border-border hover:border-muted-foreground"
+                    : "border-border/50 hover:border-muted-foreground/50"
                 }`}
                 onDragOver={(e) => {
                   e.preventDefault();

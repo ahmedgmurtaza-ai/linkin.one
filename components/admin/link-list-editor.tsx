@@ -173,7 +173,7 @@ export function LinkListEditor({
             return (
               <div
                 key={index}
-                className="flex items-center gap-3 bg-card/50 border-2 border-dashed border-border rounded-lg px-3 py-2.5 opacity-60"
+                className="flex items-center gap-3 bg-card/30 border border-dashed border-border/50 rounded-lg px-3 py-2.5 opacity-60"
               >
                 <div
                   className={`flex items-center justify-center h-9 w-9 ${colors.bg} ${colors.text} rounded-md shrink-0`}
@@ -225,7 +225,7 @@ export function LinkListEditor({
                 onDragOver={handleDragOver}
                 onDrop={(e) => handleDrop(e, index)}
                 onDragEnd={handleDragEnd}
-                className={`flex items-center gap-3 bg-card border-2 rounded-lg px-3 py-2.5 group transition-all duration-200 ${
+                className={`flex items-center gap-3 bg-card/50 border border-border/40 rounded-lg px-3 py-2.5 group transition-all duration-200 ${
                   isDragging
                     ? "opacity-50 scale-[0.98] border-primary"
                     : isDragOver

@@ -36,7 +36,9 @@ export function ProfileHeader({
         />
         <Avatar
           className={`relative ${
-            compact ? "h-20 w-20 border-4" : "h-32 w-32"
+            compact
+              ? "h-20 w-20 ring-2 ring-border/30 ring-offset-2"
+              : "h-32 w-32"
           } border-background shadow-xl ring-2 ring-primary/20 transition-transform group-hover:scale-105`}
         >
           <AvatarImage

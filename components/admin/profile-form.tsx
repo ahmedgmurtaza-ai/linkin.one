@@ -11,6 +11,8 @@ import type { Profile } from "@/lib/types";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Upload, Link as LinkIcon, Loader2, X } from "lucide-react";
+import { ThemeSelector } from "@/components/admin/theme-selector";
+import type { ProfileTheme } from "@/lib/types";
 
 interface ProfileFormProps {
   profile: Profile;
@@ -101,7 +103,9 @@ export function ProfileForm({ profile, onUpdate }: ProfileFormProps) {
       usernameTimerRef.current = setTimeout(async () => {
         const available = await checkUsernameAvailability(value);
         if (available) {
-          onUpdate({ username: value.toLowerCase().replace(/[^a-z0-9_-]/g, "") });
+          onUpdate({
+            username: value.toLowerCase().replace(/[^a-z0-9_-]/g, ""),
+          });
         }
       }, 800);
     },
@@ -245,7 +249,9 @@ export function ProfileForm({ profile, onUpdate }: ProfileFormProps) {
     if (!isUsernameValid || username.length === 0) return null;
     if (username === originalUsername)
       return (
-        <p className="text-xs text-green-600 dark:text-green-500">✓ This is your current username</p>
+        <p className="text-xs text-green-600 dark:text-green-500">
+          ✓ This is your current username
+        </p>
       );
     if (checkingUsername)
       return (
@@ -255,150 +261,212 @@ export function ProfileForm({ profile, onUpdate }: ProfileFormProps) {
         </p>
       );
     if (usernameAvailable === true)
-      return <p className="text-xs text-green-600 dark:text-green-500">✓ Username is available</p>;
+      return (
+        <p className="text-xs text-green-600 dark:text-green-500">
+          ✓ Username is available
+        </p>
+      );
     if (usernameAvailable === false)
-      return <p className="text-xs text-destructive">✗ Username is already taken</p>;
+      return (
+        <p className="text-xs text-destructive">✗ Username is already taken</p>
+      );
     return null;
   };
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        <Label htmlFor="username">Username</Label>
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">linkin.one/</span>
-          <Input
-            id="username"
-            value={username}
-            onChange={(e) => {
-              const sanitized = e.target.value
-                .toLowerCase()
-                .replace(/[^a-z0-9_-]/g, "");
-              setUsername(sanitized);
-              setUsernameAvailable(null); // Reset availability status
-              debouncedUpdateUsername(sanitized);
-            }}
-            placeholder="yourname"
-            className={`flex-1 ${
-              usernameError || usernameAvailable === false
-                ? "border-destructive"
-                : usernameAvailable === true && username !== originalUsername
-                ? "border-green-600 dark:border-green-500"
-                : ""
-            }`}
-          />
-        </div>
-        <p className="text-xs text-muted-foreground">
-          3-20 characters, letters, numbers, hyphens (-), and underscores (_)
-        </p>
-        {usernameError && (
-          <p className="text-xs text-destructive">{usernameError}</p>
-        )}
-        {!usernameError && getUsernameStatusMessage()}
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="displayName">Display Name</Label>
-        <Input
-          id="displayName"
-          value={displayName}
-          onChange={(e) => {
-            setDisplayName(e.target.value);
-            debouncedUpdateDisplayName(e.target.value);
-          }}
-          placeholder="Your Name"
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="description">Bio</Label>
-        <Textarea
-          id="description"
-          value={description}
-          onChange={(e) => {
-            setDescription(e.target.value);
-            debouncedUpdateDescription(e.target.value);
-          }}
-          placeholder="Tell the world about yourself..."
-          rows={3}
-        />
-      </div>
-
-      <div className="space-y-4">
-        <Label>Profile Image</Label>
-
-        {/* Image Preview */}
-        <div className="flex items-center gap-4">
-          <Avatar className="h-20 w-20">
-            <AvatarImage src={externalUrl} alt={displayName} />
-            <AvatarFallback className="text-xl">
-              {getUserInitials()}
-            </AvatarFallback>
-          </Avatar>
-          {externalUrl && (
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={handleRemoveImage}
-            >
-              <X className="h-4 w-4 mr-2" />
-              Remove
-            </Button>
-          )}
-        </div>
-
-        {/* Upload/URL Tabs */}
-        <Tabs defaultValue="url" className="w-full">
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="url">
-              <LinkIcon className="h-4 w-4 mr-2" />
-              Image URL
-            </TabsTrigger>
-            <TabsTrigger value="upload">
-              <Upload className="h-4 w-4 mr-2" />
-              Upload File
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="url" className="space-y-2">
+    <div className="space-y-8">
+      {/* Basic Information Section */}
+      <div className="space-y-6">
+        <div className="space-y-2">
+          <Label htmlFor="username" className="text-base">
+            Username
+          </Label>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-muted-foreground whitespace-nowrap">
+              linkin.one/
+            </span>
             <Input
-              id="thumbnailUrl"
-              value={externalUrl}
-              onChange={(e) => handleExternalUrlChange(e.target.value)}
-              placeholder="https://example.com/avatar.jpg"
+              id="username"
+              value={username}
+              onChange={(e) => {
+                const sanitized = e.target.value
+                  .toLowerCase()
+                  .replace(/[^a-z0-9_-]/g, "");
+                setUsername(sanitized);
+                setUsernameAvailable(null);
+                debouncedUpdateUsername(sanitized);
+              }}
+              placeholder="yourname"
+              className={`flex-1 ${
+                usernameError || usernameAvailable === false
+                  ? "border-destructive"
+                  : usernameAvailable === true && username !== originalUsername
+                  ? "border-green-600 dark:border-green-500"
+                  : ""
+              }`}
             />
-            <p className="text-xs text-muted-foreground">
-              Enter a direct URL to an image hosted online
-            </p>
-          </TabsContent>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            3-20 characters: letters, numbers, hyphens (-), and underscores (_)
+            only
+          </p>
+          {usernameError && (
+            <p className="text-xs text-destructive">{usernameError}</p>
+          )}
+          {!usernameError && getUsernameStatusMessage()}
+        </div>
 
-          <TabsContent value="upload" className="space-y-2">
-            <div className="flex items-center gap-2">
-              <Input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleFileUpload}
-                disabled={uploading}
-                className="cursor-pointer"
-              />
-              {uploading && (
-                <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+        <div className="space-y-4">
+          <Label className="text-base">Profile Picture</Label>
+          <p className="text-sm text-muted-foreground -mt-2">
+            Add a photo to help people recognize you
+          </p>
+
+          {/* Image Preview */}
+          <div className="flex items-center gap-4">
+            <Avatar className="h-24 w-24 ring-2 ring-border/30 ring-offset-2 ring-offset-background">
+              <AvatarImage src={externalUrl} alt={displayName} />
+              <AvatarFallback className="text-2xl font-semibold">
+                {getUserInitials()}
+              </AvatarFallback>
+            </Avatar>
+            <div className="flex-1">
+              {externalUrl ? (
+                <div className="space-y-2">
+                  <p className="text-sm font-medium">Current picture</p>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={handleRemoveImage}
+                  >
+                    <X className="h-4 w-4 mr-2" />
+                    Remove Picture
+                  </Button>
+                </div>
+              ) : (
+                <p className="text-sm text-muted-foreground">
+                  No picture set. Upload one or add an image URL below.
+                </p>
               )}
             </div>
-            <p className="text-xs text-muted-foreground">
-              Upload an image file (max 1MB). Image will be stored as base64.
-            </p>
-            {uploadError && (
-              <Alert variant="destructive">
-                <AlertDescription className="text-sm">
-                  {uploadError}
-                </AlertDescription>
-              </Alert>
-            )}
-          </TabsContent>
-        </Tabs>
+          </div>
+
+          {/* Upload/URL Tabs */}
+          <Tabs defaultValue="url" className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="url">
+                <LinkIcon className="h-4 w-4 mr-2" />
+                Image URL
+              </TabsTrigger>
+              <TabsTrigger value="upload">
+                <Upload className="h-4 w-4 mr-2" />
+                Upload File
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="url" className="space-y-2">
+              <Input
+                id="thumbnailUrl"
+                value={externalUrl}
+                onChange={(e) => handleExternalUrlChange(e.target.value)}
+                placeholder="https://example.com/avatar.jpg"
+              />
+              <p className="text-xs text-muted-foreground">
+                Enter a direct URL to an image hosted online
+              </p>
+            </TabsContent>
+
+            <TabsContent value="upload" className="space-y-2">
+              <div className="flex items-center gap-2">
+                <Input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileUpload}
+                  disabled={uploading}
+                  className="cursor-pointer"
+                />
+                {uploading && (
+                  <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                )}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Upload an image file (max 1MB). Image will be stored as base64.
+              </p>
+              {uploadError && (
+                <Alert variant="destructive">
+                  <AlertDescription className="text-sm">
+                    {uploadError}
+                  </AlertDescription>
+                </Alert>
+              )}
+            </TabsContent>
+          </Tabs>
+        </div>
+      </div>
+
+      {/* Profile Details Section */}
+      <div className="space-y-6 pt-6 border-t">
+        <div>
+          <h3 className="text-lg font-semibold mb-1">Profile Details</h3>
+          <p className="text-sm text-muted-foreground">
+            Tell visitors about yourself
+          </p>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="displayName" className="text-base">
+            Display Name
+          </Label>
+          <Input
+            id="displayName"
+            value={displayName}
+            onChange={(e) => {
+              setDisplayName(e.target.value);
+              debouncedUpdateDisplayName(e.target.value);
+            }}
+            placeholder="Your Name"
+          />
+          <p className="text-xs text-muted-foreground">
+            Your full name as you'd like it to appear on your profile
+          </p>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="description" className="text-base">
+            Bio
+          </Label>
+          <Textarea
+            id="description"
+            value={description}
+            onChange={(e) => {
+              setDescription(e.target.value);
+              debouncedUpdateDescription(e.target.value);
+            }}
+            placeholder="Tell the world about yourself..."
+            rows={4}
+            className="resize-none"
+          />
+          <p className="text-xs text-muted-foreground">
+            Brief description about yourself, what you do, or what visitors can
+            find here
+          </p>
+        </div>
+      </div>
+
+      {/* Appearance Section */}
+      <div className="pt-6 border-t">
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold mb-1">Appearance</h3>
+          <p className="text-sm text-muted-foreground">
+            Customize how your profile looks to visitors
+          </p>
+        </div>
+        <ThemeSelector
+          currentTheme={profile.theme}
+          onSelect={(theme: ProfileTheme) => onUpdate({ theme })}
+        />
       </div>
     </div>
   );

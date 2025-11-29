@@ -102,7 +102,7 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
   };
 
   return (
-    <aside className="w-64 border-r border-border bg-card/30 backdrop-blur-sm p-6 flex flex-col overflow-y-auto">
+    <aside className="w-64 border-r border-primary/10 bg-linear-to-b from-card via-primary/5 to-accent/5 backdrop-blur-md p-6 flex flex-col overflow-y-auto shadow-lg">
       {/* Logo */}
       <Link href="/" className="flex items-center gap-2 px-3 py-4 mb-4 group">
         <Logo />

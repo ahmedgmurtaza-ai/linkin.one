@@ -12,6 +12,8 @@ export type LinkCategory =
 
 export type ProfileLayout = "classic" | "split" | "grid";
 
+export type ProfileTheme = "light" | "dark" | "system";
+
 export type LinkType = "url" | "file";
 
 export interface ProfileLink {
@@ -41,6 +43,7 @@ export interface Profile {
   links: ProfileLink[];
   layout: ProfileLayout;
   showCategories?: boolean;
+  theme?: ProfileTheme;
   analytics?: ProfileAnalytics;
 }
 
