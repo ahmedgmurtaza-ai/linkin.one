@@ -18,6 +18,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { Loader2 } from "lucide-react";
+import { Logo } from "../logo";
 
 export function RegisterForm() {
   const [email, setEmail] = useState("");
@@ -105,11 +106,21 @@ export function RegisterForm() {
 
   return (
     <Card className="w-full max-w-md">
-      <CardHeader>
-        <CardTitle>Create an account</CardTitle>
-        <CardDescription>
-          Sign up to create your linkin.one profile
-        </CardDescription>
+      <CardHeader className="space-y-6 text-center pb-6">
+        {/* Logo */}
+        <div className="flex justify-center pt-2">
+          <Logo />
+        </div>
+
+        {/* Title and Description */}
+        <div className="space-y-1">
+          <CardTitle className="text-2xl font-semibold">
+            Create an account
+          </CardTitle>
+          <CardDescription>
+            Sign up to create your linkin.one profile
+          </CardDescription>
+        </div>
       </CardHeader>
       <form onSubmit={handleRegister}>
         <CardContent className="space-y-4">

@@ -2,7 +2,7 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { LinkCard } from "@/components/link-card";
+import { LinkList } from "@/components/link-list";
 import { ProfileFooter } from "@/components/profile-footer";
 import type { Profile } from "@/lib/types";
 
@@ -90,9 +90,12 @@ export function SplitLayout({ profile, compact = false }: SplitLayoutProps) {
 
         {/* Right side - Links */}
         <div className={`flex flex-col ${compact ? "gap-1.5" : "gap-3"}`}>
-          {profile.links.map((link) => (
-            <LinkCard key={link.id} link={link} compact={compact} />
-          ))}
+          <LinkList
+            links={profile.links}
+            compact={compact}
+            layout="classic"
+            groupByCategory={profile.showCategories || false}
+          />
         </div>
       </div>
       {compact && <ProfileFooter compact />}

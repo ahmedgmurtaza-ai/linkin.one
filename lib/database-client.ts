@@ -46,6 +46,8 @@ export async function updateProfile(
   if (updates.thumbnailUrl !== undefined)
     dbUpdates.thumbnail_url = updates.thumbnailUrl;
   if (updates.layout !== undefined) dbUpdates.layout = updates.layout;
+  if (updates.showCategories !== undefined)
+    dbUpdates.show_categories = updates.showCategories;
 
   const { error } = await supabase
     .from("profiles")

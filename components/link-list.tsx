@@ -18,7 +18,7 @@ interface LinkListProps {
 export function LinkList({
   links,
   compact = false,
-  groupByCategory = true,
+  groupByCategory = false,
   layout = "classic",
 }: LinkListProps) {
   if (layout === "grid") {
@@ -49,7 +49,18 @@ export function LinkList({
     return acc;
   }, {} as Record<LinkCategory, ProfileLink[]>);
 
-  const categoryOrder: LinkCategory[] = ["social", "business", "personal"];
+  const categoryOrder: LinkCategory[] = [
+    "social",
+    "professional",
+    "portfolio",
+    "content",
+    "shop",
+    "music",
+    "video",
+    "contact",
+    "resources",
+    "others",
+  ];
 
   return (
     <div className={`flex flex-col ${compact ? "gap-4" : "gap-6"}`}>

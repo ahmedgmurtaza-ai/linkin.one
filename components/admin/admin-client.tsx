@@ -10,32 +10,49 @@ import { LayoutSelector } from "@/components/admin/layout-selector";
 import { AdminSidebar } from "@/components/admin/admin-sidebar";
 import { AnalyticsPanel } from "@/components/admin/analytics-panel";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 
 type AdminTab = "profile" | "links" | "layout" | "analytics";
 
 export default function AdminClient() {
   const [activeTab, setActiveTab] = useState<AdminTab>("profile");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const {
     profile,
     loading,
     saving,
     updateProfile,
     setLayout,
+    setShowCategories,
     addLink,
     updateLink,
     deleteLink,
     reorderLinks,
   } = useProfileEditor();
 
+  const handleTabChange = (tab: AdminTab) => {
+    setActiveTab(tab);
+    setMobileMenuOpen(false); // Close mobile menu after selecting tab
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-linear-to-br from-background via-background to-muted/20 flex">
-        <AdminSidebar activeTab={activeTab} onTabChange={setActiveTab} />
+        {/* Desktop Sidebar */}
+        <div className="hidden md:block w-64 border-r border-border bg-card/30 backdrop-blur-sm p-6">
+          <Skeleton className="h-12 w-full mb-8" />
+          <div className="space-y-2">
+            <Skeleton className="h-10 w-full" />
+            <Skeleton className="h-10 w-full" />
+            <Skeleton className="h-10 w-full" />
+            <Skeleton className="h-10 w-full" />
+          </div>
+        </div>
         <div className="flex-1 flex flex-col overflow-hidden">
           <div className="border-b border-border bg-card/30 backdrop-blur-sm p-4">
             <Skeleton className="h-8 w-48" />
           </div>
-          <main className="flex-1 p-6 md:p-8 lg:p-10 overflow-y-auto">
+          <main className="flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto">
             <Skeleton className="h-10 w-64 mb-4" />
             <Skeleton className="h-6 w-96 mb-8" />
             <div className="space-y-4">
@@ -51,25 +68,38 @@ export default function AdminClient() {
 
   return (
     <div className="min-h-screen bg-linear-to-br from-background via-background to-muted/20 flex">
-      {/* Sidebar - full height */}
-      <AdminSidebar activeTab={activeTab} onTabChange={setActiveTab} />
+      {/* Mobile Sidebar Sheet */}
+      <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+        <SheetContent side="left" className="p-0 w-64">
+          <AdminSidebar activeTab={activeTab} onTabChange={handleTabChange} />
+        </SheetContent>
+      </Sheet>
+
+      {/* Desktop Sidebar - hidden on mobile */}
+      <div className="hidden md:block">
+        <AdminSidebar activeTab={activeTab} onTabChange={handleTabChange} />
+      </div>
 
       {/* Main content area */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        <AdminTopBar profile={profile} saving={saving} />
+        <AdminTopBar
+          profile={profile}
+          saving={saving}
+          onMenuClick={() => setMobileMenuOpen(true)}
+        />
 
         {/* Content wrapper */}
         <main className="flex-1 flex overflow-hidden">
-          <div className="flex-1 p-6 md:p-8 lg:p-10 overflow-y-auto">
+          <div className="flex-1 p-4 md:p-6 lg:p-10 overflow-y-auto">
             {/* Page Header */}
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold tracking-tight mb-2">
+            <div className="mb-6 md:mb-8">
+              <h1 className="text-2xl md:text-3xl font-bold tracking-tight mb-2">
                 {activeTab === "profile" && "Profile Settings"}
                 {activeTab === "links" && "Manage Links"}
                 {activeTab === "layout" && "Choose Layout"}
                 {activeTab === "analytics" && "Analytics"}
               </h1>
-              <p className="text-muted-foreground">
+              <p className="text-sm md:text-base text-muted-foreground">
                 {activeTab === "profile" &&
                   "Customize your profile information and appearance"}
                 {activeTab === "links" &&
@@ -90,6 +120,8 @@ export default function AdminClient() {
               {activeTab === "links" && (
                 <LinkListEditor
                   links={profile.links}
+                  showCategories={profile.showCategories || false}
+                  onShowCategoriesChange={setShowCategories}
                   onAdd={addLink}
                   onUpdate={updateLink}
                   onDelete={deleteLink}

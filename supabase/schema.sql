@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS profiles (
   description TEXT,
   thumbnail_url TEXT,
   layout TEXT NOT NULL DEFAULT 'classic',
+  show_categories BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
   CONSTRAINT username_length CHECK (char_length(username) >= 3 AND char_length(username) <= 20),

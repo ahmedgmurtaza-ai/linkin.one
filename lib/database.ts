@@ -10,6 +10,7 @@ export interface DbProfile {
   description: string | null;
   thumbnail_url: string | null;
   layout: string;
+  show_categories: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -37,6 +38,7 @@ function dbProfileToProfile(dbProfile: DbProfile, links: DbLink[]): Profile {
     description: dbProfile.description || "",
     thumbnailUrl: dbProfile.thumbnail_url || "",
     layout: dbProfile.layout as any,
+    showCategories: dbProfile.show_categories || false,
     links: links.map((link) => ({
       id: link.id,
       title: link.title,
@@ -151,6 +153,8 @@ export async function updateProfile(
   if (updates.thumbnailUrl !== undefined)
     dbUpdates.thumbnail_url = updates.thumbnailUrl;
   if (updates.layout !== undefined) dbUpdates.layout = updates.layout;
+  if (updates.showCategories !== undefined)
+    dbUpdates.show_categories = updates.showCategories;
 
   const { error } = await supabase
     .from("profiles")

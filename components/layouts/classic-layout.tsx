@@ -1,23 +1,31 @@
-"use client"
+"use client";
 
-import { ProfileHeader } from "@/components/profile-header"
-import { LinkList } from "@/components/link-list"
-import { ProfileFooter } from "@/components/profile-footer"
-import type { Profile } from "@/lib/types"
+import { ProfileHeader } from "@/components/profile-header";
+import { LinkList } from "@/components/link-list";
+import { ProfileFooter } from "@/components/profile-footer";
+import type { Profile } from "@/lib/types";
 
 interface ClassicLayoutProps {
-  profile: Profile
-  compact?: boolean
+  profile: Profile;
+  compact?: boolean;
 }
 
-export function ClassicLayout({ profile, compact = false }: ClassicLayoutProps) {
+export function ClassicLayout({
+  profile,
+  compact = false,
+}: ClassicLayoutProps) {
   return (
     <div className={compact ? "px-4 py-4" : "max-w-md mx-auto px-4 py-8"}>
       <ProfileHeader profile={profile} compact={compact} />
       <div className={compact ? "mt-4" : "mt-8"}>
-        <LinkList links={profile.links} compact={compact} layout="classic" />
+        <LinkList
+          links={profile.links}
+          compact={compact}
+          layout="classic"
+          groupByCategory={profile.showCategories || false}
+        />
       </div>
       <ProfileFooter compact={compact} />
     </div>
-  )
+  );
 }

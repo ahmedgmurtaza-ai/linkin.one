@@ -4,6 +4,8 @@ import type React from "react";
 
 import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 import { type ProfileLink } from "@/lib/types";
 import { LinkEditor } from "./link-editor";
 import { GripVertical, Pencil, Plus, Trash2 } from "lucide-react";
@@ -11,6 +13,8 @@ import { PlatformIcon, getPlatformColors } from "@/components/platform-icon";
 
 interface LinkListEditorProps {
   links: ProfileLink[];
+  showCategories: boolean;
+  onShowCategoriesChange: (show: boolean) => void;
   onAdd: (link: Omit<ProfileLink, "id">) => void;
   onUpdate: (id: string, updates: Partial<ProfileLink>) => void;
   onDelete: (id: string) => void;
@@ -19,6 +23,8 @@ interface LinkListEditorProps {
 
 export function LinkListEditor({
   links,
+  showCategories,
+  onShowCategoriesChange,
   onAdd,
   onUpdate,
   onDelete,
@@ -26,6 +32,9 @@ export function LinkListEditor({
 }: LinkListEditorProps) {
   const [editorOpen, setEditorOpen] = useState(false);
   const [editingLink, setEditingLink] = useState<ProfileLink | undefined>();
+  const [selectedPlatform, setSelectedPlatform] = useState<
+    string | undefined
+  >();
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
   const dragNodeRef = useRef<HTMLDivElement | null>(null);
@@ -83,11 +92,22 @@ export function LinkListEditor({
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-end">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Switch
+            id="show-categories"
+            checked={showCategories}
+            onCheckedChange={onShowCategoriesChange}
+          />
+          <Label htmlFor="show-categories" className="cursor-pointer">
+            Show categories on profile page
+          </Label>
+        </div>
         <Button
           size="sm"
           onClick={() => {
             setEditingLink(undefined);
+            setSelectedPlatform(undefined);
             setEditorOpen(true);
           }}
         >
@@ -103,9 +123,9 @@ export function LinkListEditor({
           </p>
           {[
             {
-              platform: "twitter",
-              title: "Twitter",
-              url: "https://twitter.com/yourusername",
+              platform: "x",
+              title: "Twitter / X",
+              url: "https://x.com/yourusername",
             },
             {
               platform: "instagram",
@@ -144,7 +164,7 @@ export function LinkListEditor({
               url: "https://yourwebsite.com",
             },
             {
-              platform: "link",
+              platform: "resume",
               title: "Resume",
               url: "https://yourresume.com",
             },
@@ -173,6 +193,7 @@ export function LinkListEditor({
                   size="sm"
                   onClick={() => {
                     setEditingLink(undefined);
+                    setSelectedPlatform(link.platform);
                     setEditorOpen(true);
                   }}
                   className="shrink-0"
@@ -255,9 +276,13 @@ export function LinkListEditor({
         open={editorOpen}
         onOpenChange={(open) => {
           setEditorOpen(open);
-          if (!open) setEditingLink(undefined);
+          if (!open) {
+            setEditingLink(undefined);
+            setSelectedPlatform(undefined);
+          }
         }}
         onSave={handleSave}
+        initialPlatform={selectedPlatform}
       />
     </div>
   );

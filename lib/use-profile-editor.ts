@@ -130,6 +130,7 @@ export function useProfileEditor() {
           description: profileData.description || "",
           thumbnailUrl: profileData.thumbnail_url || "",
           layout: profileData.layout as ProfileLayout,
+          showCategories: profileData.show_categories || false,
           links: (linksData || []).map((link) => ({
             id: link.id,
             title: link.title,
@@ -172,6 +173,13 @@ export function useProfileEditor() {
   const setLayout = useCallback(
     async (layout: ProfileLayout) => {
       await updateProfile({ layout });
+    },
+    [updateProfile]
+  );
+
+  const setShowCategories = useCallback(
+    async (showCategories: boolean) => {
+      await updateProfile({ showCategories });
     },
     [updateProfile]
   );
@@ -247,6 +255,7 @@ export function useProfileEditor() {
     saving,
     updateProfile,
     setLayout,
+    setShowCategories,
     addLink,
     updateLink,
     deleteLink,

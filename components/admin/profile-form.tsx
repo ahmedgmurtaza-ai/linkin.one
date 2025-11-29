@@ -29,6 +29,13 @@ export function ProfileForm({ profile, onUpdate }: ProfileFormProps) {
   const [displayName, setDisplayName] = useState(profile.displayName);
   const [description, setDescription] = useState(profile.description);
 
+  // Username availability state
+  const [checkingUsername, setCheckingUsername] = useState(false);
+  const [usernameAvailable, setUsernameAvailable] = useState<boolean | null>(
+    null
+  );
+  const [originalUsername] = useState(profile.username);
+
   // Update local state when profile prop changes
   useEffect(() => {
     setUsername(profile.username);
@@ -43,10 +50,47 @@ export function ProfileForm({ profile, onUpdate }: ProfileFormProps) {
   ]);
 
   // Debounce timer refs
-  const usernameTimerRef = useRef<NodeJS.Timeout>();
-  const displayNameTimerRef = useRef<NodeJS.Timeout>();
-  const descriptionTimerRef = useRef<NodeJS.Timeout>();
-  const urlTimerRef = useRef<NodeJS.Timeout>();
+  const usernameTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const displayNameTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const descriptionTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const urlTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Check username availability
+  const checkUsernameAvailability = useCallback(
+    async (usernameToCheck: string) => {
+      // If it's the original username, it's available (user's own)
+      if (usernameToCheck === originalUsername) {
+        setUsernameAvailable(true);
+        return true;
+      }
+
+      setCheckingUsername(true);
+      try {
+        const { data, error } = await supabase
+          .from("profiles")
+          .select("username")
+          .eq("username", usernameToCheck)
+          .maybeSingle();
+
+        if (error) {
+          console.error("Error checking username:", error);
+          setUsernameAvailable(null);
+          return false;
+        }
+
+        const available = !data;
+        setUsernameAvailable(available);
+        return available;
+      } catch (error) {
+        console.error("Error checking username:", error);
+        setUsernameAvailable(null);
+        return false;
+      } finally {
+        setCheckingUsername(false);
+      }
+    },
+    [supabase, originalUsername]
+  );
 
   // Debounced update functions
   const debouncedUpdateUsername = useCallback(
@@ -54,11 +98,14 @@ export function ProfileForm({ profile, onUpdate }: ProfileFormProps) {
       if (usernameTimerRef.current) {
         clearTimeout(usernameTimerRef.current);
       }
-      usernameTimerRef.current = setTimeout(() => {
-        onUpdate({ username: value.toLowerCase().replace(/[^a-z0-9_-]/g, "") });
-      }, 500);
+      usernameTimerRef.current = setTimeout(async () => {
+        const available = await checkUsernameAvailability(value);
+        if (available) {
+          onUpdate({ username: value.toLowerCase().replace(/[^a-z0-9_-]/g, "") });
+        }
+      }, 800);
     },
-    [onUpdate]
+    [onUpdate, checkUsernameAvailability]
   );
 
   const debouncedUpdateDisplayName = useCallback(
@@ -193,6 +240,27 @@ export function ProfileForm({ profile, onUpdate }: ProfileFormProps) {
         : "Username can only contain letters, numbers, hyphens, and underscores"
       : null;
 
+  // Username availability message
+  const getUsernameStatusMessage = () => {
+    if (!isUsernameValid || username.length === 0) return null;
+    if (username === originalUsername)
+      return (
+        <p className="text-xs text-green-600 dark:text-green-500">✓ This is your current username</p>
+      );
+    if (checkingUsername)
+      return (
+        <p className="text-xs text-muted-foreground flex items-center gap-1">
+          <Loader2 className="h-3 w-3 animate-spin" />
+          Checking availability...
+        </p>
+      );
+    if (usernameAvailable === true)
+      return <p className="text-xs text-green-600 dark:text-green-500">✓ Username is available</p>;
+    if (usernameAvailable === false)
+      return <p className="text-xs text-destructive">✗ Username is already taken</p>;
+    return null;
+  };
+
   return (
     <div className="space-y-6">
       <div className="space-y-2">
@@ -207,10 +275,17 @@ export function ProfileForm({ profile, onUpdate }: ProfileFormProps) {
                 .toLowerCase()
                 .replace(/[^a-z0-9_-]/g, "");
               setUsername(sanitized);
+              setUsernameAvailable(null); // Reset availability status
               debouncedUpdateUsername(sanitized);
             }}
             placeholder="yourname"
-            className={`flex-1 ${usernameError ? "border-destructive" : ""}`}
+            className={`flex-1 ${
+              usernameError || usernameAvailable === false
+                ? "border-destructive"
+                : usernameAvailable === true && username !== originalUsername
+                ? "border-green-600 dark:border-green-500"
+                : ""
+            }`}
           />
         </div>
         <p className="text-xs text-muted-foreground">
@@ -219,6 +294,7 @@ export function ProfileForm({ profile, onUpdate }: ProfileFormProps) {
         {usernameError && (
           <p className="text-xs text-destructive">{usernameError}</p>
         )}
+        {!usernameError && getUsernameStatusMessage()}
       </div>
 
       <div className="space-y-2">

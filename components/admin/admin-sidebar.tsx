@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
+import { Logo } from "@/components/logo";
 
 type AdminTab = "profile" | "links" | "layout" | "analytics";
 
@@ -84,15 +85,8 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
     <aside className="w-64 border-r border-border bg-card/30 backdrop-blur-sm p-6 flex flex-col overflow-y-auto">
       {/* Logo */}
       <Link href="/" className="flex items-center gap-2 px-3 py-4 mb-4 group">
-        <div className="flex items-center justify-center w-8 h-8 bg-primary rounded-lg group-hover:scale-110 transition-transform">
-          <LinkIcon className="h-5 w-5 text-primary-foreground" />
-        </div>
-        <div>
-          <h2 className="font-bold text-lg leading-none">linkin.one</h2>
-          <p className="text-xs text-muted-foreground">Admin Panel</p>
-        </div>
+        <Logo />
       </Link>
-
       {/* Navigation */}
       <div className="flex-1 space-y-1">
         <div className="mb-6">
