@@ -4,10 +4,15 @@ import { ArrowLeft, Sparkles } from "lucide-react";
 import { promises as fs } from "fs";
 import path from "path";
 import { ChangelogRenderer } from "@/components/changelog-renderer";
+import { PAGE_SEO } from "@/lib/seo-config";
 
 export const metadata: Metadata = {
-  title: "Changelog - linkin.one",
-  description: "See what's new in linkin.one",
+  title: PAGE_SEO.changelog.title,
+  description: PAGE_SEO.changelog.description,
+  keywords: PAGE_SEO.changelog.keywords,
+  alternates: {
+    canonical: PAGE_SEO.changelog.canonical,
+  },
 };
 
 async function getChangelog() {

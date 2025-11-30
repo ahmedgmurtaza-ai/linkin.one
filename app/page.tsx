@@ -9,8 +9,31 @@ import { LiveExamplesSection } from "@/components/landing/live-examples-section"
 import { PricingPreviewSection } from "@/components/landing/pricing-preview-section"
 import { FAQSection } from "@/components/landing/faq-section"
 import { CTASection } from "@/components/landing/cta-section"
+import { PAGE_SEO, generateHomeStructuredData } from "@/lib/seo-config"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: PAGE_SEO.home.title,
+  description: PAGE_SEO.home.description,
+  keywords: PAGE_SEO.home.keywords,
+  alternates: {
+    canonical: PAGE_SEO.home.canonical,
+  },
+  openGraph: {
+    title: PAGE_SEO.home.title,
+    description: PAGE_SEO.home.description,
+    url: PAGE_SEO.home.canonical,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: PAGE_SEO.home.title,
+    description: PAGE_SEO.home.description,
+  },
+};
 
 export default function HomePage() {
+  const structuredData = generateHomeStructuredData();
   // Feature data
   const features = [
     {
@@ -248,6 +271,26 @@ export default function HomePage() {
 
       {/* Footer */}
       <Footer />
+      
+      {/* Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData.organizationSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData.websiteSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData.webApplicationSchema),
+        }}
+      />
     </div>
   )
 }

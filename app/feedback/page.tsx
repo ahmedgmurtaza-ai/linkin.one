@@ -2,10 +2,19 @@ import type { Metadata } from "next";
 import { FeedbackForm } from "@/components/feedback/feedback-form";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { PAGE_SEO } from "@/lib/seo-config";
 
 export const metadata: Metadata = {
-  title: "Feedback - linkin.one",
-  description: "Share your feedback, suggestions, or report bugs for linkin.one",
+  title: PAGE_SEO.feedback.title,
+  description: PAGE_SEO.feedback.description,
+  keywords: PAGE_SEO.feedback.keywords,
+  alternates: {
+    canonical: PAGE_SEO.feedback.canonical,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function FeedbackPage() {

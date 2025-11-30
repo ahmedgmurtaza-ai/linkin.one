@@ -2,10 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Shield } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { PAGE_SEO } from "@/lib/seo-config";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy - linkin.one",
-  description: "Privacy policy for linkin.one",
+  title: PAGE_SEO.privacy.title,
+  description: PAGE_SEO.privacy.description,
+  keywords: PAGE_SEO.privacy.keywords,
+  alternates: {
+    canonical: PAGE_SEO.privacy.canonical,
+  },
 };
 
 export default function PrivacyPage() {

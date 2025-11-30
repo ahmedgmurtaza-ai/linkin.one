@@ -5,6 +5,8 @@ import { ProfileLayoutRenderer } from "@/components/profile-layout";
 import { ProfileThemeProvider } from "@/components/profile-theme-provider";
 import { BuiltWithLinkin } from "@/components/built-with-linkin";
 import { createClient } from "@/lib/supabase/server";
+import { generateProfileSEO, generateProfileStructuredData } from "@/lib/seo-config";
+import type { Metadata } from "next";
 
 interface ProfilePageProps {
   params: Promise<{ username: string }>;
@@ -18,6 +20,8 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
     notFound();
   }
 
+  const structuredData = generateProfileStructuredData(profile);
+
   // Check if user is logged in
   const supabase = await createClient();
   const {
@@ -27,6 +31,26 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
 
   return (
     <ProfileThemeProvider theme={profile.theme}>
+      {/* Structured Data for Profile */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData.personSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData.profilePageSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData.breadcrumbSchema),
+        }}
+      />
+      
       <div className="min-h-screen bg-background">
         <ProfileTopBar username={profile.username} isLoggedIn={isLoggedIn} />
         <main className="pt-16">
@@ -38,18 +62,53 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
   );
 }
 
-export async function generateMetadata({ params }: ProfilePageProps) {
+export async function generateMetadata({ params }: ProfilePageProps): Promise<Metadata> {
   const { username } = await params;
   const profile = await getProfileByUsername(username);
 
   if (!profile) {
     return {
       title: "Profile Not Found | linkin.one",
+      description: "The profile you are looking for does not exist.",
+      robots: {
+        index: false,
+        follow: false,
+      },
     };
   }
 
+  const seo = generateProfileSEO(profile);
+
   return {
-    title: `${profile.displayName} | linkin.one`,
-    description: profile.description,
+    title: seo.title,
+    description: seo.description,
+    keywords: seo.keywords,
+    alternates: {
+      canonical: seo.canonical,
+    },
+    openGraph: {
+      title: seo.title,
+      description: seo.description,
+      url: seo.canonical,
+      type: "profile",
+      images: [
+        {
+          url: seo.ogImage,
+          width: 1200,
+          height: 630,
+          alt: `${profile.displayName} (@${profile.username})`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seo.title,
+      description: seo.description,
+      images: [seo.ogImage],
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
   };
 }

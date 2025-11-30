@@ -2,10 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, FileText } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { PAGE_SEO } from "@/lib/seo-config";
 
 export const metadata: Metadata = {
-  title: "Terms of Service - linkin.one",
-  description: "Terms of service for linkin.one",
+  title: PAGE_SEO.terms.title,
+  description: PAGE_SEO.terms.description,
+  keywords: PAGE_SEO.terms.keywords,
+  alternates: {
+    canonical: PAGE_SEO.terms.canonical,
+  },
 };
 
 export default function TermsPage() {

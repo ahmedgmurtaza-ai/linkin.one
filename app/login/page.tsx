@@ -1,5 +1,20 @@
 import { LoginForm } from "@/components/auth/login-form";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { PAGE_SEO } from "@/lib/seo-config";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: PAGE_SEO.login.title,
+  description: PAGE_SEO.login.description,
+  keywords: PAGE_SEO.login.keywords,
+  alternates: {
+    canonical: PAGE_SEO.login.canonical,
+  },
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 export default function LoginPage() {
   return (
