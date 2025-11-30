@@ -24,18 +24,18 @@ export default function PrivacyPage() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <Shield className="h-8 w-8 text-primary" />
-              <h1 className="text-4xl font-bold tracking-tight">Privacy Policy</h1>
+              <h1 className="text-xl font-bold tracking-tight">Privacy Policy</h1>
             </div>
-            <p className="text-muted-foreground">
+            <p className="text-sm text-muted-foreground">
               Last updated: November 30, 2025
             </p>
           </div>
 
           <Card>
             <CardContent className="prose prose-gray dark:prose-invert max-w-none pt-6">
-              <section className="space-y-6">
+              <section className="space-y-6 text-sm">
                 <div>
-                  <h2 className="text-2xl font-semibold mb-3">Introduction</h2>
+                  <h2 className="font-semibold mb-3">Introduction</h2>
                   <p className="text-muted-foreground">
                     Welcome to linkin.one ("we," "our," or "us"). We are committed to protecting your
                     privacy and ensuring the security of your personal information. This Privacy Policy
@@ -45,8 +45,8 @@ export default function PrivacyPage() {
                 </div>
 
                 <div>
-                  <h2 className="text-2xl font-semibold mb-3">Information We Collect</h2>
-                  <h3 className="text-xl font-medium mb-2 mt-4">Personal Information</h3>
+                  <h2 className="font-semibold mb-3">Information We Collect</h2>
+                  <h3 className="font-medium mb-2 mt-4">Personal Information</h3>
                   <p className="text-muted-foreground mb-3">
                     When you create an account, we collect:
                   </p>
@@ -58,7 +58,7 @@ export default function PrivacyPage() {
                     <li>Bio/description</li>
                   </ul>
 
-                  <h3 className="text-xl font-medium mb-2 mt-4">Usage Information</h3>
+                  <h3 className="font-medium mb-2 mt-4">Usage Information</h3>
                   <p className="text-muted-foreground mb-3">
                     We automatically collect certain information about your device and how you interact
                     with our service:
@@ -73,7 +73,7 @@ export default function PrivacyPage() {
                 </div>
 
                 <div>
-                  <h2 className="text-2xl font-semibold mb-3">How We Use Your Information</h2>
+                  <h2 className="font-semibold mb-3">How We Use Your Information</h2>
                   <p className="text-muted-foreground mb-3">We use your information to:</p>
                   <ul className="list-disc pl-6 space-y-1 text-muted-foreground">
                     <li>Provide, maintain, and improve our services</li>
@@ -87,7 +87,7 @@ export default function PrivacyPage() {
                 </div>
 
                 <div>
-                  <h2 className="text-2xl font-semibold mb-3">Data Sharing and Disclosure</h2>
+                  <h2 className="font-semibold mb-3">Data Sharing and Disclosure</h2>
                   <p className="text-muted-foreground mb-3">
                     We do not sell your personal information. We may share your information only in the
                     following circumstances:
@@ -107,7 +107,7 @@ export default function PrivacyPage() {
                 </div>
 
                 <div>
-                  <h2 className="text-2xl font-semibold mb-3">Data Security</h2>
+                  <h2 className="font-semibold mb-3">Data Security</h2>
                   <p className="text-muted-foreground">
                     We implement appropriate technical and organizational measures to protect your
                     personal information. However, no method of transmission over the internet or
@@ -116,7 +116,7 @@ export default function PrivacyPage() {
                 </div>
 
                 <div>
-                  <h2 className="text-2xl font-semibold mb-3">Your Rights</h2>
+                  <h2 className="font-semibold mb-3">Your Rights</h2>
                   <p className="text-muted-foreground mb-3">You have the right to:</p>
                   <ul className="list-disc pl-6 space-y-1 text-muted-foreground">
                     <li>Access your personal information</li>
@@ -128,7 +128,7 @@ export default function PrivacyPage() {
                 </div>
 
                 <div>
-                  <h2 className="text-2xl font-semibold mb-3">Cookies and Tracking</h2>
+                  <h2 className="font-semibold mb-3">Cookies and Tracking</h2>
                   <p className="text-muted-foreground">
                     We use cookies and similar tracking technologies to enhance your experience, analyze
                     usage patterns, and deliver personalized content. You can control cookies through your
@@ -137,7 +137,7 @@ export default function PrivacyPage() {
                 </div>
 
                 <div>
-                  <h2 className="text-2xl font-semibold mb-3">Children's Privacy</h2>
+                  <h2 className="font-semibold mb-3">Children's Privacy</h2>
                   <p className="text-muted-foreground">
                     Our service is not intended for children under 13 years of age. We do not knowingly
                     collect personal information from children under 13.
@@ -145,7 +145,7 @@ export default function PrivacyPage() {
                 </div>
 
                 <div>
-                  <h2 className="text-2xl font-semibold mb-3">Changes to This Policy</h2>
+                  <h2 className=" font-semibold mb-3">Changes to This Policy</h2>
                   <p className="text-muted-foreground">
                     We may update this Privacy Policy from time to time. We will notify you of any changes
                     by posting the new policy on this page and updating the "Last updated" date.
@@ -153,7 +153,7 @@ export default function PrivacyPage() {
                 </div>
 
                 <div>
-                  <h2 className="text-2xl font-semibold mb-3">Contact Us</h2>
+                  <h2 className="font-semibold mb-3">Contact Us</h2>
                   <p className="text-muted-foreground">
                     If you have questions about this Privacy Policy, please contact us through our{" "}
                     <Link href="/feedback" className="text-primary hover:underline">

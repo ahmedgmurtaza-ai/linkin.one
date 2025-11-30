@@ -90,21 +90,15 @@ All notable changes to linkin.one will be documented in this file.
 - Image loading optimization with lazy loading
 - Form validation with helpful error messages
 - Profile creation workflow
-
-## [1.0.0] - 2025-07-01
-
-### Added
-- Initial launch of linkin.one
-- User registration and authentication
-- Profile creation and customization
 - Classic layout for profile pages
 - Add unlimited links to profiles
 - Custom usernames (3-20 characters)
 - Display name and bio support
 - Profile thumbnail images
 - Google OAuth integration
-- Admin dashboard for profile management
-- Mobile-responsive design
 - Link management (add, edit, delete, reorder)
-- Basic analytics setup
-- Email verification for new accounts
+
+## [1.0.0] - 2025-07-01
+
+### Added
+- Initial launch of linkin.one
