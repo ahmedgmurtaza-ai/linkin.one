@@ -139,20 +139,27 @@ export function AnalyticsPanel({ links }: AnalyticsPanelProps) {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
-          <BarChart3 className="h-5 w-5" />
-          Analytics
-        </h2>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={resetAnalytics}
-          className="text-muted-foreground"
-        >
-          <RotateCcw className="h-4 w-4 mr-1" />
-          Reset
-        </Button>
+      <div>
+        <div className="flex items-center justify-between">
+          <div>
+            <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
+              <BarChart3 className="h-5 w-5" />
+              Analytics
+            </h3>
+            <p className="text-sm text-muted-foreground mt-1">
+              Track how visitors interact with your links
+            </p>
+          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={resetAnalytics}
+            className="text-muted-foreground"
+          >
+            <RotateCcw className="h-4 w-4 mr-1" />
+            Reset
+          </Button>
+        </div>
       </div>
 
       {/* Summary Cards */}

@@ -20,7 +20,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarSeparator,
+  SidebarRail,
 } from "@/components/ui/sidebar";
 import {
   DropdownMenu,
@@ -120,10 +120,10 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <Link href="/">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg text-primary">
+                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
                   <Link2 className="h-5 w-5" />
                 </div>
-                <div className="flex flex-col gap-0.5 leading-none">
+                <div className="flex flex-col gap-0.5 leading-none group-data-[collapsible=icon]:hidden">
                   <span className="font-semibold">linkin.one</span>
                   <span className="text-xs text-muted-foreground">
                     Dashboard
@@ -187,7 +187,7 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
                       {getUserInitials()}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="flex flex-col gap-0.5 leading-none">
+                  <div className="flex flex-col gap-0.5 leading-none group-data-[collapsible=icon]:hidden">
                     <span className="font-medium text-sm">
                       {getUserDisplayName()}
                     </span>
@@ -219,6 +219,7 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
+      <SidebarRail />
     </Sidebar>
   );
 }

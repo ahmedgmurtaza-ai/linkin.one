@@ -77,18 +77,20 @@ export default function AdminClient() {
       <>
         <AdminSidebar activeTab={activeTab} onTabChange={handleTabChange} />
         <SidebarInset>
-          <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-            <SidebarTrigger className="-ml-1" />
-            <Separator orientation="vertical" className="mr-2 h-4" />
-            <Skeleton className="h-8 w-48" />
+          <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+            <div className="flex items-center gap-2 px-4">
+              <SidebarTrigger className="-ml-1" />
+              <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
+              <Skeleton className="h-8 w-48" />
+            </div>
           </header>
-          <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-            <div className="mt-4 space-y-4">
+          <div className="flex flex-1 flex-col gap-4 p-4 pt-0 bg-muted/20">
+            <div className="space-y-4 max-w-5xl mx-auto w-full pt-6">
               <Skeleton className="h-10 w-64" />
               <Skeleton className="h-6 w-96" />
-              <Skeleton className="h-24 w-full" />
-              <Skeleton className="h-24 w-full" />
-              <Skeleton className="h-24 w-full" />
+              <Skeleton className="h-32 w-full rounded-lg" />
+              <Skeleton className="h-32 w-full rounded-lg" />
+              <Skeleton className="h-32 w-full rounded-lg" />
             </div>
           </div>
         </SidebarInset>
@@ -100,31 +102,33 @@ export default function AdminClient() {
     <>
       <AdminSidebar activeTab={activeTab} onTabChange={handleTabChange} />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
-          <SidebarTrigger className="-ml-1" />
-          <Separator orientation="vertical" className="mr-2 h-4" />
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem className="hidden md:block">
-                <BreadcrumbLink href="/admin">Dashboard</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator className="hidden md:block" />
-              <BreadcrumbItem>
-                <BreadcrumbPage>{getTabTitle()}</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-          <div className="ml-auto">
+        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+          <div className="flex items-center gap-2 px-4">
+            <SidebarTrigger className="-ml-1" />
+            <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem className="hidden md:block">
+                  <BreadcrumbLink href="/admin">Dashboard</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator className="hidden md:block" />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>{getTabTitle()}</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+          <div className="ml-auto pr-4">
             <AdminTopBar profile={profile} saving={saving} />
           </div>
         </header>
 
         <div className="flex flex-1 overflow-hidden">
           {/* Main content area */}
-          <div className="flex-1 overflow-y-auto">
-            <div className="p-4 md:p-6 lg:p-8">
+          <div className="flex-1 overflow-y-auto bg-muted/20">
+            <div className="flex flex-1 flex-col gap-4 p-4 pt-6 md:p-6 md:pt-8">
               {/* Content Area */}
-              <div className="space-y-6 max-w-4xl">
+              <div className="space-y-6 max-w-5xl mx-auto w-full">
                 {activeTab === "profile" && (
                   <ProfileForm profile={profile} onUpdate={updateProfile} />
                 )}
@@ -156,7 +160,7 @@ export default function AdminClient() {
           </div>
 
           {/* Preview panel - separate full-height column */}
-          <div className="hidden xl:flex w-[400px] 2xl:w-[500px] border-l bg-muted/20">
+          <div className="hidden xl:flex w-[400px] 2xl:w-[500px] bg-muted/30">
             <div className="flex-1 flex items-center justify-center p-8">
               <MobilePreview profile={profile} />
             </div>

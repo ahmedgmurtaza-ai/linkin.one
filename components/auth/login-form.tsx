@@ -80,7 +80,7 @@ export function LoginForm() {
   };
 
   return (
-    <Card className="w-full max-w-md border">
+    <Card className="w-full max-w-md shadow-lg">
       <CardHeader className="space-y-6 text-center pb-6">
         {/* Logo */}
         <div className="flex justify-center pt-2">
@@ -130,7 +130,7 @@ export function LoginForm() {
         <CardFooter className="flex flex-col gap-4">
           <Button
             type="submit"
-            className="w-full"
+            className="mt-4 w-full"
             disabled={loading || googleLoading}
           >
             {loading ? (

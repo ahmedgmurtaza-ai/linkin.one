@@ -30,7 +30,7 @@ export function ProfileHeader({
       {/* Avatar with ring effect */}
       <div className="relative group">
         <div
-          className={`absolute inset-0 bg-linear-to-r from-primary/50 via-primary to-primary/50 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity ${
+          className={`absolute rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity ${
             compact ? "scale-110" : "scale-125"
           }`}
         />

@@ -62,7 +62,7 @@ export function QRCodeDialog({
           <DialogTitle className="text-center">Your QR Code</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col items-center gap-4 py-4">
-          <div className="bg-white p-4 rounded-xl border border-border/30 shadow-sm">
+          <div className="bg-white p-4 rounded-xl shadow-lg">
             <canvas ref={canvasRef} className="w-64 h-64" />
           </div>
           <p className="text-sm text-muted-foreground text-center">

@@ -18,22 +18,25 @@ const LAYOUT_ICONS: Record<ProfileLayout, React.ReactNode> = {
 
 export function LayoutSelector({ currentLayout, onSelect }: LayoutSelectorProps) {
   return (
-    <div className="space-y-3">
-      <label className="text-sm font-medium text-foreground">Profile Layout</label>
-      <div className="grid grid-cols-3 gap-3">
+    <div className="space-y-4">
+      <div>
+        <label className="text-base font-medium text-foreground">Profile Layout</label>
+        <p className="text-sm text-muted-foreground mt-1">Choose how your links are displayed</p>
+      </div>
+      <div className="grid grid-cols-3 gap-4">
         {LAYOUT_OPTIONS.map((option) => (
           <button
             key={option.value}
             type="button"
             onClick={() => onSelect(option.value)}
-            className={`flex flex-col items-center gap-2 p-4 rounded-xl border transition-all ${
+            className={`flex flex-col items-center gap-3 p-6 rounded-xl transition-all ${
               currentLayout === option.value
-                ? "border-primary bg-primary/10 text-primary"
-                : "border-border bg-card hover:border-primary/50 text-muted-foreground hover:text-foreground"
+                ? "bg-primary/10 text-primary shadow-md ring-2 ring-primary/20"
+                : "bg-card text-muted-foreground hover:text-foreground hover:shadow-md shadow-sm"
             }`}
           >
             {LAYOUT_ICONS[option.value]}
-            <span className="text-xs font-medium">{option.label}</span>
+            <span className="text-sm font-medium">{option.label}</span>
           </button>
         ))}
       </div>
