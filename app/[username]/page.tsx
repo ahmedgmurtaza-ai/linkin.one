@@ -78,6 +78,9 @@ export async function generateMetadata({ params }: ProfilePageProps): Promise<Me
   }
 
   const seo = generateProfileSEO(profile);
+  
+  // Generate dynamic OG image URL
+  const ogImageUrl = `${seo.canonical.replace(`/${username}`, '')}/api/og?username=${username}`;
 
   return {
     title: seo.title,
@@ -93,7 +96,7 @@ export async function generateMetadata({ params }: ProfilePageProps): Promise<Me
       type: "profile",
       images: [
         {
-          url: seo.ogImage,
+          url: ogImageUrl,
           width: 1200,
           height: 630,
           alt: `${profile.displayName} (@${profile.username})`,
@@ -104,7 +107,7 @@ export async function generateMetadata({ params }: ProfilePageProps): Promise<Me
       card: "summary_large_image",
       title: seo.title,
       description: seo.description,
-      images: [seo.ogImage],
+      images: [ogImageUrl],
     },
     robots: {
       index: true,

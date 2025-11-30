@@ -52,6 +52,9 @@ export async function generateMetadata({ params }: PlatformRedirectProps): Promi
     link?.title
   )
 
+  // Generate dynamic OG image URL for platform
+  const ogImageUrl = `https://linkin.one/api/og/platform?username=${username}&platform=${platform}`;
+
   return {
     title: seo.title,
     description: seo.description,
@@ -64,21 +67,20 @@ export async function generateMetadata({ params }: PlatformRedirectProps): Promi
       description: seo.description,
       url: seo.canonical,
       type: "website",
-      images: profile.thumbnailUrl
-        ? [
-            {
-              url: profile.thumbnailUrl,
-              width: 1200,
-              height: 630,
-              alt: `${profile.displayName} on ${platform}`,
-            },
-          ]
-        : undefined,
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: `${profile.displayName} on ${platform}`,
+        },
+      ],
     },
     twitter: {
-      card: "summary",
+      card: "summary_large_image",
       title: seo.title,
       description: seo.description,
+      images: [ogImageUrl],
     },
     robots: {
       index: true,
