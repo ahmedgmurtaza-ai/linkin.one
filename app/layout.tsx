@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { FeedbackWidget } from "@/components/feedback/feedback-widget";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -41,6 +42,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} font-sans antialiased`}>
         {children}
+        <FeedbackWidget />
         <Analytics />
         <GoogleAnalytics gaId="G-XRZ1BC1QRF" />
       </body>

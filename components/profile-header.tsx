@@ -55,7 +55,7 @@ export function ProfileHeader({
         <div className="flex items-center justify-center gap-2">
           <h1
             className={`font-bold text-foreground tracking-tight ${
-              compact ? "text-xl" : "text-3xl"
+              compact ? "text-xl" : "text-2xl"
             }`}
           >
             {profile.displayName}

@@ -37,7 +37,7 @@ export function SplitLayout({ profile, compact = false }: SplitLayoutProps) {
           {/* Avatar with enhanced styling */}
           <div className="relative group">
             <div
-              className={`absolute inset-0 bg-linear-to-r from-primary/50 via-primary to-primary/50 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity ${
+              className={`absolute bg-linear-to-r from-primary/50 via-primary to-primary/50 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity ${
                 compact ? "scale-110" : "scale-125"
               }`}
             />
@@ -45,7 +45,7 @@ export function SplitLayout({ profile, compact = false }: SplitLayoutProps) {
               className={`relative ${
                 compact
                   ? "h-20 w-20 ring-2 ring-border/30 ring-offset-2"
-                  : "h-40 w-40 ring-4 ring-border/30 ring-offset-4"
+                  : "h-30 w-30 ring-4 ring-border/30 ring-offset-4"
               } border-background shadow-2xl ring-4 ring-primary/20 transition-transform group-hover:scale-105`}
             >
               <AvatarImage
@@ -53,7 +53,7 @@ export function SplitLayout({ profile, compact = false }: SplitLayoutProps) {
                 alt={profile.displayName}
                 className="object-cover"
               />
-              <AvatarFallback className="bg-linear-to-br from-primary/20 to-primary/10 text-primary text-3xl font-bold">
+              <AvatarFallback className="bg-linear-to-br from-primary/20 to-primary/10 text-primary text-2xl font-bold">
                 {initials}
               </AvatarFallback>
             </Avatar>
@@ -62,7 +62,7 @@ export function SplitLayout({ profile, compact = false }: SplitLayoutProps) {
           <div className={`space-y-3 ${compact ? "max-w-xs" : "max-w-sm"}`}>
             <h1
               className={`font-bold text-foreground tracking-tight ${
-                compact ? "text-xl" : "text-4xl"
+                compact ? "text-xl" : "text-2xl md:text-2xl"
               }`}
             >
               {profile.displayName}
@@ -71,7 +71,7 @@ export function SplitLayout({ profile, compact = false }: SplitLayoutProps) {
             {/* Username badge */}
             <Badge
               variant="secondary"
-              className={`${compact ? "text-xs" : "text-sm"} font-normal`}
+              className={`${compact ? "text-xs" : "text-xs md:text-sm"} font-normal`}
             >
               @{profile.username}
             </Badge>
@@ -79,7 +79,7 @@ export function SplitLayout({ profile, compact = false }: SplitLayoutProps) {
             {profile.description && (
               <p
                 className={`text-muted-foreground leading-relaxed ${
-                  compact ? "text-sm" : "text-lg"
+                  compact ? "text-sm" : "text-sm md:text-lg"
                 }`}
               >
                 {profile.description}
@@ -87,7 +87,7 @@ export function SplitLayout({ profile, compact = false }: SplitLayoutProps) {
             )}
           </div>
 
-          {!compact && <ProfileFooter />}
+          {/* {!compact && <ProfileFooter />} */}
         </div>
 
         {/* Right side - Links */}
@@ -100,7 +100,6 @@ export function SplitLayout({ profile, compact = false }: SplitLayoutProps) {
           />
         </div>
       </div>
-      {compact && <ProfileFooter compact />}
     </div>
   );
 }
