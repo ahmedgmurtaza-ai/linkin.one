@@ -1,6 +1,7 @@
 import { RegisterForm } from "@/components/auth/register-form";
 import { PAGE_SEO } from "@/lib/seo-config";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: PAGE_SEO.register.title,
@@ -19,7 +20,9 @@ export const metadata: Metadata = {
 export default function RegisterPage() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-linear-to-br from-background to-muted">
-      <RegisterForm />
+      <Suspense fallback={<div>Loading...</div>}>
+        <RegisterForm />
+      </Suspense>
     </div>
   );
 }
