@@ -63,7 +63,9 @@ export function SplitLayout({ profile, compact = false }: SplitLayoutProps) {
             {/* Username badge */}
             <Badge
               variant="secondary"
-              className={`${compact ? "text-xs" : "text-sm"} font-normal`}
+              className={`${
+                compact ? "text-xs" : "text-xs md:text-sm"
+              } font-normal`}
             >
               @{profile.username}
             </Badge>
@@ -89,7 +91,7 @@ export function SplitLayout({ profile, compact = false }: SplitLayoutProps) {
             )}
           </div>
 
-          {!compact && <ProfileFooter />}
+          {/* {!compact && <ProfileFooter />} */}
         </div>
 
         {/* Right side - Links */}

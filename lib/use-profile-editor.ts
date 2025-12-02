@@ -70,6 +70,7 @@ export function useProfileEditor() {
             user.email?.split("@")[0] || "user"
           );
           const displayName = user.user_metadata?.full_name || baseUsername;
+          const avatarUrl = user.user_metadata?.avatar_url || "";
 
           // Try to create profile, if username exists, append random suffix
           let username = baseUsername;
@@ -83,6 +84,7 @@ export function useProfileEditor() {
                 username,
                 display_name: displayName,
                 description: "Welcome to my linkin.one profile!",
+                thumbnail_url: avatarUrl,
                 layout: "classic",
               })
               .select()

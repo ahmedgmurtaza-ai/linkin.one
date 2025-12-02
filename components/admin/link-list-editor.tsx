@@ -210,6 +210,13 @@ export function LinkListEditor({
 
   return (
     <div className="space-y-6">
+      <div>
+        <h3 className="text-base font-semibold text-foreground">Your Links</h3>
+        <p className="text-sm text-muted-foreground mt-1">
+          Add and organize your social links and important content
+        </p>
+      </div>
+
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Switch
@@ -217,28 +224,30 @@ export function LinkListEditor({
             checked={showCategories}
             onCheckedChange={onShowCategoriesChange}
           />
-          <Label htmlFor="show-categories" className="cursor-pointer">
+          <Label htmlFor="show-categories" className="cursor-pointer text-sm">
             Show categories on profile page
           </Label>
         </div>
         <Button
-          size="lg"
+          size="default"
           onClick={() => {
             setEditingLink(undefined);
             setSelectedPlatform(undefined);
             setEditorOpen(true);
           }}
-          className="shadow-lg hover:shadow-xl transition-all"
         >
-          <Plus className="h-4 w-4 mr-1" />
+          <Plus className="h-4 w-4 mr-2" />
           Add Link
         </Button>
       </div>
 
       {links.length === 0 ? (
-        <div className="space-y-2">
-          <p className="text-xs text-muted-foreground mb-3">
-            Add your social links below - here are some suggestions:
+        <div className="space-y-3">
+          <p className="text-sm font-medium text-foreground">
+            Get started by adding your first link
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Here are some popular suggestions:
           </p>
           {[
             {
@@ -292,7 +301,7 @@ export function LinkListEditor({
             return (
               <div
                 key={index}
-                className="flex items-center gap-3 bg-card/30 border border-dashed border-border/50 rounded-lg px-3 py-2.5 opacity-60"
+                className="flex items-center gap-3 bg-muted/50 border-dashed rounded-lg px-3 py-2.5 opacity-60 shadow-sm"
               >
                 <div
                   className={`flex items-center justify-center h-9 w-9 ${colors.bg} ${colors.text} rounded-md shrink-0`}
@@ -350,12 +359,12 @@ export function LinkListEditor({
                 onDragOver={handleDragOver}
                 onDrop={(e) => handleCategoryDrop(e, category)}
                 onDragEnd={handleDragEnd}
-                className={`space-y-2 rounded-lg border p-3 transition-all duration-200 ${
+                className={`space-y-2 rounded-lg p-3 transition-all duration-200 shadow-sm ${
                   isCategoryDragging
-                    ? "opacity-50 scale-[0.98] border-primary bg-primary/5"
+                    ? "opacity-50 scale-[0.98] bg-primary/5 shadow-md"
                     : isCategoryDragOver
-                    ? "border-primary bg-primary/10 scale-[1.02]"
-                    : "border-border/40 bg-card/30"
+                    ? "bg-primary/10 scale-[1.02] shadow-md"
+                    : "bg-muted/50"
                 } cursor-grab active:cursor-grabbing`}
               >
                 <div className="flex items-center gap-2 mb-3">
@@ -396,12 +405,12 @@ export function LinkListEditor({
                           handleDrop(e, linkIndex);
                         }}
                         onDragEnd={handleDragEnd}
-                        className={`flex items-center gap-3 bg-card/50 border border-border/40 rounded-lg px-3 py-2.5 group transition-all duration-200 ${
+                        className={`flex items-center gap-3 bg-card rounded-lg px-3 py-2.5 group transition-all duration-200 shadow-sm ${
                           isDragging
-                            ? "opacity-50 scale-[0.98] border-primary"
+                            ? "opacity-50 scale-[0.98] shadow-md"
                             : isDragOver
-                            ? "border-primary bg-primary/5 scale-[1.02]"
-                            : "border-border hover:border-muted-foreground/50"
+                            ? "bg-primary/5 scale-[1.02] shadow-md"
+                            : "hover:shadow-md"
                         } cursor-grab active:cursor-grabbing`}
                       >
                         <GripVertical className="h-4 w-4 text-muted-foreground shrink-0" />
@@ -468,12 +477,12 @@ export function LinkListEditor({
                 onDragOver={handleDragOver}
                 onDrop={(e) => handleDrop(e, index)}
                 onDragEnd={handleDragEnd}
-                className={`flex items-center gap-3 bg-card/50 border border-border/40 rounded-lg px-3 py-2.5 group transition-all duration-200 ${
+                className={`flex items-center gap-3 bg-card rounded-lg px-3 py-2.5 group transition-all duration-200 shadow-sm ${
                   isDragging
-                    ? "opacity-50 scale-[0.98] border-primary"
+                    ? "opacity-50 scale-[0.98] shadow-md"
                     : isDragOver
-                    ? "border-primary bg-primary/5 scale-[1.02]"
-                    : "border-border hover:border-muted-foreground/50"
+                    ? "bg-primary/5 scale-[1.02] shadow-md"
+                    : "hover:shadow-md"
                 } cursor-grab active:cursor-grabbing`}
               >
                 <GripVertical className="h-4 w-4 text-muted-foreground shrink-0" />

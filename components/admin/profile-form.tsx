@@ -274,14 +274,18 @@ export function ProfileForm({ profile, onUpdate }: ProfileFormProps) {
   };
 
   return (
-    <div className="space-y-8">
-      {/* Basic Information Section */}
-      <div className="space-y-6">
+    <div className="space-y-6">
+      {/* Username Section */}
+      <div className="bg-card rounded-lg p-6 shadow-sm">
+        <div className="mb-5">
+          <h3 className="text-lg font-semibold text-foreground">Profile URL</h3>
+          <p className="text-sm text-muted-foreground mt-1">
+            Choose your unique profile URL
+          </p>
+        </div>
         <div className="space-y-2">
-          <Label htmlFor="username" className="text-base">
-            Username
-          </Label>
-          <div className="flex items-center gap-2 md:max-w-1/2 max-w-full">
+          <Label htmlFor="username" className="text-sm font-medium">Username</Label>
+          <div className="flex items-center gap-2">
             <span className="text-sm text-muted-foreground whitespace-nowrap">
               linkin.one/
             </span>
@@ -311,120 +315,153 @@ export function ProfileForm({ profile, onUpdate }: ProfileFormProps) {
           )}
           {!usernameError && getUsernameStatusMessage()}
         </div>
+      </div>
 
+      {/* Profile Picture Section */}
+      <div className="bg-card rounded-lg p-6 shadow-sm">
+        <div className="mb-5">
+          <h3 className="text-lg font-semibold text-foreground">Profile Picture</h3>
+          <p className="text-sm text-muted-foreground mt-1">
+            Add a photo to personalize your profile
+          </p>
+        </div>
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <Label className="text-base">Profile Picture</Label>
-            {externalUrl && (
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={handleRemoveImage}
-              >
-                <X className="h-4 w-4 mr-1" />
-                Remove
-              </Button>
-            )}
-          </div>
-
-          {/* Image Preview */}
-          <div className="flex items-center gap-4">
-            <Avatar className="h-20 w-20 ring-2 ring-border/30 ring-offset-2 ring-offset-background">
+          {/* Image Preview with Remove Button */}
+          <div className="flex items-start gap-6">
+            <Avatar className="h-24 w-24 ring-2 ring-muted ring-offset-4 ring-offset-background">
               <AvatarImage src={externalUrl} alt={displayName} />
-              <AvatarFallback className="text-xl font-semibold">
+              <AvatarFallback className="text-2xl font-semibold bg-primary/10">
                 {getUserInitials()}
               </AvatarFallback>
             </Avatar>
 
-            {/* Upload/URL Tabs */}
-            <Tabs defaultValue="url" className="flex-1">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="url">
-                  <LinkIcon className="h-4 w-4 mr-2" />
-                  URL
-                </TabsTrigger>
-                <TabsTrigger value="upload">
-                  <Upload className="h-4 w-4 mr-2" />
-                  Upload
-                </TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="url" className="mt-3">
-                <Input
-                  id="thumbnailUrl"
-                  value={externalUrl}
-                  onChange={(e) => handleExternalUrlChange(e.target.value)}
-                  placeholder="https://example.com/avatar.jpg"
-                />
-              </TabsContent>
-
-              <TabsContent value="upload" className="mt-3">
-                <div className="flex items-center gap-2">
-                  <Input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileUpload}
-                    disabled={uploading}
-                    className="cursor-pointer"
-                  />
-                  {uploading && (
-                    <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
-                  )}
+            <div className="flex-1 space-y-3">
+              {externalUrl && (
+                <div className="flex justify-end">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleRemoveImage}
+                    className="h-8"
+                  >
+                    <X className="h-3.5 w-3.5 mr-1.5" />
+                    Remove
+                  </Button>
                 </div>
-                {uploadError && (
-                  <Alert variant="destructive" className="mt-3">
-                    <AlertDescription className="text-sm">
-                      {uploadError}
-                    </AlertDescription>
-                  </Alert>
-                )}
-              </TabsContent>
-            </Tabs>
+              )}
+
+              {/* Upload/URL Tabs */}
+              <Tabs defaultValue="url" className="w-full">
+                <TabsList className="grid w-full grid-cols-2 h-9">
+                  <TabsTrigger value="url" className="text-xs">
+                    <LinkIcon className="h-3.5 w-3.5 mr-1.5" />
+                    URL
+                  </TabsTrigger>
+                  <TabsTrigger value="upload" className="text-xs">
+                    <Upload className="h-3.5 w-3.5 mr-1.5" />
+                    Upload
+                  </TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="url" className="mt-3 space-y-2">
+                  <Label htmlFor="thumbnailUrl" className="text-xs text-muted-foreground">
+                    Image URL
+                  </Label>
+                  <Input
+                    id="thumbnailUrl"
+                    value={externalUrl}
+                    onChange={(e) => handleExternalUrlChange(e.target.value)}
+                    placeholder="https://example.com/avatar.jpg"
+                    className="h-9"
+                  />
+                </TabsContent>
+
+                <TabsContent value="upload" className="mt-3 space-y-2">
+                  <Label htmlFor="file-upload" className="text-xs text-muted-foreground">
+                    Choose file (Max 1MB)
+                  </Label>
+                  <div className="flex items-center gap-2">
+                    <Input
+                      id="file-upload"
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileUpload}
+                      disabled={uploading}
+                      className="cursor-pointer h-9"
+                    />
+                    {uploading && (
+                      <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                    )}
+                  </div>
+                  {uploadError && (
+                    <Alert variant="destructive" className="py-2">
+                      <AlertDescription className="text-xs">
+                        {uploadError}
+                      </AlertDescription>
+                    </Alert>
+                  )}
+                </TabsContent>
+              </Tabs>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Profile Details Section */}
-      <div className="space-y-6 pt-6 ">
-        <div className="space-y-2">
-          <Label htmlFor="displayName" className="text-base">
-            Display Name
-          </Label>
-          <Input
-            id="displayName"
-            value={displayName}
-            onChange={(e) => {
-              setDisplayName(e.target.value);
-              debouncedUpdateDisplayName(e.target.value);
-            }}
-            placeholder="Your Name"
-          />
+      <div className="bg-card rounded-lg p-6 shadow-sm">
+        <div className="mb-5">
+          <h3 className="text-lg font-semibold text-foreground">Profile Details</h3>
+          <p className="text-sm text-muted-foreground mt-1">
+            Tell visitors about yourself
+          </p>
         </div>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="displayName" className="text-sm font-medium">Display Name</Label>
+            <Input
+              id="displayName"
+              value={displayName}
+              onChange={(e) => {
+                setDisplayName(e.target.value);
+                debouncedUpdateDisplayName(e.target.value);
+              }}
+              placeholder="Your Name"
+              className="h-10"
+            />
+            <p className="text-xs text-muted-foreground">
+              This is how your name will appear to visitors
+            </p>
+          </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="description" className="text-base">
-            Bio
-          </Label>
-          <Textarea
-            id="description"
-            value={description}
-            onChange={(e) => {
-              setDescription(e.target.value);
-              debouncedUpdateDescription(e.target.value);
-            }}
-            placeholder="Tell the world about yourself..."
-            rows={4}
-            className="resize-none"
-          />
+          <div className="space-y-2">
+            <Label htmlFor="description" className="text-sm font-medium">Bio</Label>
+            <Textarea
+              id="description"
+              value={description}
+              onChange={(e) => {
+                setDescription(e.target.value);
+                debouncedUpdateDescription(e.target.value);
+              }}
+              placeholder="Tell the world about yourself..."
+              rows={4}
+              className="resize-none"
+            />
+            <p className="text-xs text-muted-foreground">
+              Brief description for your profile
+            </p>
+          </div>
         </div>
       </div>
 
       {/* Appearance Section */}
-      <div className="pt-6 ">
-        <div className="mb-4">
-          <Label className="text-base">Theme</Label>
+      <div className="bg-card rounded-lg p-6 shadow-sm">
+        <div className="mb-5">
+          <h3 className="text-lg font-semibold text-foreground">Appearance</h3>
+          <p className="text-sm text-muted-foreground mt-1">
+            Customize how your profile looks to visitors
+          </p>
         </div>
         <ThemeSelector
           currentTheme={profile.theme}

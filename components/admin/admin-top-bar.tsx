@@ -43,7 +43,7 @@ export function AdminTopBar({ profile, saving = false }: AdminTopBarProps) {
         )}
 
         {/* URL Copy */}
-        <div className="hidden md:flex items-center gap-2 bg-muted/50 border rounded-lg px-3 py-1.5">
+        <div className="hidden md:flex items-center gap-2 bg-muted/50 rounded-lg px-3 py-1.5">
           <span className="text-xs text-muted-foreground truncate max-w-[200px]">
             linkin.one/{profile.username}
           </span>

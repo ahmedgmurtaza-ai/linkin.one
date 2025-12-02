@@ -1,8 +1,8 @@
 "use client";
 
 import { createClient } from "@/lib/supabase/client";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,9 +21,11 @@ import { Loader2 } from "lucide-react";
 import { Logo } from "../logo";
 
 export function RegisterForm() {
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
   const [message, setMessage] = useState<{
@@ -32,6 +34,14 @@ export function RegisterForm() {
   } | null>(null);
   const router = useRouter();
   const supabase = createClient();
+
+  // Pre-fill username from URL params
+  useEffect(() => {
+    const usernameParam = searchParams.get("username");
+    if (usernameParam) {
+      setUsername(usernameParam);
+    }
+  }, [searchParams]);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -131,6 +141,28 @@ export function RegisterForm() {
               <AlertDescription>{message.text}</AlertDescription>
             </Alert>
           )}
+          <div className="space-y-2">
+            <Label htmlFor="username">Username</Label>
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">
+                linkin.one/
+              </span>
+              <Input
+                id="username"
+                type="text"
+                placeholder="yourname"
+                value={username}
+                onChange={(e) => setUsername(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
+                required
+                disabled={loading}
+                className="pl-[85px]"
+                minLength={3}
+              />
+            </div>
+            <p className="text-xs text-muted-foreground">
+              3-20 characters, letters, numbers and hyphens only
+            </p>
+          </div>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input

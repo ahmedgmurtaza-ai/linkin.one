@@ -35,7 +35,7 @@ export function LinkCard({ link, compact = false }: LinkCardProps) {
   return (
     <button
       onClick={handleClick}
-      className={`w-full flex items-center gap-3 bg-linear-to-r from-card/80 to-primary/5 hover:from-primary/10 hover:to-accent/15 border border-primary/20 rounded-xl transition-all duration-300 hover:scale-[1.02] hover:border-primary/40 hover:shadow-lg group ${
+      className={`w-full flex items-center gap-3 bg-white  rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-lg shadow-sm group ${
         compact ? "px-3 py-2.5" : "px-4 py-3.5"
       }`}
     >

@@ -1,5 +1,7 @@
 import { redirect, notFound } from "next/navigation"
 import { getProfile, getLinkByPlatform } from "@/lib/profile-store"
+import { generatePlatformSEO } from "@/lib/seo-config"
+import type { Metadata } from "next"
 
 interface PlatformRedirectProps {
   params: Promise<{ username: string; platform: string }>
@@ -24,11 +26,65 @@ export default async function PlatformRedirectPage({ params }: PlatformRedirectP
   redirect(targetUrl)
 }
 
-export async function generateMetadata({ params }: PlatformRedirectProps) {
+export async function generateMetadata({ params }: PlatformRedirectProps): Promise<Metadata> {
   const { username, platform } = await params
   const profile = getProfile(username)
 
+  if (!profile) {
+    return {
+      title: "Profile Not Found | linkin.one",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    }
+  }
+
+  // Find the specific link for this platform
+  const link = profile.links?.find(
+    (l) => l.platform.toLowerCase() === platform.toLowerCase()
+  )
+
+  const seo = generatePlatformSEO(
+    username,
+    platform,
+    profile.displayName,
+    link?.title
+  )
+
+  // Generate dynamic OG image URL for platform
+  const ogImageUrl = `https://linkin.one/api/og/platform?username=${username}&platform=${platform}`;
+
   return {
-    title: `${platform.charAt(0).toUpperCase() + platform.slice(1)} - ${profile?.displayName || username} | linkin.one`,
+    title: seo.title,
+    description: seo.description,
+    keywords: seo.keywords,
+    alternates: {
+      canonical: seo.canonical,
+    },
+    openGraph: {
+      title: seo.title,
+      description: seo.description,
+      url: seo.canonical,
+      type: "website",
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: `${profile.displayName} on ${platform}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: seo.title,
+      description: seo.description,
+      images: [ogImageUrl],
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
   }
 }
