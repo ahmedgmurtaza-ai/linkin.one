@@ -15,7 +15,9 @@ export function ClassicLayout({
   compact = false,
 }: ClassicLayoutProps) {
   return (
-    <div className={compact ? "px-4 py-4" : "max-w-md mx-auto px-4 py-8"}>
+    <div
+      className={compact ? "px-4 py-4" : "max-w-md mx-auto px-4 md:py-12 py-8"}
+    >
       <ProfileHeader profile={profile} compact={compact} />
       <div className={compact ? "mt-4" : "mt-8"}>
         <LinkList

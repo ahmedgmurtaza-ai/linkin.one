@@ -21,17 +21,18 @@ export function LinkList({
   groupByCategory = false,
   layout = "classic",
 }: LinkListProps) {
-  if (layout === "grid") {
-    return (
-      <div className={`grid grid-cols-2 ${compact ? "gap-2" : "gap-3"}`}>
-        {links.map((link) => (
-          <LinkCard key={link.id} link={link} compact={compact} />
-        ))}
-      </div>
-    );
-  }
-
+  // If not grouping by category, render simple layout
   if (!groupByCategory) {
+    if (layout === "grid") {
+      return (
+        <div className={`grid grid-cols-2 ${compact ? "gap-2" : "gap-3"}`}>
+          {links.map((link) => (
+            <LinkCard key={link.id} link={link} compact={compact} />
+          ))}
+        </div>
+      );
+    }
+
     return (
       <div className={`flex flex-col ${compact ? "gap-2" : "gap-3"}`}>
         {links.map((link) => (
@@ -41,6 +42,7 @@ export function LinkList({
     );
   }
 
+  // Group links by category
   const groupedLinks = links.reduce((acc, link) => {
     if (!acc[link.category]) {
       acc[link.category] = [];
@@ -62,6 +64,7 @@ export function LinkList({
     "others",
   ];
 
+  // Render with categories
   return (
     <div className={`flex flex-col ${compact ? "gap-4" : "gap-6"}`}>
       {categoryOrder.map((category) => {
@@ -77,11 +80,21 @@ export function LinkList({
             >
               {CATEGORY_LABELS[category]}
             </h3>
-            <div className={`flex flex-col ${compact ? "gap-1.5" : "gap-2"}`}>
-              {categoryLinks.map((link) => (
-                <LinkCard key={link.id} link={link} compact={compact} />
-              ))}
-            </div>
+            {layout === "grid" ? (
+              <div
+                className={`grid grid-cols-2 ${compact ? "gap-2" : "gap-3"}`}
+              >
+                {categoryLinks.map((link) => (
+                  <LinkCard key={link.id} link={link} compact={compact} />
+                ))}
+              </div>
+            ) : (
+              <div className={`flex flex-col ${compact ? "gap-1.5" : "gap-2"}`}>
+                {categoryLinks.map((link) => (
+                  <LinkCard key={link.id} link={link} compact={compact} />
+                ))}
+              </div>
+            )}
           </div>
         );
       })}

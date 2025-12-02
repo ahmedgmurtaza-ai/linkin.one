@@ -1,10 +1,18 @@
 "use client";
 
+import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { LinkList } from "@/components/link-list";
 import { ProfileFooter } from "@/components/profile-footer";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import type { Profile } from "@/lib/types";
+import { ProfileAvatar } from "../profile-avatar";
 
 interface SplitLayoutProps {
   profile: Profile;
@@ -12,12 +20,20 @@ interface SplitLayoutProps {
 }
 
 export function SplitLayout({ profile, compact = false }: SplitLayoutProps) {
+  const [isDescriptionModalOpen, setIsDescriptionModalOpen] = useState(false);
+
   const initials = profile.displayName
     .split(" ")
     .map((n) => n[0])
     .join("")
     .toUpperCase()
     .slice(0, 2);
+
+  const shouldTruncate =
+    profile.description && profile.description.length > 100;
+  const truncatedDescription = shouldTruncate
+    ? profile.description.slice(0, 100) + "..."
+    : profile.description;
 
   return (
     <div className={compact ? "px-3 py-3" : "max-w-4xl mx-auto px-4 py-12"}>
@@ -34,35 +50,11 @@ export function SplitLayout({ profile, compact = false }: SplitLayoutProps) {
               : "md:items-start md:text-left items-center text-center"
           } ${compact ? "gap-4 pt-4" : "gap-6 pt-8"}`}
         >
-          {/* Avatar with enhanced styling */}
-          <div className="relative group">
-            <div
-              className={`absolute inset-0 bg-linear-to-r from-primary/50 via-primary to-primary/50 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity ${
-                compact ? "scale-110" : "scale-125"
-              }`}
-            />
-            <Avatar
-              className={`relative ${
-                compact
-                  ? "h-20 w-20 ring-2 ring-border/30 ring-offset-2"
-                  : "h-40 w-40 ring-4 ring-border/30 ring-offset-4"
-              } border-background shadow-2xl ring-4 ring-primary/20 transition-transform group-hover:scale-105`}
-            >
-              <AvatarImage
-                src={profile.thumbnailUrl || "/placeholder.svg"}
-                alt={profile.displayName}
-                className="object-cover"
-              />
-              <AvatarFallback className="bg-linear-to-br from-primary/20 to-primary/10 text-primary text-3xl font-bold">
-                {initials}
-              </AvatarFallback>
-            </Avatar>
-          </div>
-
+          <ProfileAvatar profile={profile} compact={compact} />
           <div className={`space-y-3 ${compact ? "max-w-xs" : "max-w-sm"}`}>
             <h1
               className={`font-bold text-foreground tracking-tight ${
-                compact ? "text-xl" : "text-4xl"
+                compact ? "text-xl" : "md:text-3xl text-2xl"
               }`}
             >
               {profile.displayName}
@@ -77,13 +69,23 @@ export function SplitLayout({ profile, compact = false }: SplitLayoutProps) {
             </Badge>
 
             {profile.description && (
-              <p
-                className={`text-muted-foreground leading-relaxed ${
-                  compact ? "text-sm" : "text-lg"
-                }`}
-              >
-                {profile.description}
-              </p>
+              <div className="space-y-2">
+                <p
+                  className={`text-muted-foreground leading-relaxed ${
+                    compact ? "text-sm" : "md:text-lg text-sm"
+                  }`}
+                >
+                  {truncatedDescription}
+                </p>
+                {shouldTruncate && (
+                  <button
+                    onClick={() => setIsDescriptionModalOpen(true)}
+                    className="text-primary hover:underline text-sm font-medium"
+                  >
+                    Read more
+                  </button>
+                )}
+              </div>
             )}
           </div>
 
@@ -101,6 +103,37 @@ export function SplitLayout({ profile, compact = false }: SplitLayoutProps) {
         </div>
       </div>
       {compact && <ProfileFooter compact />}
+
+      {/* Description Modal */}
+      <Dialog
+        open={isDescriptionModalOpen}
+        onOpenChange={setIsDescriptionModalOpen}
+      >
+        <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>About {profile.displayName}</DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            {/* Avatar floated to the left on desktop, centered on mobile */}
+            <div className="md:float-left md:mr-6 md:mb-4 flex justify-center mb-6 md:mb-0">
+              <Avatar className="h-40 w-40 ring-4 ring-border/30 shadow-lg">
+                <AvatarImage
+                  src={profile.thumbnailUrl || "/placeholder.svg"}
+                  alt={profile.displayName}
+                  className="object-cover"
+                />
+                <AvatarFallback className="bg-linear-to-br from-primary/20 to-primary/10 text-primary text-3xl font-bold">
+                  {initials}
+                </AvatarFallback>
+              </Avatar>
+            </div>
+            {/* Description text wraps around the avatar */}
+            <p className="text-muted-foreground leading-relaxed whitespace-pre-wrap text-base">
+              {profile.description}
+            </p>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
