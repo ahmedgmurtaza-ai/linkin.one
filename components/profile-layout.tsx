@@ -8,18 +8,19 @@ import type { Profile } from "@/lib/types"
 interface ProfileLayoutProps {
   profile: Profile
   compact?: boolean
+  isLoggedIn?: boolean
 }
 
-export function ProfileLayoutRenderer({ profile, compact = false }: ProfileLayoutProps) {
+export function ProfileLayoutRenderer({ profile, compact = false, isLoggedIn = false }: ProfileLayoutProps) {
   const layout = profile.layout || "classic"
 
   switch (layout) {
     case "split":
-      return <SplitLayout profile={profile} compact={compact} />
+      return <SplitLayout profile={profile} compact={compact} isLoggedIn={isLoggedIn} />
     case "grid":
-      return <GridLayout profile={profile} compact={compact} />
+      return <GridLayout profile={profile} compact={compact} isLoggedIn={isLoggedIn} />
     case "classic":
     default:
-      return <ClassicLayout profile={profile} compact={compact} />
+      return <ClassicLayout profile={profile} compact={compact} isLoggedIn={isLoggedIn} />
   }
 }

@@ -1,8 +1,60 @@
 import { ImageResponse } from 'next/og';
 import { NextRequest } from 'next/server';
-import { getProfile } from '@/lib/profile-store';
 
 export const runtime = 'edge';
+
+// Fetch profile data directly in edge runtime
+async function getProfile(username: string) {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error('Supabase credentials not found');
+  }
+
+  // Fetch profile
+  const profileResponse = await fetch(
+    `${supabaseUrl}/rest/v1/profiles?username=eq.${username.toLowerCase()}&select=*`,
+    {
+      headers: {
+        apikey: supabaseAnonKey,
+        Authorization: `Bearer ${supabaseAnonKey}`,
+      },
+    }
+  );
+
+  if (!profileResponse.ok) {
+    return null;
+  }
+
+  const profiles = await profileResponse.json();
+  if (!profiles || profiles.length === 0) {
+    return null;
+  }
+
+  const profile = profiles[0];
+
+  // Fetch links
+  const linksResponse = await fetch(
+    `${supabaseUrl}/rest/v1/links?profile_id=eq.${profile.id}&select=*&order=position.asc`,
+    {
+      headers: {
+        apikey: supabaseAnonKey,
+        Authorization: `Bearer ${supabaseAnonKey}`,
+      },
+    }
+  );
+
+  const links = linksResponse.ok ? await linksResponse.json() : [];
+
+  return {
+    username: profile.username,
+    displayName: profile.display_name,
+    description: profile.description,
+    thumbnailUrl: profile.thumbnail_url,
+    links,
+  };
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -15,7 +67,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get profile data
-    const profile = getProfile(username);
+    const profile = await getProfile(username);
 
     if (!profile) {
       return new Response('Profile not found', { status: 404 });
@@ -27,7 +79,7 @@ export async function GET(request: NextRequest) {
 
     // Find the specific link for this platform
     const link = profile.links?.find(
-      (l) => l.platform.toLowerCase() === platform.toLowerCase()
+      (l: any) => l.platform.toLowerCase() === platform.toLowerCase()
     );
 
     // Platform icons/emojis

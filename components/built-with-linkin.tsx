@@ -1,20 +1,37 @@
 "use client";
 
-import { Link2 } from "lucide-react";
 import Link from "next/link";
+import { Button } from "./ui/button";
+import { Link2 } from "lucide-react";
 
-export function BuiltWithLinkin() {
+interface BuiltWithLinkinProps {
+  username?: string;
+}
+
+export function BuiltWithLinkin({ username }: BuiltWithLinkinProps) {
   return (
-    <Link
-      href="https://linkin.one"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="mx-6 flex items-center justify-center gap-2 rounded-full bg-black/90 backdrop-blur-sm px-4 py-2 shadow-2xl hover:bg-black transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(59,130,246,0.5)] group md:fixed md:bottom-10 md:left-10 md:z-50 md:w-auto"
-    >
-      <Link2 className="h-5 w-5  text-yellow-500 group-hover:rotate-12 transition-transform " />
-      <span className="text-sm font-medium text-white/90 group-hover:text-white">
-        Build with linkin.<span className="text-yellow-500">one</span>
-      </span>
-    </Link>
+    <div className="flex justify-center">
+      <Link
+        href="https://linkin.one"
+        target="_blank"
+        rel="noopener noreferrer"
+        // className="mb-6 inline-flex items-center justify-center gap-2 rounded-full  px-6 py-3 shadow-lg hover:shadow-xl transition-all hover:scale-105 group"
+      >
+<Button  size="lg" variant={"default"} className="mb-6 inline-flex items-center justify-center gap-2 rounded-full  px-6 py-3 shadow-lg hover:shadow-xl transition-all hover:scale-105 group ">
+
+      <span className="flex items-center gap-2 ">
+          {username ? (
+            <>
+              join <span className="font-semibold">{username}</span> on <Link2 className="text-yellow-200 transition-transform group-hover:rotate-45"/> linkin.one
+            </>
+          ) : (
+            "create your profile on linkin.one"
+          )}
+        </span>
+  
+</Button>
+      </Link>
+    </div>
   );
 }
+

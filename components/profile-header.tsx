@@ -5,15 +5,18 @@ import { Badge } from "@/components/ui/badge";
 import type { Profile } from "@/lib/types";
 import { Verified } from "lucide-react";
 import { ProfileAvatar } from "./profile-avatar";
+import { ShareButton } from "@/components/share-profile-dialog";
 
 interface ProfileHeaderProps {
   profile: Profile;
   compact?: boolean;
+  isLoggedIn?: boolean;
 }
 
 export function ProfileHeader({
   profile,
   compact = false,
+  isLoggedIn = false,
 }: ProfileHeaderProps) {
   const initials = profile.displayName
     .split(" ")
@@ -62,7 +65,19 @@ export function ProfileHeader({
             {profile.description}
           </p>
         )}
+
+        {/* Share Button */}
+        <div className="flex justify-center pt-2">
+          <ShareButton
+            username={profile.username}
+            displayName={profile.displayName}
+            thumbnailUrl={profile.thumbnailUrl}
+            description={profile.description}
+            isLoggedIn={isLoggedIn}
+          />
+        </div>
       </div>
+      
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { redirect, notFound } from "next/navigation"
-import { getProfile, getLinkByPlatform } from "@/lib/profile-store"
+import { getProfileByUsername } from "@/lib/database"
 import { generatePlatformSEO } from "@/lib/seo-config"
 import type { Metadata } from "next"
 
@@ -9,26 +9,29 @@ interface PlatformRedirectProps {
 
 export default async function PlatformRedirectPage({ params }: PlatformRedirectProps) {
   const { username, platform } = await params
-  const profile = getProfile(username)
+  const profile = await getProfileByUsername(username)
 
   if (!profile) {
     notFound()
   }
 
-  const targetUrl = getLinkByPlatform(username, platform)
+  // Find the link for this platform
+  const link = profile.links?.find(
+    (l) => l.platform.toLowerCase() === platform.toLowerCase()
+  )
 
-  if (!targetUrl) {
+  if (!link) {
     // Platform not found, redirect to main profile
     redirect(`/${username}`)
   }
 
   // Redirect to the actual platform URL
-  redirect(targetUrl)
+  redirect(link.url)
 }
 
 export async function generateMetadata({ params }: PlatformRedirectProps): Promise<Metadata> {
   const { username, platform } = await params
-  const profile = getProfile(username)
+  const profile = await getProfileByUsername(username)
 
   if (!profile) {
     return {
@@ -52,8 +55,9 @@ export async function generateMetadata({ params }: PlatformRedirectProps): Promi
     link?.title
   )
 
-  // Generate dynamic OG image URL for platform
-  const ogImageUrl = `https://linkin.one/api/og/platform?username=${username}&platform=${platform}`;
+  // Generate dynamic OG image URL for platform - use full absolute URL
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://linkin.one';
+  const ogImageUrl = `${baseUrl}/api/og/platform?username=${username}&platform=${platform}`;
 
   return {
     title: seo.title,

@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { LinkList } from "@/components/link-list";
 import { ProfileFooter } from "@/components/profile-footer";
+import { ShareButton } from "@/components/share-profile-dialog";
 import {
   Dialog,
   DialogContent,
@@ -17,9 +18,10 @@ import { ProfileAvatar } from "../profile-avatar";
 interface SplitLayoutProps {
   profile: Profile;
   compact?: boolean;
+  isLoggedIn?: boolean;
 }
 
-export function SplitLayout({ profile, compact = false }: SplitLayoutProps) {
+export function SplitLayout({ profile, compact = false, isLoggedIn = false }: SplitLayoutProps) {
   const [isDescriptionModalOpen, setIsDescriptionModalOpen] = useState(false);
 
   const initials = profile.displayName
@@ -89,6 +91,17 @@ export function SplitLayout({ profile, compact = false }: SplitLayoutProps) {
                 )}
               </div>
             )}
+
+            {/* Share Button */}
+            <div className="flex justify-center md:justify-start pt-2">
+              <ShareButton
+                username={profile.username}
+                displayName={profile.displayName}
+                thumbnailUrl={profile.thumbnailUrl}
+                description={profile.description}
+                isLoggedIn={isLoggedIn}
+              />
+            </div>
           </div>
 
           {/* {!compact && <ProfileFooter />} */}

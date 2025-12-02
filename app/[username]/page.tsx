@@ -52,11 +52,14 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
       />
       
       <div className="min-h-screen bg-background">
-        <ProfileTopBar username={profile.username} isLoggedIn={isLoggedIn} />
-        <main className="pt-16">
-          <ProfileLayoutRenderer profile={profile} />
+        <ProfileTopBar 
+          username={profile.username} 
+          isLoggedIn={isLoggedIn} 
+        />
+        <main className="pt-16 pb-24">
+          <ProfileLayoutRenderer profile={profile} isLoggedIn={isLoggedIn} />
         </main>
-        <BuiltWithLinkin />
+        <BuiltWithLinkin username={profile.username} />
       </div>
     </ProfileThemeProvider>
   );
@@ -79,8 +82,9 @@ export async function generateMetadata({ params }: ProfilePageProps): Promise<Me
 
   const seo = generateProfileSEO(profile);
   
-  // Generate dynamic OG image URL
-  const ogImageUrl = `${seo.canonical.replace(`/${username}`, '')}/api/og?username=${username}`;
+  // Generate dynamic OG image URL - use full absolute URL
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://linkin.one';
+  const ogImageUrl = `${baseUrl}/api/og?username=${username}`;
 
   return {
     title: seo.title,

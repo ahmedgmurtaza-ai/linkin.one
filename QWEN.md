@@ -253,4 +253,87 @@ Custom link
 
 22 — Final agent instructions (copy into agent prompt)
 
-Use this document as the single source of truth. You must not add or assume features beyond what’s described. Implement the MVP features only. Use Next.js (app router), TypeScript, Tailwind, and Joy UI. Follow naming, file structure, and API contracts above. Create or update ROUTES_MANIFEST.md and DECISIONS.md for any new routes or decisions. Use Supabase for auth, DB, and storage. No emojis. Keep code modular and well-tested. Write clear commit messages. When creating new files, include their routes and a short purpose entry in ROUTES_MANIFEST.md. If you encounter ambiguity you cannot resolve, document the chosen default in DECISIONS.md and proceed with the simplest option.
+Use this document as the single source of truth. You must not add or assume features beyond what's described. Implement the MVP features only. Use Next.js (app router), TypeScript, Tailwind, and Joy UI. Follow naming, file structure, and API contracts above. Create or update ROUTES_MANIFEST.md and DECISIONS.md for any new routes or decisions. Use Supabase for auth, DB, and storage. No emojis. Keep code modular and well-tested. Write clear commit messages. When creating new files, include their routes and a short purpose entry in ROUTES_MANIFEST.md. If you encounter ambiguity you cannot resolve, document the chosen default in DECISIONS.md and proceed with the simplest option.
+
+---
+
+## 23 — Documentation Index (December 2, 2025)
+
+### Parent Document
+This QWEN.md file serves as the **parent documentation** and single source of truth for all project documentation. All other documentation files are linked here for reference.
+
+### Feature Documentation
+
+#### Share Button & OG Image Implementation
+- **File**: [`SHARE_AND_OG_FIX.md`](./SHARE_AND_OG_FIX.md)
+- **Purpose**: Complete documentation for the social sharing feature and OG image fix
+- **Contents**:
+  - Share button implementation with 8 social platforms
+  - OG image generation fix for edge runtime
+  - Sitemap verification
+  - Technical details and design specifications
+  - Troubleshooting guide
+
+#### Testing Procedures
+- **File**: [`TESTING_GUIDE.md`](./TESTING_GUIDE.md)
+- **Purpose**: Step-by-step testing instructions for share and OG features
+- **Contents**:
+  - Local testing procedures
+  - Production testing steps
+  - Social media debugger tools
+  - Expected results and success criteria
+  - Performance benchmarks
+
+#### Deployment Process
+- **File**: [`DEPLOYMENT_CHECKLIST.md`](./DEPLOYMENT_CHECKLIST.md)
+- **Purpose**: Quick reference for deploying new features to production
+- **Contents**:
+  - Pre-deployment checklist
+  - Environment variable configuration
+  - Post-deployment verification
+  - Common issues and fixes
+  - Verification URLs
+
+### Quick Reference Summary
+
+#### Recent Features (December 2, 2025)
+1. **Share Button**: Icon-only button with modal for sharing profiles on 8 social networks (LinkedIn, Facebook, X/Twitter, WhatsApp, Messenger, Snapchat, TikTok, Email)
+2. **OG Image Fix**: Fixed Open Graph images by implementing edge runtime with direct Supabase REST API calls
+3. **Sitemap**: Verified working correctly at `/sitemap.xml` with all profiles and platform pages
+
+#### Key Files Modified
+- `components/share-profile-dialog.tsx` (NEW)
+- `components/profile-top-bar.tsx`
+- `app/[username]/page.tsx`
+- `app/api/og/route.tsx`
+- `app/api/og/platform/route.tsx`
+- `app/[username]/[platform]/page.tsx`
+
+#### Environment Variables Required
+```env
+NEXT_PUBLIC_SITE_URL=https://linkin.one
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+```
+
+### Documentation Guidelines
+
+When adding new features or documentation:
+1. **Always link** new documentation files in this section
+2. Provide a **brief purpose** statement
+3. List **key contents** for quick reference
+4. Update the **Quick Reference Summary** if major features are added
+5. Keep this QWEN.md as the **single entry point** for all documentation
+
+---
+
+## 24 — Future Documentation
+
+As new features are added, link documentation here following this format:
+
+#### Feature Name
+- **File**: [`FILENAME.md`](./FILENAME.md)
+- **Purpose**: Brief description
+- **Contents**: Key topics covered
+
+This ensures all team members know where to find documentation and maintains QWEN.md as the parent document.
