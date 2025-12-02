@@ -47,7 +47,7 @@ export function SplitLayout({ profile, compact = false }: SplitLayoutProps) {
           className={`flex flex-col ${
             compact
               ? "items-center text-center"
-              : "md:items-start md:text-left items-center text-center"
+              : "md:items-start md:text-left items-center text-center md:sticky md:top-28 md:self-start"
           } ${compact ? "gap-4 pt-4" : "gap-6 pt-8"}`}
         >
           <ProfileAvatar profile={profile} compact={compact} />
