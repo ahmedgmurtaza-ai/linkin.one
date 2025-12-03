@@ -58,7 +58,7 @@ export function ProfileHeader({
         {/* Description */}
         {profile.description && (
           <p
-            className={`text-muted-foreground leading-relaxed ${
+            className={`text-foreground leading-relaxed ${
               compact ? "text-sm" : "text-base"
             }`}
           >

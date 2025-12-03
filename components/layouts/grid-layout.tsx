@@ -39,32 +39,37 @@ export function GridLayout({ profile, compact = false, isLoggedIn = false }: Gri
 
   // Get color theme classes
   const getColorClasses = () => {
-    const colorTheme = profile.colorTheme || "blue-purple";
+    const colorTheme = profile.colorTheme || "#a88bf8";
     
-    const themes = {
-      "blue-purple": {
-        header: "bg-blue-100 dark:bg-blue-950",
-        content: "bg-purple-50 dark:bg-purple-950/50",
-      },
-      "green-teal": {
-        header: "bg-green-100 dark:bg-green-950",
-        content: "bg-teal-50 dark:bg-teal-950/50",
-      },
-      "orange-pink": {
-        header: "bg-orange-100 dark:bg-orange-950",
-        content: "bg-pink-50 dark:bg-pink-950/50",
-      },
+    // Function to convert hex to RGB
+    const hexToRgb = (hex: string) => {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : { r: 168, g: 139, b: 248 };
     };
-
-    return themes[colorTheme] || themes["blue-purple"];
+    
+    const rgb = hexToRgb(colorTheme);
+    
+    // Create lighter version (40% lighter for content)
+    const lighterR = Math.min(255, rgb.r + Math.round((255 - rgb.r) * 0.4));
+    const lighterG = Math.min(255, rgb.g + Math.round((255 - rgb.g) * 0.4));
+    const lighterB = Math.min(255, rgb.b + Math.round((255 - rgb.b) * 0.4));
+    
+    return {
+      header: `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`,
+      content: `rgba(${lighterR}, ${lighterG}, ${lighterB}, 0.2)`,
+    };
   };
 
   const colors = getColorClasses();
 
   return (
-    <div className="min-h-screen">
+    <div className="" >
       {/* Header Section with theme color */}
-      <div className={colors.header}>
+      <div style={{ backgroundColor: colors.header }}>
         <div className={compact ? "px-4 py-6" : "max-w-4xl mx-auto px-4 py-12"}>
           <div className="flex flex-col items-center text-center space-y-6">
             <ProfileAvatar profile={profile} compact={compact} />
@@ -121,7 +126,7 @@ export function GridLayout({ profile, compact = false, isLoggedIn = false }: Gri
       </div>
 
       {/* Links Section with theme color */}
-      <div className={colors.content}>
+      <div >
         <div className={compact ? "px-4 py-6" : "max-w-4xl mx-auto px-4 py-12"}>
           <LinkList
             links={profile.links}
@@ -133,11 +138,11 @@ export function GridLayout({ profile, compact = false, isLoggedIn = false }: Gri
       </div>
 
       {/* Footer */}
-      <div className={colors.content}>
+      {/* <div style={{ backgroundColor: colors.content }}>
         <div className={compact ? "px-4 pb-6" : "max-w-4xl mx-auto px-4 pb-12"}>
           <ProfileFooter compact={compact} />
         </div>
-      </div>
+      </div> */}
 
       {/* Description Modal */}
       <Dialog

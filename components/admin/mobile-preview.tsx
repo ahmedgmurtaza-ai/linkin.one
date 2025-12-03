@@ -1,6 +1,5 @@
 "use client";
 
-import { ProfileLayoutRenderer } from "@/components/profile-layout";
 import type { Profile } from "@/lib/types";
 
 interface MobilePreviewProps {
@@ -8,17 +7,70 @@ interface MobilePreviewProps {
 }
 
 export function MobilePreview({ profile }: MobilePreviewProps) {
+  const layout = profile.layout || "split";
+  
+  // Get color theme classes
+  const getColorClasses = () => {
+    const colorTheme = profile.colorTheme || "#a88bf8";
+    
+    // Function to convert hex to RGB
+    const hexToRgb = (hex: string) => {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : { r: 168, g: 139, b: 248 };
+    };
+    
+    const rgb = hexToRgb(colorTheme);
+    
+    if (layout === "grid") {
+      // Grid layout uses 40% lighter for content
+      const lighterR = Math.min(255, rgb.r + Math.round((255 - rgb.r) * 0.4));
+      const lighterG = Math.min(255, rgb.g + Math.round((255 - rgb.g) * 0.4));
+      const lighterB = Math.min(255, rgb.b + Math.round((255 - rgb.b) * 0.4));
+      
+      return {
+        header: `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`,
+        content: `rgba(${lighterR}, ${lighterG}, ${lighterB}, 0.2)`,
+      };
+    } else {
+      // Split layout uses 30% lighter
+      const lighterR = Math.min(255, rgb.r + Math.round((255 - rgb.r) * 0.3));
+      const lighterG = Math.min(255, rgb.g + Math.round((255 - rgb.g) * 0.3));
+      const lighterB = Math.min(255, rgb.b + Math.round((255 - rgb.b) * 0.3));
+      
+      return {
+        left: `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`,
+        right: `rgba(${lighterR}, ${lighterG}, ${lighterB}, 0.2)`,
+      };
+    }
+  };
+
+  const colors = getColorClasses();
+
+  // For grid layout, use vertical gradient
+  const frameGradient = layout === "grid" 
+    ? `linear-gradient(to bottom, ${(colors as any).header}, ${(colors as any).content})`
+    : `linear-gradient(to right, ${(colors as any).left}, ${(colors as any).right})`;
+
   return (
     <div className="flex flex-col items-center h-full w-full py-4">
       <div className="relative w-full max-w-[420px] flex justify-center flex-1 max-h-[calc(100vh-12rem)] min-h-[600px]">
         {/* Phone frame */}
-        <div className="w-full min-w-[320px] max-w-[420px] h-full bg-linear-to-br from-primary/15 via-accent/20 to-primary/25 rounded-[48px] p-1 shadow-2xl">
+        <div 
+          className="w-full min-w-[320px] max-w-[420px] h-full rounded-[48px] p-1 shadow-2xl"
+          style={{ background: frameGradient }}
+        >
           {/* Screen */}
           <div className="w-full h-full bg-background rounded-[40px] overflow-hidden flex flex-col shadow-inner">
-            {/* Content - Use ProfileLayoutRenderer for dynamic layouts */}
-            <div className="flex-1 overflow-y-auto">
-              <ProfileLayoutRenderer profile={profile} compact />
-            </div>
+            {/* Content - iframe for live preview */}
+            <iframe
+              src={`/${profile.username}`}
+              className="flex-1 w-full h-full border-0"
+              title="Profile Preview"
+            />
           </div>
         </div>
       </div>

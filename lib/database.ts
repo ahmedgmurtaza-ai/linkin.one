@@ -42,7 +42,7 @@ function dbProfileToProfile(dbProfile: DbProfile, links: DbLink[]): Profile {
     layout: dbProfile.layout as any,
     showCategories: dbProfile.show_categories || false,
     theme: (dbProfile.theme as any) || "system",
-    colorTheme: (dbProfile.color_theme as any) || "blue-purple",
+    colorTheme: dbProfile.color_theme || "#a88bf8",
     links: links.map((link) => ({
       id: link.id,
       title: link.title,

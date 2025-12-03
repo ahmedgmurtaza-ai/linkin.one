@@ -14,7 +14,7 @@ export type ProfileLayout = "split" | "grid";
 
 export type ProfileTheme = "light" | "dark" | "system";
 
-export type ProfileColorTheme = "blue-purple" | "green-teal" | "orange-pink";
+export type ProfileColorTheme = string; // Stores hex color value
 
 export type LinkType = "url" | "file";
 

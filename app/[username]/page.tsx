@@ -29,6 +29,19 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
   } = await supabase.auth.getUser();
   const isLoggedIn = !!user;
 
+  // Get background color from profile theme
+  const colorTheme = profile.colorTheme || "#a88bf8";
+  const hexToRgb = (hex: string) => {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : { r: 168, g: 139, b: 248 };
+  };
+  const rgb = hexToRgb(colorTheme);
+  const backgroundColor = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.05)`;
+
   return (
     <ProfileThemeProvider theme={profile.theme}>
       {/* Structured Data for Profile */}
@@ -51,7 +64,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
         }}
       />
       
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen" style={{ backgroundColor }}>
         {/* <ProfileTopBar 
           username={profile.username} 
           isLoggedIn={isLoggedIn} 

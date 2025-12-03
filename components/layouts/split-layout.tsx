@@ -39,24 +39,33 @@ export function SplitLayout({ profile, compact = false, isLoggedIn = false }: Sp
 
   // Get color theme classes
   const getColorClasses = () => {
-    const colorTheme = profile.colorTheme || "blue-purple";
+    const colorTheme = profile.colorTheme || "#a88bf8";
     
-    const themes = {
-      "blue-purple": {
-        left: "bg-blue-100 dark:bg-blue-950",
-        right: "bg-purple-100 dark:bg-purple-950",
-      },
-      "green-teal": {
-        left: "bg-green-100 dark:bg-green-950",
-        right: "bg-teal-100 dark:bg-teal-950",
-      },
-      "orange-pink": {
-        left: "bg-orange-100 dark:bg-orange-950",
-        right: "bg-pink-100 dark:bg-pink-950",
-      },
+    // Function to convert hex to RGB
+    const hexToRgb = (hex: string) => {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : { r: 168, g: 139, b: 248 };
     };
-
-    return themes[colorTheme] || themes["blue-purple"];
+    
+    const rgb = hexToRgb(colorTheme);
+    const primaryColor = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+    
+    // Create lighter version (30% lighter)
+    const lighterR = Math.min(255, rgb.r + Math.round((255 - rgb.r) * 0.3));
+    const lighterG = Math.min(255, rgb.g + Math.round((255 - rgb.g) * 0.3));
+    const lighterB = Math.min(255, rgb.b + Math.round((255 - rgb.b) * 0.3));
+    const lighterColor = `rgb(${lighterR}, ${lighterG}, ${lighterB})`;
+    
+    return {
+      left: `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`,
+      right: `rgba(${lighterR}, ${lighterG}, ${lighterB}, 0.2)`,
+      leftDark: `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.1)`,
+      rightDark: `rgba(${lighterR}, ${lighterG}, ${lighterB}, 0.15)`,
+    };
   };
 
   const colors = getColorClasses();
@@ -67,7 +76,10 @@ export function SplitLayout({ profile, compact = false, isLoggedIn = false }: Sp
         className={`grid grid-cols-1 md:grid-cols-[450px_1fr] gap-0`}
       >
         {/* Left side - Profile info with theme color */}
-        <div className={`${colors.left} md:min-h-screen`}>
+        <div 
+          className="md:min-h-screen"
+          style={{ backgroundColor: colors.left }}
+        >
           <div
             className={`flex flex-col ${
               compact
@@ -137,24 +149,27 @@ export function SplitLayout({ profile, compact = false, isLoggedIn = false }: Sp
         </div>
 
         {/* Right side - Links with theme color and grid layout */}
-        <div className={`${colors.right} min-h-screen`}>
+        <div 
+          className="min-h-screen"
+          style={{ backgroundColor: colors.right }}
+        >
           <div className={`${compact ? "px-3 py-6" : "px-6 py-12 max-w-5xl mx-auto"}`}>
             <LinkList
               links={profile.links}
               compact={compact}
-              layout={compact ? "classic" : "grid"}
+              layout="grid"
               groupByCategory={profile.showCategories || false}
             />
-            {compact && (
+            {/* {compact && (
               <div className="mt-6">
                 <ProfileFooter compact />
               </div>
-            )}
-            {!compact && (
+            )} */}
+            {/* {!compact && (
               <div className="md:hidden mt-8">
                 <ProfileFooter compact={false} />
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </div>

@@ -19,13 +19,13 @@ export function LinkList({
   links,
   compact = false,
   groupByCategory = false,
-  layout = "classic",
+  layout = "split",
 }: LinkListProps) {
   // If not grouping by category, render simple layout
   if (!groupByCategory) {
-    if (layout === "grid") {
+    if (layout === "grid" || layout === "split") {
       return (
-        <div className={`grid grid-cols-2 ${compact ? "gap-2" : "gap-3"}`}>
+        <div className={`grid grid-cols-1 ${links.length > 1 ? 'md:grid-cols-2' : ''} ${compact ? "gap-2" : "gap-3"}`}>
           {links.map((link) => (
             <LinkCard key={link.id} link={link} compact={compact} />
           ))}
@@ -82,7 +82,7 @@ export function LinkList({
             </h3>
             {layout === "grid" ? (
               <div
-                className={`grid grid-cols-2 ${compact ? "gap-2" : "gap-3"}`}
+                className={`grid grid-cols-1 ${categoryLinks.length > 1 ? 'md:grid-cols-2' : ''} ${compact ? "gap-2" : "gap-3"}`}
               >
                 {categoryLinks.map((link) => (
                   <LinkCard key={link.id} link={link} compact={compact} />

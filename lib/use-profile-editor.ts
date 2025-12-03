@@ -134,7 +134,7 @@ export function useProfileEditor() {
           layout: profileData.layout as ProfileLayout,
           showCategories: profileData.show_categories || false,
           theme: (profileData.theme as any) || "system",
-          colorTheme: (profileData.color_theme as any) || "blue-purple",
+          colorTheme: profileData.color_theme || "#a88bf8",
           links: (linksData || []).map((link) => ({
             id: link.id,
             title: link.title,
