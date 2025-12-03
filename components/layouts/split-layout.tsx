@@ -37,87 +37,127 @@ export function SplitLayout({ profile, compact = false, isLoggedIn = false }: Sp
     ? profile.description.slice(0, 100) + "..."
     : profile.description;
 
+  // Get color theme classes
+  const getColorClasses = () => {
+    const colorTheme = profile.colorTheme || "blue-purple";
+    
+    const themes = {
+      "blue-purple": {
+        left: "bg-blue-100 dark:bg-blue-950",
+        right: "bg-purple-100 dark:bg-purple-950",
+      },
+      "green-teal": {
+        left: "bg-green-100 dark:bg-green-950",
+        right: "bg-teal-100 dark:bg-teal-950",
+      },
+      "orange-pink": {
+        left: "bg-orange-100 dark:bg-orange-950",
+        right: "bg-pink-100 dark:bg-pink-950",
+      },
+    };
+
+    return themes[colorTheme] || themes["blue-purple"];
+  };
+
+  const colors = getColorClasses();
+
   return (
-    <div className={compact ? "px-3 py-3" : "max-w-4xl mx-auto px-4 py-12"}>
+    <div className="min-h-screen">
       <div
-        className={`grid ${
-          compact ? "grid-cols-1 gap-4" : "md:grid-cols-2 gap-8"
-        }`}
+        className={`grid grid-cols-1 md:grid-cols-[450px_1fr] gap-0`}
       >
-        {/* Left side - Profile info */}
-        <div
-          className={`flex flex-col ${
-            compact
-              ? "items-center text-center"
-              : "md:items-start md:text-left items-center text-center md:sticky md:top-28 md:self-start"
-          } ${compact ? "gap-4 pt-4" : "gap-6 pt-8"}`}
-        >
-          <ProfileAvatar profile={profile} compact={compact} />
-          <div className={`space-y-3 ${compact ? "max-w-xs" : "max-w-sm"}`}>
-            <h1
-              className={`font-bold text-foreground tracking-tight ${
-                compact ? "text-xl" : "md:text-3xl text-2xl"
-              }`}
-            >
-              {profile.displayName}
-            </h1>
+        {/* Left side - Profile info with theme color */}
+        <div className={`${colors.left} md:min-h-screen`}>
+          <div
+            className={`flex flex-col ${
+              compact
+                ? "items-center text-center px-3 py-6"
+                : "md:items-start md:text-left items-center text-center md:sticky md:top-0 md:self-start px-10 py-12"
+            } ${compact ? "gap-4" : "gap-6"}`}
+          >
+            <ProfileAvatar profile={profile} compact={compact} />
+            <div className={`space-y-3 ${compact ? "max-w-xs" : "max-w-sm"}`}>
+              <h1
+                className={`font-bold text-foreground tracking-tight ${
+                  compact ? "text-xl" : "md:text-3xl text-2xl"
+                }`}
+              >
+                {profile.displayName}
+              </h1>
 
-            {/* Username badge */}
-            <Badge
-              variant="secondary"
-              className={`${
-                compact ? "text-xs" : "text-xs md:text-sm"
-              } font-normal`}
-            >
-              @{profile.username}
-            </Badge>
+              {/* Username badge */}
+              <Badge
+                variant="secondary"
+                className={`${
+                  compact ? "text-xs" : "text-xs md:text-sm"
+                } font-normal`}
+              >
+                @{profile.username}
+              </Badge>
 
-            {profile.description && (
-              <div className="space-y-2">
-                <p
-                  className={`text-muted-foreground leading-relaxed ${
-                    compact ? "text-sm" : "md:text-lg text-sm"
-                  }`}
-                >
-                  {truncatedDescription}
-                </p>
-                {shouldTruncate && (
-                  <button
-                    onClick={() => setIsDescriptionModalOpen(true)}
-                    className="text-primary hover:underline text-sm font-medium"
+              {profile.description && (
+                <div className="space-y-2">
+                  <p
+                    className={`text-foreground leading-relaxed ${
+                      compact ? "text-sm" : "md:text-lg text-sm"
+                    }`}
                   >
-                    Read more
-                  </button>
-                )}
+                    {truncatedDescription}
+                  </p>
+                  {shouldTruncate && (
+                    <button
+                      onClick={() => setIsDescriptionModalOpen(true)}
+                      className="text-primary hover:underline text-sm font-medium"
+                    >
+                      Read more
+                    </button>
+                  )}
+                </div>
+              )}
+
+              {/* Share Button */}
+              <div className="flex justify-center md:justify-start pt-2">
+                <ShareButton
+                  username={profile.username}
+                  displayName={profile.displayName}
+                  thumbnailUrl={profile.thumbnailUrl}
+                  description={profile.description}
+                  isLoggedIn={isLoggedIn}
+                />
+              </div>
+            </div>
+
+            {/* Footer on desktop in sidebar */}
+            {/* {!compact && (
+              <div className="hidden md:block mt-auto pt-8">
+                <ProfileFooter compact />
+              </div>
+            )} */}
+          </div>
+        </div>
+
+        {/* Right side - Links with theme color and grid layout */}
+        <div className={`${colors.right} min-h-screen`}>
+          <div className={`${compact ? "px-3 py-6" : "px-6 py-12 max-w-5xl mx-auto"}`}>
+            <LinkList
+              links={profile.links}
+              compact={compact}
+              layout={compact ? "classic" : "grid"}
+              groupByCategory={profile.showCategories || false}
+            />
+            {compact && (
+              <div className="mt-6">
+                <ProfileFooter compact />
               </div>
             )}
-
-            {/* Share Button */}
-            <div className="flex justify-center md:justify-start pt-2">
-              <ShareButton
-                username={profile.username}
-                displayName={profile.displayName}
-                thumbnailUrl={profile.thumbnailUrl}
-                description={profile.description}
-                isLoggedIn={isLoggedIn}
-              />
-            </div>
+            {!compact && (
+              <div className="md:hidden mt-8">
+                <ProfileFooter compact={false} />
+              </div>
+            )}
           </div>
-
-          {/* {!compact && <ProfileFooter />} */}
-        </div>
-
-        {/* Right side - Links */}
-        <div className={`flex flex-col ${compact ? "gap-1.5" : "gap-3"}`}>
-          <LinkList
-            links={profile.links}
-            compact={compact}
-            layout="classic"
-            groupByCategory={profile.showCategories || false}
-          />
         </div>
       </div>
-      {compact && <ProfileFooter compact />}
 
       {/* Description Modal */}
       <Dialog
@@ -130,7 +170,7 @@ export function SplitLayout({ profile, compact = false, isLoggedIn = false }: Sp
           </DialogHeader>
           <div className="py-4">
             {/* Avatar floated to the left on desktop, centered on mobile */}
-            <div className="md:float-left md:mr-6 md:mb-4 flex justify-center mb-6 md:mb-0">
+            <div className="md:float-left md:mr-6 flex justify-center mb-6 md:mb-0">
               <Avatar className="h-40 w-40 ring-4 ring-border/30 shadow-lg">
                 <AvatarImage
                   src={profile.thumbnailUrl || "/placeholder.svg"}

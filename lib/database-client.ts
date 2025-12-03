@@ -49,6 +49,7 @@ export async function updateProfile(
   if (updates.showCategories !== undefined)
     dbUpdates.show_categories = updates.showCategories;
   if (updates.theme !== undefined) dbUpdates.theme = updates.theme;
+  if (updates.colorTheme !== undefined) dbUpdates.color_theme = updates.colorTheme;
 
   const { error } = await supabase
     .from("profiles")

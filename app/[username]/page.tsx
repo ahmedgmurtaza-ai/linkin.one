@@ -52,11 +52,11 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
       />
       
       <div className="min-h-screen bg-background">
-        <ProfileTopBar 
+        {/* <ProfileTopBar 
           username={profile.username} 
           isLoggedIn={isLoggedIn} 
-        />
-        <main className="pt-16 pb-24">
+        /> */}
+        <main className="pb-24">
           <ProfileLayoutRenderer profile={profile} isLoggedIn={isLoggedIn} />
         </main>
         <BuiltWithLinkin username={profile.username} />

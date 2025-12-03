@@ -14,6 +14,8 @@ export type ProfileLayout = "classic" | "split" | "grid";
 
 export type ProfileTheme = "light" | "dark" | "system";
 
+export type ProfileColorTheme = "blue-purple" | "green-teal" | "orange-pink";
+
 export type LinkType = "url" | "file";
 
 export interface ProfileLink {
@@ -44,6 +46,7 @@ export interface Profile {
   layout: ProfileLayout;
   showCategories?: boolean;
   theme?: ProfileTheme;
+  colorTheme?: ProfileColorTheme;
   analytics?: ProfileAnalytics;
 }
 

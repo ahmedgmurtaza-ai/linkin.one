@@ -27,7 +27,7 @@ export function ProfileHeader({
 
   return (
     <div
-      className={`flex flex-col items-center text-center ${
+      className={`*:flex flex-col items-center text-center ${
         compact ? "gap-4" : "gap-6"
       }`}
     >

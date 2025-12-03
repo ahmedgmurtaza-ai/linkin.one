@@ -8,8 +8,11 @@ import { LinkListEditor } from "@/components/admin/link-list-editor";
 import { MobilePreview } from "@/components/admin/mobile-preview";
 import { AdminTopBar } from "@/components/admin/admin-top-bar";
 import { LayoutSelector } from "@/components/admin/layout-selector";
+import { ThemeSelector } from "@/components/admin/theme-selector";
+import { ColorThemeSelector } from "@/components/admin/color-theme-selector";
 import { AdminSidebar } from "@/components/admin/admin-sidebar";
 import { AnalyticsPanel } from "@/components/admin/analytics-panel";
+import type { ProfileTheme, ProfileColorTheme } from "@/lib/types";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
@@ -146,10 +149,52 @@ export default function AdminClient() {
                 )}
 
                 {activeTab === "layout" && (
-                  <LayoutSelector
-                    currentLayout={profile.layout}
-                    onSelect={setLayout}
-                  />
+                  <div className="space-y-6">
+                    <div>
+                      <h2 className="text-2xl font-bold text-foreground mb-2">
+                        Layout & Appearance
+                      </h2>
+                      <p className="text-sm text-muted-foreground">
+                        Customize how your profile looks and feels
+                      </p>
+                    </div>
+
+                    {/* Layout Selection */}
+                    <div className="bg-card rounded-lg border p-6">
+                      <h3 className="text-lg font-semibold mb-2">Profile Layout</h3>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Choose how your profile content is organized
+                      </p>
+                      <LayoutSelector
+                        currentLayout={profile.layout}
+                        onSelect={setLayout}
+                      />
+                    </div>
+
+                    {/* Theme Mode */}
+                    <div className="bg-card rounded-lg border p-6">
+                      <h3 className="text-lg font-semibold mb-2">Theme Mode</h3>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Choose between light, dark, or system theme
+                      </p>
+                      <ThemeSelector
+                        currentTheme={profile.theme}
+                        onSelect={(theme: ProfileTheme) => updateProfile({ theme })}
+                      />
+                    </div>
+
+                    {/* Color Theme */}
+                    <div className="bg-card rounded-lg border p-6">
+                      <h3 className="text-lg font-semibold mb-2">Color Theme</h3>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Select a color combination for your profile (applies to split layout)
+                      </p>
+                      <ColorThemeSelector
+                        currentTheme={profile.colorTheme}
+                        onSelect={(colorTheme: ProfileColorTheme) => updateProfile({ colorTheme })}
+                      />
+                    </div>
+                  </div>
                 )}
 
                 {activeTab === "analytics" && (
