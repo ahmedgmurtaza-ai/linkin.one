@@ -72,7 +72,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
         <main className="pb-24">
           <ProfileLayoutRenderer profile={profile} isLoggedIn={isLoggedIn} />
         </main>
-        <BuiltWithLinkin username={profile.username} />
+        <BuiltWithLinkin username={profile.username} colorTheme={profile.colorTheme} />
       </div>
     </ProfileThemeProvider>
   );

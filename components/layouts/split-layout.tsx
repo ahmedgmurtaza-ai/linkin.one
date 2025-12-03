@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import type { Profile } from "@/lib/types";
 import { ProfileAvatar } from "../profile-avatar";
+import { ProfileTopBar } from "../profile-top-bar";
 
 interface SplitLayoutProps {
   profile: Profile;
@@ -31,11 +32,6 @@ export function SplitLayout({ profile, compact = false, isLoggedIn = false }: Sp
     .toUpperCase()
     .slice(0, 2);
 
-  const shouldTruncate =
-    profile.description && profile.description.length > 100;
-  const truncatedDescription = shouldTruncate
-    ? profile.description.slice(0, 100) + "..."
-    : profile.description;
 
   // Get color theme classes
   const getColorClasses = () => {
@@ -72,8 +68,9 @@ export function SplitLayout({ profile, compact = false, isLoggedIn = false }: Sp
 
   return (
     <div className="min-h-screen">
+      <ProfileTopBar username={profile.username} isLoggedIn={isLoggedIn} colorTheme={profile.colorTheme} />
       <div
-        className={`grid grid-cols-1 md:grid-cols-[450px_1fr] gap-0`}
+        className={`grid grid-cols-1 md:grid-cols-[300px_1fr] lg:grid-cols-[500px_1fr] gap-0`}
       >
         {/* Left side - Profile info with theme color */}
         <div 
@@ -114,16 +111,16 @@ export function SplitLayout({ profile, compact = false, isLoggedIn = false }: Sp
                       compact ? "text-sm" : "md:text-lg text-sm"
                     }`}
                   >
-                    {truncatedDescription}
+                    {profile.description}
                   </p>
-                  {shouldTruncate && (
+                  {/* {shouldTruncate && (
                     <button
                       onClick={() => setIsDescriptionModalOpen(true)}
                       className="text-primary hover:underline text-sm font-medium"
                     >
                       Read more
                     </button>
-                  )}
+                  )} */}
                 </div>
               )}
 

@@ -62,7 +62,7 @@ export function ColorThemeSelector({
                 }}
                 className={`relative flex flex-col items-center gap-2 p-2 rounded-lg border-2 transition-all hover:scale-105 ${
                   isSelected
-                    ? "border-primary ring-2 ring-primary ring-offset-2"
+                    ? "border-primary"
                     : "border-transparent hover:border-muted-foreground/30"
                 }`}
                 title={color.label}

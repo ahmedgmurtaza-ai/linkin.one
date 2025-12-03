@@ -370,9 +370,9 @@ export function ProfileForm({ profile, onUpdate }: ProfileFormProps) {
                   </Label>
                   <Input
                     id="thumbnailUrl"
-                    value={externalUrl}
+                    value={externalUrl.includes("data:image") ? "" : externalUrl}
                     onChange={(e) => handleExternalUrlChange(e.target.value)}
-                    placeholder="https://example.com/avatar.jpg"
+                    placeholder=""
                     className="h-9"
                   />
                 </TabsContent>

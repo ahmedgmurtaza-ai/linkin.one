@@ -207,7 +207,7 @@ export default function AdminClient() {
           {/* Preview panel - separate full-height column */}
           <div className="hidden xl:flex w-[400px] 2xl:w-[500px] bg-muted/30">
             <div className="flex-1 flex items-center justify-center p-8">
-              <MobilePreview profile={profile} />
+              <MobilePreview profile={profile} saving={saving} />
             </div>
           </div>
         </div>

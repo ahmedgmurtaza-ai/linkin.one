@@ -6,9 +6,10 @@ import { Link2 } from "lucide-react";
 
 interface BuiltWithLinkinProps {
   username?: string;
+  colorTheme?: string;
 }
 
-export function BuiltWithLinkin({ username }: BuiltWithLinkinProps) {
+export function BuiltWithLinkin({ username, colorTheme = "#a88bf8" }: BuiltWithLinkinProps) {
   return (
     <div className="flex justify-center">
       <Link
@@ -17,7 +18,7 @@ export function BuiltWithLinkin({ username }: BuiltWithLinkinProps) {
         rel="noopener noreferrer"
         // className="mb-6 inline-flex items-center justify-center gap-2 rounded-full  px-6 py-3 shadow-lg hover:shadow-xl transition-all hover:scale-105 group"
       >
-<Button  size="lg" variant={"default"} className="mb-6 inline-flex items-center justify-center gap-2 rounded-full  px-6 py-3 shadow-lg hover:shadow-xl transition-all hover:scale-105 group ">
+<Button  size="lg" variant={"default"} style={{ backgroundColor: colorTheme }} className="mb-6 inline-flex items-center justify-center gap-2 rounded-full  px-6 py-3 shadow-lg hover:shadow-xl transition-all hover:scale-105 group ">
 
       <span className="flex items-center gap-2 ">
           {username ? (

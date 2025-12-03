@@ -25,7 +25,7 @@ export function LinkList({
   if (!groupByCategory) {
     if (layout === "grid" || layout === "split") {
       return (
-        <div className={`grid grid-cols-1 ${links.length > 1 ? 'md:grid-cols-2' : ''} ${compact ? "gap-2" : "gap-3"}`}>
+        <div className={`grid grid-cols-1 md:grid-cols-2 ${compact ? "gap-2" : "gap-3"}`}>
           {links.map((link) => (
             <LinkCard key={link.id} link={link} compact={compact} />
           ))}

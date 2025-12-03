@@ -1,12 +1,14 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
 import type { Profile } from "@/lib/types";
 
 interface MobilePreviewProps {
   profile: Profile;
+  saving?: boolean;
 }
 
-export function MobilePreview({ profile }: MobilePreviewProps) {
+export function MobilePreview({ profile, saving = false }: MobilePreviewProps) {
   const layout = profile.layout || "split";
   
   // Get color theme classes
@@ -51,17 +53,17 @@ export function MobilePreview({ profile }: MobilePreviewProps) {
   const colors = getColorClasses();
 
   // For grid layout, use vertical gradient
-  const frameGradient = layout === "grid" 
-    ? `linear-gradient(to bottom, ${(colors as any).header}, ${(colors as any).content})`
-    : `linear-gradient(to right, ${(colors as any).left}, ${(colors as any).right})`;
+  // const frameGradient = layout === "grid" 
+  //   ? `linear-gradient(to bottom, ${(colors as any).header}, ${(colors as any).content})`
+  //   : `linear-gradient(to right, ${(colors as any).left}, ${(colors as any).right})`;
 
   return (
-    <div className="flex flex-col items-center h-full w-full py-4">
+    <div className="flex flex-col items-center h-full w-full py-4 relative">
       <div className="relative w-full max-w-[420px] flex justify-center flex-1 max-h-[calc(100vh-12rem)] min-h-[600px]">
         {/* Phone frame */}
         <div 
-          className="w-full min-w-[320px] max-w-[420px] h-full rounded-[48px] p-1 shadow-2xl"
-          style={{ background: frameGradient }}
+          className="w-full min-w-[320px] max-w-[420px] h-full rounded-[48px] p-1 shadow-2xl border-2 "
+          // style={{ background: frameGradient }}
         >
           {/* Screen */}
           <div className="w-full h-full bg-background rounded-[40px] overflow-hidden flex flex-col shadow-inner">
@@ -73,6 +75,16 @@ export function MobilePreview({ profile }: MobilePreviewProps) {
             />
           </div>
         </div>
+
+        {/* Loading overlay */}
+        {saving && (
+          <div className="absolute inset-0 bg-background/80 backdrop-blur-sm rounded-[48px] flex items-center justify-center z-10">
+            <div className="flex flex-col items-center gap-3">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              <span className="text-sm text-muted-foreground">Updating...</span>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

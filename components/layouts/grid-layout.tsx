@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import type { Profile } from "@/lib/types";
 import { ProfileAvatar } from "../profile-avatar";
+import { ProfileTopBar } from "../profile-top-bar";
 
 interface GridLayoutProps {
   profile: Profile;
@@ -31,11 +32,11 @@ export function GridLayout({ profile, compact = false, isLoggedIn = false }: Gri
     .toUpperCase()
     .slice(0, 2);
 
-  const shouldTruncate =
-    profile.description && profile.description.length > 100;
-  const truncatedDescription = shouldTruncate
-    ? profile.description.slice(0, 100) + "..."
-    : profile.description;
+  // const shouldTruncate =
+  //   profile.description && profile.description.length > 100;
+  // const truncatedDescription = shouldTruncate
+  //   ? profile.description.slice(0, 100) + "..."
+  //   : profile.description;
 
   // Get color theme classes
   const getColorClasses = () => {
@@ -68,6 +69,7 @@ export function GridLayout({ profile, compact = false, isLoggedIn = false }: Gri
 
   return (
     <div className="" >
+      <ProfileTopBar username={profile.username} isLoggedIn={isLoggedIn} colorTheme={profile.colorTheme} />
       {/* Header Section with theme color */}
       <div style={{ backgroundColor: colors.header }}>
         <div className={compact ? "px-4 py-6" : "max-w-4xl mx-auto px-4 py-12"}>
@@ -98,16 +100,16 @@ export function GridLayout({ profile, compact = false, isLoggedIn = false }: Gri
                       compact ? "text-sm" : "md:text-lg text-sm"
                     }`}
                   >
-                    {truncatedDescription}
+                    {profile.description}
                   </p>
-                  {shouldTruncate && (
+                  {/* {shouldTruncate && (
                     <button
                       onClick={() => setIsDescriptionModalOpen(true)}
                       className="text-primary hover:underline text-sm font-medium"
                     >
                       Read more
                     </button>
-                  )}
+                  )} */}
                 </div>
               )}
 
