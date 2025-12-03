@@ -10,7 +10,7 @@ export type LinkCategory =
   | "resources"
   | "others";
 
-export type ProfileLayout = "classic" | "split" | "grid";
+export type ProfileLayout = "split" | "grid";
 
 export type ProfileTheme = "light" | "dark" | "system";
 
@@ -93,13 +93,8 @@ export const LAYOUT_OPTIONS: {
   label: string;
   description: string;
 }[] = [
-  {
-    value: "classic",
-    label: "Classic",
-    description: "Vertical list with categories",
-  },
-  { value: "split", label: "Split", description: "Profile left, links right" },
-  { value: "grid", label: "Grid", description: "Links in 2-column grid" },
+  { value: "split", label: "Split", description: "Profile left, links right in 2 columns" },
+  { value: "grid", label: "Grid", description: "Centered header with 2-column grid links" },
 ];
 
 // Platform to category mapping - auto-assign categories based on platform

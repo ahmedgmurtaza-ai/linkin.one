@@ -16,7 +16,7 @@ const DEFAULT_PROFILE: Profile = {
   displayName: "",
   description: "",
   thumbnailUrl: "",
-  layout: "classic",
+  layout: "split",
   links: [],
 };
 
@@ -85,7 +85,7 @@ export function useProfileEditor() {
                 display_name: displayName,
                 description: "Welcome to my linkin.one profile!",
                 thumbnail_url: avatarUrl,
-                layout: "classic",
+                layout: "split",
               })
               .select()
               .limit(1);

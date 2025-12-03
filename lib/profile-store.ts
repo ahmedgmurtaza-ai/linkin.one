@@ -8,7 +8,7 @@ export const DEMO_PROFILES: Record<string, Profile> = {
     description:
       "Software Engineer & Open Source Enthusiast. Building products that matter.",
     thumbnailUrl: "/professional-man-headshot.png",
-    layout: "classic",
+    layout: "split",
     showCategories: false,
     theme: "system",
     links: [

@@ -172,7 +172,7 @@ export default function AdminClient() {
                     </div>
 
                     {/* Theme Mode */}
-                    <div className="bg-card rounded-lg border p-6">
+                    <div className="bg-card rounded-lg border p-6 hidden">
                       <h3 className="text-lg font-semibold mb-2">Theme Mode</h3>
                       <p className="text-sm text-muted-foreground mb-4">
                         Choose between light, dark, or system theme
