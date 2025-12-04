@@ -1,0 +1,288 @@
+{
+  "categories": [
+    {
+      "id": "social",
+      "title": "Social Media",
+      "description": "Connect your social media profiles"
+    },
+    {
+      "id": "professional",
+      "title": "Professional",
+      "description": "Share your professional profiles"
+    },
+    {
+      "id": "content",
+      "title": "Content & Media",
+      "description": "Showcase your content creation"
+    },
+    {
+      "id": "communication",
+      "title": "Communication",
+      "description": "Direct communication channels"
+    },
+    {
+      "id": "music",
+      "title": "Music & Audio",
+      "description": "Share your music and podcasts"
+    },
+    {
+      "id": "design",
+      "title": "Design & Creative",
+      "description": "Display your creative work"
+    },
+    {
+      "id": "streaming",
+      "title": "Live Streaming",
+      "description": "Share your live streaming channels"
+    },
+    {
+      "id": "documents",
+      "title": "Documents & Files",
+      "description": "Share important documents"
+    },
+    {
+      "id": "other",
+      "title": "Other",
+      "description": "Custom links and websites"
+    }
+  ],
+  "platforms": [
+    {
+      "id": "twitter",
+      "title": "Twitter",
+      "category": "social",
+      "color": "#1DA1F2",
+      "textColor": "#FFFFFF",
+      "icon": "twitter",
+      "urlPattern": "twitter.com",
+      "placeholder": "https://twitter.com/username"
+    },
+    {
+      "id": "x",
+      "title": "X (Twitter)",
+      "category": "social",
+      "color": "#000000",
+      "textColor": "#FFFFFF",
+      "icon": "x",
+      "urlPattern": "x.com",
+      "placeholder": "https://x.com/username"
+    },
+    {
+      "id": "linkedin",
+      "title": "LinkedIn",
+      "category": "professional",
+      "color": "#0A66C2",
+      "textColor": "#FFFFFF",
+      "icon": "linkedin",
+      "urlPattern": "linkedin.com",
+      "placeholder": "https://linkedin.com/in/username"
+    },
+    {
+      "id": "github",
+      "title": "GitHub",
+      "category": "professional",
+      "color": "#181717",
+      "textColor": "#FFFFFF",
+      "icon": "github",
+      "urlPattern": "github.com",
+      "placeholder": "https://github.com/username"
+    },
+    {
+      "id": "instagram",
+      "title": "Instagram",
+      "category": "social",
+      "color": "#E4405F",
+      "gradient": "linear-gradient(45deg, #833AB4, #FD1D1D, #F77737)",
+      "textColor": "#FFFFFF",
+      "icon": "instagram",
+      "urlPattern": "instagram.com",
+      "placeholder": "https://instagram.com/username"
+    },
+    {
+      "id": "youtube",
+      "title": "YouTube",
+      "category": "content",
+      "color": "#FF0000",
+      "textColor": "#FFFFFF",
+      "icon": "youtube",
+      "urlPattern": "youtube.com",
+      "placeholder": "https://youtube.com/@username"
+    },
+    {
+      "id": "facebook",
+      "title": "Facebook",
+      "category": "social",
+      "color": "#1877F2",
+      "textColor": "#FFFFFF",
+      "icon": "facebook",
+      "urlPattern": "facebook.com",
+      "placeholder": "https://facebook.com/username"
+    },
+    {
+      "id": "tiktok",
+      "title": "TikTok",
+      "category": "content",
+      "color": "#000000",
+      "textColor": "#FFFFFF",
+      "icon": "tiktok",
+      "urlPattern": "tiktok.com",
+      "placeholder": "https://tiktok.com/@username"
+    },
+    {
+      "id": "discord",
+      "title": "Discord",
+      "category": "communication",
+      "color": "#5865F2",
+      "textColor": "#FFFFFF",
+      "icon": "discord",
+      "urlPattern": "discord.gg",
+      "placeholder": "https://discord.gg/invite"
+    },
+    {
+      "id": "telegram",
+      "title": "Telegram",
+      "category": "communication",
+      "color": "#26A5E4",
+      "textColor": "#FFFFFF",
+      "icon": "telegram",
+      "urlPattern": "t.me",
+      "placeholder": "https://t.me/username"
+    },
+    {
+      "id": "whatsapp",
+      "title": "WhatsApp",
+      "category": "communication",
+      "color": "#25D366",
+      "textColor": "#FFFFFF",
+      "icon": "whatsapp",
+      "urlPattern": "wa.me",
+      "placeholder": "https://wa.me/1234567890"
+    },
+    {
+      "id": "spotify",
+      "title": "Spotify",
+      "category": "music",
+      "color": "#1DB954",
+      "textColor": "#FFFFFF",
+      "icon": "spotify",
+      "urlPattern": "spotify.com",
+      "placeholder": "https://open.spotify.com/artist/..."
+    },
+    {
+      "id": "soundcloud",
+      "title": "SoundCloud",
+      "category": "music",
+      "color": "#FF5500",
+      "textColor": "#FFFFFF",
+      "icon": "soundcloud",
+      "urlPattern": "soundcloud.com",
+      "placeholder": "https://soundcloud.com/username"
+    },
+    {
+      "id": "twitch",
+      "title": "Twitch",
+      "category": "streaming",
+      "color": "#9146FF",
+      "textColor": "#FFFFFF",
+      "icon": "twitch",
+      "urlPattern": "twitch.tv",
+      "placeholder": "https://twitch.tv/username"
+    },
+    {
+      "id": "medium",
+      "title": "Medium",
+      "category": "content",
+      "color": "#000000",
+      "textColor": "#FFFFFF",
+      "icon": "medium",
+      "urlPattern": "medium.com",
+      "placeholder": "https://medium.com/@username"
+    },
+    {
+      "id": "devto",
+      "title": "Dev.to",
+      "category": "professional",
+      "color": "#000000",
+      "textColor": "#FFFFFF",
+      "icon": "devto",
+      "urlPattern": "dev.to",
+      "placeholder": "https://dev.to/username"
+    },
+    {
+      "id": "substack",
+      "title": "Substack",
+      "category": "content",
+      "color": "#FF6719",
+      "textColor": "#FFFFFF",
+      "icon": "substack",
+      "urlPattern": "substack.com",
+      "placeholder": "https://username.substack.com"
+    },
+    {
+      "id": "dribbble",
+      "title": "Dribbble",
+      "category": "design",
+      "color": "#EA4C89",
+      "textColor": "#FFFFFF",
+      "icon": "dribbble",
+      "urlPattern": "dribbble.com",
+      "placeholder": "https://dribbble.com/username"
+    },
+    {
+      "id": "behance",
+      "title": "Behance",
+      "category": "design",
+      "color": "#1769FF",
+      "textColor": "#FFFFFF",
+      "icon": "behance",
+      "urlPattern": "behance.net",
+      "placeholder": "https://behance.net/username"
+    },
+    {
+      "id": "resume",
+      "title": "Resume",
+      "category": "documents",
+      "color": "#6366F1",
+      "textColor": "#FFFFFF",
+      "icon": "resume",
+      "placeholder": "Upload your resume PDF"
+    },
+    {
+      "id": "pdf",
+      "title": "PDF Document",
+      "category": "documents",
+      "color": "#DC2626",
+      "textColor": "#FFFFFF",
+      "icon": "pdf",
+      "placeholder": "Upload a PDF file"
+    },
+    {
+      "id": "email",
+      "title": "Email",
+      "category": "communication",
+      "color": "#6B7280",
+      "textColor": "#FFFFFF",
+      "icon": "email",
+      "urlPattern": "mailto:",
+      "placeholder": "mailto:your@email.com"
+    },
+    {
+      "id": "website",
+      "title": "Website",
+      "category": "other",
+      "color": "#6B7280",
+      "textColor": "#FFFFFF",
+      "icon": "website",
+      "placeholder": "https://yourwebsite.com"
+    },
+    {
+      "id": "default",
+      "title": "Custom Link",
+      "category": "other",
+      "color": "#6B7280",
+      "textColor": "#FFFFFF",
+      "icon": "default",
+      "placeholder": "https://example.com"
+    }
+  ]
+}

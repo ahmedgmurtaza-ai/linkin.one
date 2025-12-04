@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ArrowRight } from "lucide-react"
 import { FloatingIcons } from "./floating-icons"
+import { AnimatedUrlShowcase } from "./animated-url-showcase"
 
 export function HeroSection() {
   const [username, setUsername] = useState("")
@@ -26,8 +27,6 @@ export function HeroSection() {
 
   return (
     <div className="relative min-h-[90vh] flex items-center justify-center overflow-hidden px-4">
-      {/* Floating Icons Background */}
-      <FloatingIcons />
 
       {/* Gradient Background */}
       <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-background to-accent/5" />
@@ -35,27 +34,40 @@ export function HeroSection() {
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto text-center space-y-8">
         <div className="space-y-6">
-          <div className="inline-block">
-            <span className="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-semibold border border-primary/20">
-              ✨ All your links in one place
-            </span>
-          </div>
-          <h1 className="text-5xl md:text-7xl font-bold text-foreground tracking-tight leading-tight">
+          <h1 className="text-4xl md:text-7xl font-bold text-foreground tracking-tight leading-tight">
             One Link for
             <br />
             <span className="text-primary bg-clip-text">Everything You Share</span>
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Consolidate all your social media, portfolio, resume, and important
-            links in one beautiful, customizable profile
+          <p className="text-xl font-medium  text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Consolidate all your{" "}
+            <span className="px-2 py-1 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-md font-medium">
+              social media
+            </span>
+            ,{" "}
+            <span className="px-2 py-1 bg-purple-500/10 text-purple-600 dark:text-purple-400 rounded-md font-medium">
+              portfolio
+            </span>
+            ,{" "}
+            <span className="px-2 py-1 bg-green-500/10 text-green-600 dark:text-green-400 rounded-md font-medium">
+              resume
+            </span>
+            , and{" "}
+            <span className="px-2 py-1 bg-orange-500/10 text-orange-600 dark:text-orange-400 rounded-md font-medium">
+              projects
+            </span>{" "}
+            in one beautiful, customizable profile
           </p>
         </div>
 
+        {/* Animated URL Showcase */}
+        <AnimatedUrlShowcase />
+
         {/* Username Input CTA */}
-        <div className="max-w-md mx-auto space-y-4">
-          <div className="flex gap-2">
+        <div className="max-w-2xl mx-auto space-y-4">
+          <div className="flex gap-3">
             <div className="relative flex-1">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+              <span className="absolute left-5 top-1/2 -translate-y-1/2 text-muted-foreground text-3xl font-medium">
                 linkin.one/
               </span>
               <Input
@@ -64,21 +76,19 @@ export function HeroSection() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="pl-[85px] h-12 text-lg"
+                className="pl-44 h-20 text-3xl font-medium"
+                style={{ fontSize: '1.875rem' }}
               />
             </div>
             <Button
               size="lg"
               onClick={handleSecureUsername}
-              className="gap-2 h-12 px-6"
+              className="gap-2 h-20 px-8 text-xl font-semibold"
             >
               Secure
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-5 w-5" />
             </Button>
           </div>
-          <p className="text-sm text-muted-foreground">
-            Free to start • No credit card required
-          </p>
         </div>
 
         {/* Stats */}
