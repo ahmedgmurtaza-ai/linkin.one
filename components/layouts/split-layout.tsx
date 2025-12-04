@@ -74,14 +74,14 @@ export function SplitLayout({ profile, compact = false, isLoggedIn = false }: Sp
       >
         {/* Left side - Profile info with theme color */}
         <div 
-          className="md:min-h-screen"
+          className="md:min-h-screen md:sticky md:top-0 md:self-start md:h-screen md:overflow-y-auto"
           style={{ backgroundColor: colors.left }}
         >
           <div
             className={`flex flex-col ${
               compact
                 ? "items-center text-center px-3 py-6"
-                : "md:items-start md:text-left items-center text-center md:sticky md:top-0 md:self-start px-10 py-12"
+                : "md:items-start md:text-left items-center text-center px-10 py-12"
             } ${compact ? "gap-4" : "gap-6"}`}
           >
             <ProfileAvatar profile={profile} compact={compact} />
