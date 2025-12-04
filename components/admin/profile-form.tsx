@@ -455,7 +455,7 @@ export function ProfileForm({ profile, onUpdate }: ProfileFormProps) {
         </div>
       </div>
 
-      {/* Appearance Section */}
+      {/* Appearance Section
       <div className="bg-card rounded-lg p-6 shadow-sm">
         <div className="mb-5">
           <h3 className="text-lg font-semibold text-foreground">Appearance</h3>
@@ -467,7 +467,7 @@ export function ProfileForm({ profile, onUpdate }: ProfileFormProps) {
           currentTheme={profile.theme}
           onSelect={(theme: ProfileTheme) => onUpdate({ theme })}
         />
-      </div>
+      </div> */}
     </div>
   );
 }

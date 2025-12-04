@@ -15,6 +15,7 @@ import {
 import type { Profile } from "@/lib/types";
 import { ProfileAvatar } from "../profile-avatar";
 import { ProfileTopBar } from "../profile-top-bar";
+import { Logo } from "../logo";
 
 interface SplitLayoutProps {
   profile: Profile;
@@ -136,6 +137,10 @@ export function SplitLayout({ profile, compact = false, isLoggedIn = false }: Sp
               </div>
             </div>
 
+<div className="absolute bottom-6 left-6 flex justify-between">
+  <Logo/>
+</div>
+
             {/* Footer on desktop in sidebar */}
             {/* {!compact && (
               <div className="hidden md:block mt-auto pt-8">
@@ -149,6 +154,7 @@ export function SplitLayout({ profile, compact = false, isLoggedIn = false }: Sp
         <div 
           className="min-h-screen"
           style={{ backgroundColor: colors.right }}
+          // style={{ backgroundColor: "#fbf6ef" }}
         >
           <div className={`${compact ? "px-3 py-6" : "px-6 py-12 max-w-5xl mx-auto"}`}>
             <LinkList

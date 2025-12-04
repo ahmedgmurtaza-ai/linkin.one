@@ -240,38 +240,12 @@ export default function HomePage() {
       {/* Hero Section */}
       <HeroSection />
 
-      {/* Stats Section */}
-      <StatsSection />
-
-      {/* How It Works */}
-      <HowItWorksSection />
-
-      {/* Feature Sections */}
-      {features.map((feature, index) => (
-        <FeatureSection key={index} {...feature} />
-      ))}
-
-      {/* Testimonials */}
-      <TestimonialCarousel testimonials={testimonials} />
-
-      {/* User Profiles Showcase */}
-      <ProfileShowcase profiles={userProfiles} />
-
-      {/* Live Examples */}
-      <LiveExamplesSection />
-
-      {/* Pricing Preview */}
-      <PricingPreviewSection />
 
       {/* FAQ Section */}
       <FAQSection />
 
-      {/* Final CTA */}
-      <CTASection />
 
-      {/* Footer */}
-      <Footer />
-      
+     
       {/* Structured Data for SEO */}
       <script
         type="application/ld+json"

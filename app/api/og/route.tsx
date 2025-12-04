@@ -1,9 +1,7 @@
-  import { ImageResponse } from 'next/og';
-  import { NextRequest } from 'next/server';
+import { ImageResponse } from '@vercel/og';
+import { NextRequest } from 'next/server';
 
-  export const runtime = 'edge';
-
-  // Fetch profile data directly in edge runtime
+export const runtime = 'edge';  // Fetch profile data directly in edge runtime
   async function getProfile(username: string) {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;

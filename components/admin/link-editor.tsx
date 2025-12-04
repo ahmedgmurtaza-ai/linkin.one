@@ -6,6 +6,7 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Card } from "@/components/ui/card";
 import {
   Select,
   SelectContent,
@@ -24,6 +25,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { ProfileLink, LinkType, LinkCategory } from "@/lib/types";
 import { CATEGORY_LABELS, PLATFORM_CATEGORY_MAP } from "@/lib/types";
 import { Upload, Link, FileText } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface LinkEditorProps {
   link?: ProfileLink;
@@ -340,7 +342,7 @@ export function LinkEditor({
             </TabsList>
 
             <TabsContent value="url" className="space-y-4 mt-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
                   <Label>Platform</Label>
                   <Select value={platform} onValueChange={handlePlatformChange}>
@@ -382,7 +384,7 @@ export function LinkEditor({
                   <div className="space-y-2">
                     <Label htmlFor="username">Username / Handle</Label>
                     <div className="flex items-center gap-2">
-                      <span className="text-sm text-muted-foreground whitespace-nowrap">
+                      <span className="shrink-0 text-sm text-muted-foreground">
                         {platformConfig.prefix}
                       </span>
                       <Input
@@ -420,7 +422,7 @@ export function LinkEditor({
             </TabsContent>
 
             <TabsContent value="file" className="space-y-4 mt-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="file-title">Title</Label>
                   <Input
@@ -452,12 +454,13 @@ export function LinkEditor({
               </div>
 
               {/* File Drop Zone */}
-              <div
-                className={`border border-dashed rounded-lg p-6 text-center transition-colors cursor-pointer ${
+              <Card
+                className={cn(
+                  "border-dashed p-6 text-center transition-all cursor-pointer",
                   isDragging
                     ? "border-primary bg-primary/10"
-                    : "border-border/50 hover:border-muted-foreground/50"
-                }`}
+                    : "hover:border-muted-foreground/50 hover:bg-accent/50"
+                )}
                 onDragOver={(e) => {
                   e.preventDefault();
                   setIsDragging(true);
@@ -492,12 +495,12 @@ export function LinkEditor({
                     </p>
                   </div>
                 )}
-              </div>
+              </Card>
             </TabsContent>
           </Tabs>
         ) : (
           <div className="space-y-4 mt-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <Label>Platform</Label>
                 <Select value={platform} onValueChange={handlePlatformChange}>
@@ -537,7 +540,7 @@ export function LinkEditor({
             <div className="space-y-2">
               <Label htmlFor="username">Username / Handle</Label>
               <div className="flex items-center gap-2">
-                <span className="text-sm text-muted-foreground whitespace-nowrap">
+                <span className="shrink-0 text-sm text-muted-foreground">
                   {platformConfig.prefix}
                 </span>
                 <Input
@@ -552,7 +555,7 @@ export function LinkEditor({
           </div>
         )}
 
-        <DialogFooter className="mt-4">
+        <DialogFooter className="gap-2">
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>

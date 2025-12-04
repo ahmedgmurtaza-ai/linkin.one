@@ -13,12 +13,14 @@ interface ColorThemeSelectorProps {
 }
 
 const PRESET_COLORS = [
-  { value: "#d5534d", label: "Coral Red", rgb: "rgb(213, 83, 77)" },
-  { value: "#a88bf8", label: "Purple", rgb: "rgb(168, 139, 248)" },
-  { value: "#93c5f9", label: "Sky Blue", rgb: "rgb(147, 197, 249)" },
-  { value: "#e18c45", label: "Orange", rgb: "rgb(225, 140, 69)" },
-  { value: "#ffd699", label: "Peach", rgb: "rgb(255, 214, 153)" },
-  { value: "#7ed44d", label: "Green", rgb: "rgb(126, 212, 77)" },
+  { value: "#cc2936", label: "Red", rgb: "rgb(213, 83, 77)" },
+  { value: "#d5b3ff", label: "Purple", rgb: "rgb(168, 139, 248)" },
+  { value: "#5bc0eb", label: "Blue", rgb: "rgb(147, 197, 249)" },
+  { value: "#f18f01", label: "Orange", rgb: "rgb(225, 140, 69)" },
+  { value: "#a7c957", label: "Green", rgb: "rgb(126, 212, 77)" },
+  { value: "#c1c1c1", label: "Gray", rgb: "rgb(126, 212, 77)" },
+  { value: "#fff95b", label: "Yellow", rgb: "rgb(126, 212, 77)" },
+  { value: "#e27396", label: "Pink", rgb: "rgb(126, 212, 77)" },
 ];
 
 // Function to lighten a color for the second shade
