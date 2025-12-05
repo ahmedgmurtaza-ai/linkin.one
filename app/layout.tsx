@@ -4,6 +4,7 @@ import { Inter, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { FeedbackWidget } from "@/components/feedback/feedback-widget";
+import { ThemeProvider } from "@/components/theme-provider";
 import { SITE_CONFIG } from "@/lib/seo-config";
 import "./globals.css";
 
@@ -99,8 +100,15 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} font-sans antialiased`}>
-        {children}
-        <FeedbackWidget />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+          <FeedbackWidget />
+        </ThemeProvider>
         <Analytics />
         <GoogleAnalytics gaId="G-XRZ1BC1QRF" />
       </body>

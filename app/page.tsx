@@ -1,4 +1,5 @@
 import { Footer } from "@/components/footer"
+import { Navbar } from "@/components/landing/navbar"
 import { HeroSection } from "@/components/landing/hero-section"
 import { StatsSection } from "@/components/landing/stats-section"
 import { FeatureSection } from "@/components/landing/feature-section"
@@ -237,6 +238,9 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Navigation */}
+      <Navbar />
+      
       {/* Hero Section */}
       <HeroSection />
 

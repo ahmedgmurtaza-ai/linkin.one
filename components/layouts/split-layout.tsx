@@ -131,7 +131,7 @@ export function SplitLayout({ profile, compact = false, isLoggedIn = false }: Sp
             </div>
 
             {/* BOTTOM BLOCK */}
-            <div className="w-full flex justify-between items-center">
+            <div className="w-full md:flex justify-between items-center hidden">
               <Logo />
               <Link href={isLoggedIn ? "/admin" : "/signup"}>
                 <Button variant={"outline"}>Start your page</Button>
