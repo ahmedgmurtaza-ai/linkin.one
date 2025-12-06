@@ -16,6 +16,12 @@ const SHOWCASE_PLATFORMS = [
   "spotify",
   "tiktok",
   "resume",
+  "bluesky",
+  "snapchat",
+  "pinterest",
+  "etsy",
+  "amazon",
+  "reddit",
 ];
 
 export function AnimatedUrlShowcase() {

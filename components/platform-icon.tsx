@@ -124,6 +124,12 @@ const PLATFORM_ICON_MAP: Record<
   resume: FileText,
   pdf: FileText,
   file: FileText,
+  bluesky: CustomIcons.BlueSky,
+  snapchat: CustomIcons.Snapchat,
+  pinterest: CustomIcons.Pinterest,
+  etsy: CustomIcons.Etsy,
+  amazon: CustomIcons.Amazon,
+  reddit: CustomIcons.Reddit,
   default: LinkIcon,
 };
 
@@ -156,6 +162,12 @@ const PLATFORM_COLORS: Record<string, { bg: string; text: string }> = {
   resume: { bg: "bg-indigo-600", text: "text-white" },
   pdf: { bg: "bg-red-600", text: "text-white" },
   file: { bg: "bg-gray-500", text: "text-white" },
+  bluesky: { bg: "bg-[#1185FE]", text: "text-white" },
+  snapchat: { bg: "bg-[#FFFC00]", text: "text-black" },
+  pinterest: { bg: "bg-[#E60023]", text: "text-white" },
+  etsy: { bg: "bg-[#F45800]", text: "text-white" },
+  amazon: { bg: "bg-[#FF9900]", text: "text-black" },
+  reddit: { bg: "bg-[#FF4500]", text: "text-white" },
   default: { bg: "bg-primary/10", text: "text-primary" },
 };
 

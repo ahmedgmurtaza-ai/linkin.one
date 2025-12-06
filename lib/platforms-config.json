@@ -283,6 +283,66 @@
       "textColor": "#FFFFFF",
       "icon": "default",
       "placeholder": "https://example.com"
+    },
+    {
+      "id": "bluesky",
+      "title": "Bluesky",
+      "category": "social",
+      "color": "#1185FE",
+      "textColor": "#FFFFFF",
+      "icon": "bluesky",
+      "urlPattern": "bsky.app",
+      "placeholder": "https://bsky.app/profile/username"
+    },
+    {
+      "id": "snapchat",
+      "title": "Snapchat",
+      "category": "social",
+      "color": "#FFFC00",
+      "textColor": "#000000",
+      "icon": "snapchat",
+      "urlPattern": "snapchat.com",
+      "placeholder": "https://snapchat.com/add/username"
+    },
+    {
+      "id": "pinterest",
+      "title": "Pinterest",
+      "category": "social",
+      "color": "#E60023",
+      "textColor": "#FFFFFF",
+      "icon": "pinterest",
+      "urlPattern": "pinterest.com",
+      "placeholder": "https://pinterest.com/username"
+    },
+    {
+      "id": "etsy",
+      "title": "Etsy",
+      "category": "other",
+      "color": "#F45800",
+      "textColor": "#FFFFFF",
+      "icon": "etsy",
+      "urlPattern": "etsy.com",
+      "placeholder": "https://etsy.com/shop/shopname"
+    },
+    {
+      "id": "amazon",
+      "title": "Amazon",
+      "category": "other",
+      "color": "#FF9900",
+      "textColor": "#000000",
+      "icon": "amazon",
+      "urlPattern": "amazon.com",
+      "placeholder": "https://amazon.com"
+    },
+    {
+      "id": "reddit",
+      "title": "Reddit",
+      "category": "social",
+      "color": "#FF4500",
+      "textColor": "#FFFFFF",
+      "icon": "reddit",
+      "urlPattern": "reddit.com",
+      "placeholder": "https://reddit.com/user/username"
     }
   ]
 }

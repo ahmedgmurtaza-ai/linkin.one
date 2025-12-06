@@ -10,6 +10,7 @@ import { LiveExamplesSection } from "@/components/landing/live-examples-section"
 import { PricingPreviewSection } from "@/components/landing/pricing-preview-section"
 import { FAQSection } from "@/components/landing/faq-section"
 import { CTASection } from "@/components/landing/cta-section"
+import { SocialPlatformsSection } from "@/components/landing/social-platforms-section"
 import { PAGE_SEO, generateHomeStructuredData } from "@/lib/seo-config"
 import type { Metadata } from "next"
 
@@ -244,6 +245,8 @@ export default function HomePage() {
       {/* Hero Section */}
       <HeroSection />
 
+      {/* Social Platforms Section */}
+      <SocialPlatformsSection />
 
       {/* FAQ Section */}
       <FAQSection />
