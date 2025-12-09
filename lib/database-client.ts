@@ -1,8 +1,6 @@
+import { auth } from "@/auth";
 import { createClient } from "./supabase/client";
 import type { Profile, ProfileLink } from "./types";
-
-// Client-side database operations
-const supabase = createClient();
 
 // Sanitize username to match LinkedIn rules: lowercase letters, numbers, hyphens, underscores
 function sanitizeUsername(username: string): string {
@@ -16,6 +14,9 @@ function sanitizeUsername(username: string): string {
 export async function updateProfile(
   updates: Partial<Profile>
 ): Promise<{ success: boolean; error?: string }> {
+  const supabase = createClient();
+
+  // Get session from Supabase auth since we're on the client side
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -24,11 +25,11 @@ export async function updateProfile(
     return { success: false, error: "Not authenticated" };
   }
 
-  // Get profile ID
+  // Get profile ID using nextauth_user_id
   const { data: profiles } = await supabase
     .from("profiles")
     .select("id")
-    .eq("user_id", user.id)
+    .eq("nextauth_user_id", user.id)
     .limit(1);
 
   const profile = profiles?.[0];
@@ -67,6 +68,8 @@ export async function updateProfile(
 export async function addLink(
   link: Omit<ProfileLink, "id">
 ): Promise<{ success: boolean; error?: string; linkId?: string }> {
+  const supabase = createClient();
+
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -75,11 +78,11 @@ export async function addLink(
     return { success: false, error: "Not authenticated" };
   }
 
-  // Get profile ID
+  // Get profile ID using nextauth_user_id
   const { data: profiles } = await supabase
     .from("profiles")
     .select("id")
-    .eq("user_id", user.id)
+    .eq("nextauth_user_id", user.id)
     .limit(1);
 
   const profile = profiles?.[0];
@@ -126,6 +129,30 @@ export async function updateLink(
   linkId: string,
   updates: Partial<ProfileLink>
 ): Promise<{ success: boolean; error?: string }> {
+  const supabase = createClient();
+
+  // Verify user owns the link
+  const { data: linkData } = await supabase
+    .from("links")
+    .select("profile_id")
+    .eq("id", linkId)
+    .single();
+
+  if (!linkData) {
+    return { success: false, error: "Link not found" };
+  }
+
+  // Get profile ID using nextauth_user_id
+  const { data: profileData } = await supabase
+    .from("profiles")
+    .select("id")
+    .eq("nextauth_user_id", (await supabase.auth.getUser()).data.user!.id)
+    .single();
+
+  if (!profileData || profileData.id !== linkData.profile_id) {
+    return { success: false, error: "Unauthorized" };
+  }
+
   const dbUpdates: any = {};
   if (updates.title !== undefined) dbUpdates.title = updates.title;
   if (updates.url !== undefined) dbUpdates.url = updates.url;
@@ -152,6 +179,30 @@ export async function updateLink(
 export async function deleteLink(
   linkId: string
 ): Promise<{ success: boolean; error?: string }> {
+  const supabase = createClient();
+
+  // Verify user owns the link
+  const { data: linkData } = await supabase
+    .from("links")
+    .select("profile_id")
+    .eq("id", linkId)
+    .single();
+
+  if (!linkData) {
+    return { success: false, error: "Link not found" };
+  }
+
+  // Get profile ID using nextauth_user_id
+  const { data: profileData } = await supabase
+    .from("profiles")
+    .select("id")
+    .eq("nextauth_user_id", (await supabase.auth.getUser()).data.user!.id)
+    .single();
+
+  if (!profileData || profileData.id !== linkData.profile_id) {
+    return { success: false, error: "Unauthorized" };
+  }
+
   const { error } = await supabase.from("links").delete().eq("id", linkId);
 
   if (error) {
@@ -165,6 +216,36 @@ export async function deleteLink(
 export async function reorderLinks(
   linkIds: string[]
 ): Promise<{ success: boolean; error?: string }> {
+  const supabase = createClient();
+
+  // Get user ID
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    return { success: false, error: "Not authenticated" };
+  }
+
+  // Get profile ID using nextauth_user_id
+  const { data: profileData } = await supabase
+    .from("profiles")
+    .select("id")
+    .eq("nextauth_user_id", user.id)
+    .single();
+
+  if (!profileData) {
+    return { success: false, error: "Profile not found" };
+  }
+
+  // Verify all links belong to user's profile
+  const { data: linksData } = await supabase
+    .from("links")
+    .select("id, profile_id")
+    .in("id", linkIds)
+    .eq("profile_id", profileData.id);
+
+  if (!linksData || linksData.length !== linkIds.length) {
+    return { success: false, error: "Unauthorized or some links not found" };
+  }
+
   // Update positions for all links
   const updates = linkIds.map((linkId, index) => ({
     id: linkId,
@@ -190,6 +271,8 @@ export async function trackLinkEvent(
   linkId: string,
   eventType: "click" | "download"
 ): Promise<void> {
+  const supabase = createClient();
+
   // Get profile_id from link
   const { data: links } = await supabase
     .from("links")
@@ -204,7 +287,8 @@ export async function trackLinkEvent(
     link_id: linkId,
     profile_id: link.profile_id,
     event_type: eventType,
-    user_agent: navigator.userAgent,
-    referrer: document.referrer || null,
+    ip_address: null, // IP address tracking would be done server-side
+    user_agent: typeof navigator !== 'undefined' ? navigator.userAgent : '',
+    referrer: typeof document !== 'undefined' ? document.referrer : '',
   });
 }

@@ -19,6 +19,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import { createClient } from "@/lib/supabase/client";
 
 interface AnalyticsPanelProps {
@@ -38,21 +39,18 @@ export function AnalyticsPanel({ links }: AnalyticsPanelProps) {
     linkStats: {},
   });
   const [loading, setLoading] = useState(true);
+  const { data: session } = useSession();
   const supabase = createClient();
 
   const loadAnalytics = async () => {
+    if (!session?.user?.id) return;
+
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (!user) return;
-
-      // Get profile ID
+      // Get profile ID using nextauth_user_id
       const { data: profile } = await supabase
         .from("profiles")
         .select("id")
-        .eq("user_id", user.id)
+        .eq("nextauth_user_id", session.user.id)
         .single();
 
       if (!profile) return;
@@ -96,19 +94,18 @@ export function AnalyticsPanel({ links }: AnalyticsPanelProps) {
   };
 
   useEffect(() => {
-    loadAnalytics();
-  }, [supabase]);
+    if (session?.user?.id) {
+      loadAnalytics();
+    }
+  }, [session?.user?.id, supabase]);
 
   const resetAnalytics = async () => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) return;
+    if (!session?.user?.id) return;
 
     const { data: profile } = await supabase
       .from("profiles")
       .select("id")
-      .eq("user_id", user.id)
+      .eq("nextauth_user_id", session.user.id)
       .single();
 
     if (!profile) return;

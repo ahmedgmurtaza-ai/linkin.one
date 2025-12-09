@@ -4,7 +4,7 @@ import { ProfileTopBar } from "@/components/profile-top-bar";
 import { ProfileLayoutRenderer } from "@/components/profile-layout";
 import { ProfileThemeProvider } from "@/components/profile-theme-provider";
 import { BuiltWithLinkin } from "@/components/built-with-linkin";
-import { createClient } from "@/lib/supabase/server";
+import { auth } from "@/auth";
 import { generateProfileSEO, generateProfileStructuredData } from "@/lib/seo-config";
 import type { Metadata } from "next";
 
@@ -23,11 +23,8 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
   const structuredData = generateProfileStructuredData(profile);
 
   // Check if user is logged in
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  const isLoggedIn = !!user;
+  const session = await auth();
+  const isLoggedIn = !!session?.user;
 
   // Get background color from profile theme
   const colorTheme = profile.colorTheme || "#a88bf8";
@@ -63,11 +60,11 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
           __html: JSON.stringify(structuredData.breadcrumbSchema),
         }}
       />
-      
+
       <div className="min-h-screen" style={{ backgroundColor }}>
-        {/* <ProfileTopBar 
-          username={profile.username} 
-          isLoggedIn={isLoggedIn} 
+        {/* <ProfileTopBar
+          username={profile.username}
+          isLoggedIn={isLoggedIn}
         /> */}
         <main className="">
           <ProfileLayoutRenderer profile={profile} isLoggedIn={isLoggedIn} />

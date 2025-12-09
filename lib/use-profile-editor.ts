@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect } from "react";
 import type { Profile, ProfileLink, ProfileLayout } from "./types";
+import { useSession } from "next-auth/react";
 import { createClient } from "./supabase/client";
 import {
   updateProfile as dbUpdateProfile,
@@ -33,17 +34,14 @@ export function useProfileEditor() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [profileId, setProfileId] = useState<string | null>(null);
+  const { data: session } = useSession();
   const supabase = createClient();
 
   // Load profile from database
   useEffect(() => {
     async function loadProfile() {
       try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-
-        if (!user) {
+        if (!session?.user?.id) {
           setLoading(false);
           return;
         }
@@ -52,7 +50,7 @@ export function useProfileEditor() {
         const { data: profilesData, error: profileError } = await supabase
           .from("profiles")
           .select("*")
-          .eq("user_id", user.id)
+          .eq("nextauth_user_id", session.user.id)
           .limit(1);
 
         if (profileError) {
@@ -67,10 +65,10 @@ export function useProfileEditor() {
         if (!profileData) {
           console.log("Profile not found, creating new profile...");
           const baseUsername = sanitizeUsername(
-            user.email?.split("@")[0] || "user"
+            session.user.email?.split("@")[0] || "user"
           );
-          const displayName = user.user_metadata?.full_name || baseUsername;
-          const avatarUrl = user.user_metadata?.avatar_url || "";
+          const displayName = session.user.name || baseUsername;
+          const avatarUrl = session.user.image || "";
 
           // Try to create profile, if username exists, append random suffix
           let username = baseUsername;
@@ -80,7 +78,7 @@ export function useProfileEditor() {
             const { data: newProfile, error: createError } = await supabase
               .from("profiles")
               .insert({
-                user_id: user.id,
+                nextauth_user_id: session.user.id,
                 username,
                 display_name: displayName,
                 description: "Welcome to my linkin.one profile!",
@@ -154,7 +152,7 @@ export function useProfileEditor() {
     }
 
     loadProfile();
-  }, [supabase]);
+  }, [session?.user?.id, supabase]);
 
   const updateProfile = useCallback(async (updates: Partial<Profile>) => {
     // Optimistic update

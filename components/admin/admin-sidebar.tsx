@@ -4,10 +4,9 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { User, Link2, BarChart3, Layout, LogOut, Home } from "lucide-react";
-import { createClient } from "@/lib/supabase/client";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import type { User as SupabaseUser } from "@supabase/supabase-js";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Sidebar,
@@ -39,31 +38,11 @@ interface AdminSidebarProps {
 }
 
 export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
-  const [user, setUser] = useState<SupabaseUser | null>(null);
+  const { data: session, status } = useSession();
   const router = useRouter();
-  const supabase = createClient();
-
-  useEffect(() => {
-    const getUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      setUser(user);
-    };
-
-    getUser();
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, [supabase.auth]);
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
+    await signOut({ redirect: false });
     router.push("/login");
     router.refresh();
   };
@@ -96,20 +75,20 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
   ];
 
   const getUserInitials = () => {
-    if (user?.user_metadata?.full_name) {
-      return user.user_metadata.full_name
+    if (session?.user?.name) {
+      return session.user.name
         .split(" ")
         .map((n: string) => n[0])
         .join("")
         .toUpperCase()
         .slice(0, 2);
     }
-    return user?.email?.slice(0, 2).toUpperCase() || "U";
+    return session?.user?.email?.slice(0, 2).toUpperCase() || "U";
   };
 
   const getUserDisplayName = () => {
     return (
-      user?.user_metadata?.full_name || user?.email?.split("@")[0] || "User"
+      session?.user?.name || session?.user?.email?.split("@")[0] || "User"
     );
   };
 
@@ -182,7 +161,7 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton size="lg">
                   <Avatar className="h-8 w-8">
-                    <AvatarImage src={user?.user_metadata?.avatar_url} />
+                    <AvatarImage src={session?.user?.image || undefined} />
                     <AvatarFallback className="bg-primary text-primary-foreground">
                       {getUserInitials()}
                     </AvatarFallback>
@@ -192,7 +171,7 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
                       {getUserDisplayName()}
                     </span>
                     <span className="text-xs text-muted-foreground truncate max-w-[150px]">
-                      {user?.email}
+                      {session?.user?.email}
                     </span>
                   </div>
                 </SidebarMenuButton>

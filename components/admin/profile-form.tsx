@@ -9,6 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import type { Profile } from "@/lib/types";
 import { useState, useRef, useCallback, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import { createClient } from "@/lib/supabase/client";
 import { Upload, Link as LinkIcon, Loader2, X } from "lucide-react";
 import { ThemeSelector } from "@/components/admin/theme-selector";
@@ -20,6 +21,7 @@ interface ProfileFormProps {
 }
 
 export function ProfileForm({ profile, onUpdate }: ProfileFormProps) {
+  const { data: session } = useSession();
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [externalUrl, setExternalUrl] = useState(profile.thumbnailUrl || "");

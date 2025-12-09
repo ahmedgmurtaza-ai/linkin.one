@@ -6,6 +6,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { FeedbackWidget } from "@/components/feedback/feedback-widget";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SITE_CONFIG } from "@/lib/seo-config";
+import { SessionProvider } from "next-auth/react";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -100,15 +101,17 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} font-sans antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-          <FeedbackWidget />
-        </ThemeProvider>
+        <SessionProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+            <FeedbackWidget />
+          </ThemeProvider>
+        </SessionProvider>
         <Analytics />
         <GoogleAnalytics gaId="G-XRZ1BC1QRF" />
       </body>

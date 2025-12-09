@@ -1,43 +1,25 @@
 "use client";
 
-import { createClient } from "@/lib/supabase/client";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { LogOut, User } from "lucide-react";
-import { useEffect, useState } from "react";
-import type { User as SupabaseUser } from "@supabase/supabase-js";
 
 export function UserNav() {
-  const [user, setUser] = useState<SupabaseUser | null>(null);
+  const { data: session, status } = useSession();
   const router = useRouter();
-  const supabase = createClient();
-
-  useEffect(() => {
-    const getUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      setUser(user);
-    };
-
-    getUser();
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, [supabase.auth]);
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
+    await signOut({ redirect: false });
     router.push("/login");
     router.refresh();
   };
 
-  if (!user) {
+  if (status === "loading") {
+    return null; // Or a loading indicator
+  }
+
+  if (!session?.user) {
     return null;
   }
 
@@ -45,7 +27,7 @@ export function UserNav() {
     <div className="flex items-center gap-4">
       <div className="flex items-center gap-2">
         <User className="h-4 w-4" />
-        <span className="text-sm">{user.email}</span>
+        <span className="text-sm">{session.user.email}</span>
       </div>
       <Button variant="outline" size="sm" onClick={handleSignOut}>
         <LogOut className="h-4 w-4 mr-2" />

@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import AdminClient from "@/components/admin/admin-client";
 import { PAGE_SEO } from "@/lib/seo-config";
@@ -18,13 +18,9 @@ export const metadata: Metadata = {
 };
 
 export default async function AdminPage() {
-  const supabase = await createClient();
+  const session = await auth();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
+  if (!session?.user) {
     redirect("/login");
   }
 

@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import { createClient } from "./supabase/server";
 import type { Profile, ProfileLink } from "./types";
 
@@ -94,7 +95,7 @@ export async function getProfileByUserId(
   const { data: profile, error: profileError } = await supabase
     .from("profiles")
     .select("*")
-    .eq("user_id", userId)
+    .eq("nextauth_user_id", userId)
     .single();
 
   if (profileError || !profile) {
@@ -116,17 +117,13 @@ export async function getProfileByUserId(
 
 // Get current user's profile
 export async function getCurrentUserProfile(): Promise<Profile | null> {
-  const supabase = await createClient();
+  const session = await auth();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
+  if (!session?.user?.id) {
     return null;
   }
 
-  return getProfileByUserId(user.id);
+  return getProfileByUserId(session.user.id);
 }
 
 // Update profile
@@ -140,7 +137,7 @@ export async function updateProfile(
   const { data: profile } = await supabase
     .from("profiles")
     .select("id")
-    .eq("user_id", userId)
+    .eq("nextauth_user_id", userId)
     .single();
 
   if (!profile) {
@@ -185,7 +182,7 @@ export async function addLink(
   const { data: profile } = await supabase
     .from("profiles")
     .select("id")
-    .eq("user_id", userId)
+    .eq("nextauth_user_id", userId)
     .single();
 
   if (!profile) {
@@ -234,6 +231,28 @@ export async function updateLink(
 ): Promise<{ success: boolean; error?: string }> {
   const supabase = await createClient();
 
+  // Verify user owns the link
+  const { data: linkData } = await supabase
+    .from("links")
+    .select("profile_id")
+    .eq("id", linkId)
+    .single();
+
+  if (!linkData) {
+    return { success: false, error: "Link not found" };
+  }
+
+  // Get profile ID using nextauth_user_id
+  const { data: profileData } = await supabase
+    .from("profiles")
+    .select("id")
+    .eq("nextauth_user_id", userId)
+    .single();
+
+  if (!profileData || profileData.id !== linkData.profile_id) {
+    return { success: false, error: "Unauthorized" };
+  }
+
   const dbUpdates: any = {};
   if (updates.title !== undefined) dbUpdates.title = updates.title;
   if (updates.url !== undefined) dbUpdates.url = updates.url;
@@ -263,6 +282,28 @@ export async function deleteLink(
 ): Promise<{ success: boolean; error?: string }> {
   const supabase = await createClient();
 
+  // Verify user owns the link
+  const { data: linkData } = await supabase
+    .from("links")
+    .select("profile_id")
+    .eq("id", linkId)
+    .single();
+
+  if (!linkData) {
+    return { success: false, error: "Link not found" };
+  }
+
+  // Get profile ID using nextauth_user_id
+  const { data: profileData } = await supabase
+    .from("profiles")
+    .select("id")
+    .eq("nextauth_user_id", userId)
+    .single();
+
+  if (!profileData || profileData.id !== linkData.profile_id) {
+    return { success: false, error: "Unauthorized" };
+  }
+
   const { error } = await supabase.from("links").delete().eq("id", linkId);
 
   if (error) {
@@ -278,6 +319,28 @@ export async function reorderLinks(
   linkIds: string[]
 ): Promise<{ success: boolean; error?: string }> {
   const supabase = await createClient();
+
+  // Get profile ID using nextauth_user_id
+  const { data: profileData } = await supabase
+    .from("profiles")
+    .select("id")
+    .eq("nextauth_user_id", userId)
+    .single();
+
+  if (!profileData) {
+    return { success: false, error: "Profile not found" };
+  }
+
+  // Verify all links belong to user's profile
+  const { data: linksData } = await supabase
+    .from("links")
+    .select("id, profile_id")
+    .in("id", linkIds)
+    .eq("profile_id", profileData.id);
+
+  if (!linksData || linksData.length !== linkIds.length) {
+    return { success: false, error: "Unauthorized or some links not found" };
+  }
 
   // Update positions for all links
   const updates = linkIds.map((linkId, index) => ({
@@ -342,7 +405,7 @@ export async function getProfileAnalytics(userId: string): Promise<{
   const { data: profile } = await supabase
     .from("profiles")
     .select("id")
-    .eq("user_id", userId)
+    .eq("nextauth_user_id", userId)
     .single();
 
   if (!profile) return null;
