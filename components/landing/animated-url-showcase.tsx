@@ -67,11 +67,11 @@ export function AnimatedUrlShowcase() {
           </div>
 
           <div className="flex-1 min-w-0 flex gap-1 items-center">
-            <p className="text-3xl font-medium text-muted-foreground">
+            <p className="text-xl md:text-3xl font-medium text-muted-foreground">
               linkin.one/alex/
             </p>
             {/* Animated platform name */}
-            <div className="relative h-10 min-w-40 overflow-hidden">
+            <div className="relative  h-8 md:h-10 min-w-32 md:min-w-40 overflow-hidden">
               {platforms.map((platform, index) => {
                 const isActive = index === currentIndex;
                 const isPrev =
@@ -81,7 +81,7 @@ export function AnimatedUrlShowcase() {
                 return (
                   <span
                     key={platform.id}
-                    className={`absolute top-0 left-0 text-3xl font-bold px-2 py-0.5 rounded-md whitespace-nowrap transition-all duration-500 inline-block ${
+                    className={`absolute top-0 left-0 text-xl md:text-3xl font-bold px-2 py-0.5 rounded-md whitespace-nowrap transition-all duration-500 inline-block ${
                       isActive
                         ? "animate-slideInUp"
                         : isPrev

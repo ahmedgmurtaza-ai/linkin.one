@@ -48,7 +48,7 @@ export function HeroSection() {
         <div className="max-w-2xl mx-auto space-y-4">
           <div className="flex gap-3">
             <div className="relative flex-1">
-              <span className="absolute left-5 top-1/2 -translate-y-1/2 text-muted-foreground text-2xl font-medium">
+              <span className="absolute left-5 top-1/2 -translate-y-1/2 text-muted-foreground text-xl md:text-2xl font-medium">
                 linkin.one/
               </span>
               <Input
@@ -57,7 +57,7 @@ export function HeroSection() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 onKeyPress={handleKeyPress}
-                className="pl-44 h-16 text-2xl font-medium"
+                className="pl-30 md:pl-44 h-16 text-xl md:text-2xl md:font-medium"
                 style={{ fontSize: '1.5rem' }}
               />
             </div>
