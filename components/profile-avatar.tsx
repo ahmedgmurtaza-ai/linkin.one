@@ -22,7 +22,7 @@ export function ProfileAvatar({
     <div className="relative group">
       <div
         className={`absolute inset-2 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity ${
-          compact ? "scale-110" : "scale-125"
+          compact ? "md:scale-110" : "md:scale-125"
         }`}
         style={{
           background: `linear-gradient(to right, ${colorTheme}80, ${colorTheme}, ${colorTheme}80)`,
@@ -32,7 +32,7 @@ export function ProfileAvatar({
         className={`relative ${
           compact
             ? "h-20 w-20 ring-offset-2"
-            : "h-40 w-40 ring-offset-4"
+            : "h-28 w-28 md:h-40 md:w-40 ring-offset-4"
         } border-background shadow-2xl transition-transform group-hover:scale-105`}
         style={{
           boxShadow: `0 0 0 ${compact ? '2px' : '4px'} ${colorTheme}33`,

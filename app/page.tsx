@@ -1,6 +1,8 @@
 import { Footer } from "@/components/footer"
 import { Navbar } from "@/components/landing/navbar"
 import { HeroSection } from "@/components/landing/hero-section"
+import { PlatformsByCategory } from "@/components/landing/platforms-by-category"
+import { AnimatedProfessions } from "@/components/landing/animated-professions"
 import { StatsSection } from "@/components/landing/stats-section"
 import { FeatureSection } from "@/components/landing/feature-section"
 import { HowItWorksSection } from "@/components/landing/how-it-works-section"
@@ -237,13 +239,18 @@ export default function HomePage() {
   ]
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="md:min-h-screen hello bg-background">
       {/* Navigation */}
       <Navbar />
       
       {/* Hero Section */}
       <HeroSection />
 
+      {/* Platforms by Category Section */}
+      <PlatformsByCategory />
+
+      {/* Animated Professions Section */}
+      <AnimatedProfessions />
 
       {/* FAQ Section */}
       <FAQSection />

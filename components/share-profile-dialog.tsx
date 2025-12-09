@@ -35,7 +35,7 @@ const socialShareButtons = [
   {
     name: "LinkedIn",
     icon: AiFillLinkedin,
-    color: "bg-[#0077B5] hover:bg-[#006097]",
+    color: "text-[#0077B5] hover:bg-[#006097]",
     getUrl: (url: string, text: string) =>
       `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
   },

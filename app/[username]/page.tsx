@@ -64,7 +64,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
         }}
       />
       
-      <div className="min-h-screen" style={{ backgroundColor }}>
+      <div className="md:min-h-screen" style={{ backgroundColor }}>
         {/* <ProfileTopBar 
           username={profile.username} 
           isLoggedIn={isLoggedIn} 

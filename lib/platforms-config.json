@@ -119,6 +119,16 @@
       "placeholder": "https://facebook.com/username"
     },
     {
+      "id": "bluesky",
+      "title": "Bluesky",
+      "category": "social",
+      "color": "#1285FE",
+      "textColor": "#FFFFFF",
+      "icon": "bluesky",
+      "urlPattern": "bsky.app",
+      "placeholder": "https://bsky.app/profile/username"
+    },
+    {
       "id": "tiktok",
       "title": "TikTok",
       "category": "content",

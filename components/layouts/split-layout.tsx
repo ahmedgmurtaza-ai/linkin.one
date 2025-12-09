@@ -37,7 +37,7 @@ export function SplitLayout({ profile, compact = false, isLoggedIn = false }: Sp
 
   // Get color theme classes
   const getColorClasses = () => {
-    const colorTheme = profile.colorTheme || "#a88bf8";
+    const colorTheme = profile.colorTheme || "#";
     const hexToRgb = (hex: string) => {
       const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
       return result
@@ -66,7 +66,7 @@ export function SplitLayout({ profile, compact = false, isLoggedIn = false }: Sp
   const colors = getColorClasses();
 
   return (
-    <div className="min-h-screen">
+    <div className="md:min-h-screen">
       <ProfileTopBar
         username={profile.username}
         isLoggedIn={isLoggedIn}
@@ -80,19 +80,19 @@ export function SplitLayout({ profile, compact = false, isLoggedIn = false }: Sp
           style={{ backgroundColor: colors.left }}
         >
           <div
-            className={`flex flex-col h-screen justify-between ${
+            className={`flex flex-col md:h-screen justify-between ${
               compact
-                ? "items-center text-center px-3 py-6"
-                : "md:items-start md:text-left items-center text-center px-10 py-12"
+                ? "items-start text-left px-3 py-6"
+                : "items-start text-left p-6 md:px-10 md:py-12"
             } ${compact ? "gap-4" : "gap-6"}`}
           >
             {/* TOP BLOCK */}
-            <div className="flex flex-col gap-6 w-full items-center md:items-start">
+            <div className="flex flex-col gap-6 w-full items-start">
               <ProfileAvatar profile={profile} compact={compact} />
 
               <div className={`space-y-3 ${compact ? "max-w-xs" : "max-w-sm"}`}>
                 <h1
-                  className={`font-bold text-foreground tracking-tight ${
+                  className={`font-bold text-[#111111] tracking-tight ${
                     compact ? "text-xl" : "md:text-3xl text-2xl"
                   }`}
                 >
@@ -109,7 +109,7 @@ export function SplitLayout({ profile, compact = false, isLoggedIn = false }: Sp
                 {profile.description && (
                   <div className="space-y-2">
                     <p
-                      className={`text-foreground leading-relaxed ${
+                      className={`text-[#111111] leading-relaxed ${
                         compact ? "text-sm" : "md:text-lg text-sm"
                       }`}
                     >
@@ -118,7 +118,7 @@ export function SplitLayout({ profile, compact = false, isLoggedIn = false }: Sp
                   </div>
                 )}
 
-                <div className="flex justify-center md:justify-start pt-2">
+                <div className="flex justify-start pt-2">
                   <ShareButton
                     username={profile.username}
                     displayName={profile.displayName}
@@ -131,10 +131,10 @@ export function SplitLayout({ profile, compact = false, isLoggedIn = false }: Sp
             </div>
 
             {/* BOTTOM BLOCK */}
-            <div className="w-full md:flex justify-between items-center hidden">
-              <Logo />
+            <div className="w-full md:block space-y-4 lg:flex justify-between items-center hidden">
+              <Logo/>
               <Link href={isLoggedIn ? "/admin" : "/signup"}>
-                <Button variant={"outline"}>Start your page</Button>
+                <Button variant={"secondary"}>Start your page</Button>
               </Link>
             </div>
           </div>
@@ -142,16 +142,25 @@ export function SplitLayout({ profile, compact = false, isLoggedIn = false }: Sp
 
         {/* RIGHT SIDE */}
         <div
-          className="min-h-screen"
-          style={{ backgroundColor: colors.right }}
+          className="md:min-h-screen"
+          style={{ backgroundColor: "#f6f3ed" }}
         >
-          <div className={`${compact ? "px-3 py-6" : "px-6 py-12 max-w-5xl mx-auto"}`}>
-            <LinkList
-              links={profile.links}
-              compact={compact}
-              layout="grid"
-              groupByCategory={profile.showCategories || false}
-            />
+          <div className={`${compact ? "px-3 py-6" : "px-6 py-12 max-w-5xl mx-auto"} ${profile.links.length === 0 ? "min-h-[400px] flex items-center justify-center" : ""}`}>
+            {profile.links.length === 0 ? (
+              <div className="text-center text-muted-foreground">
+                <p className="text-lg">No links yet</p>
+                {isLoggedIn && (
+                  <p className="text-sm mt-2">Add your first link in the admin panel</p>
+                )}
+              </div>
+            ) : (
+              <LinkList
+                links={profile.links}
+                compact={compact}
+                layout="grid"
+                groupByCategory={profile.showCategories || false}
+              />
+            )}
           </div>
         </div>
       </div>

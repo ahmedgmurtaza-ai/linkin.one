@@ -39,25 +39,6 @@ export function HeroSection() {
             <br />
             <span className="text-primary bg-clip-text">Everything You Share</span>
           </h1>
-          <p className="text-lg font-medium  text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Consolidate all your{" "}
-            <span className="px-2 py-1 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-md font-medium">
-              social media
-            </span>
-            ,{" "}
-            <span className="px-2 py-1 bg-purple-500/10 text-purple-600 dark:text-purple-400 rounded-md font-medium">
-              portfolio
-            </span>
-            ,{" "}
-            <span className="px-2 py-1 bg-green-500/10 text-green-600 dark:text-green-400 rounded-md font-medium">
-              resume
-            </span>
-            , and{" "}
-            <span className="px-2 py-1 bg-orange-500/10 text-orange-600 dark:text-orange-400 rounded-md font-medium">
-              projects
-            </span>{" "}
-            in one beautiful, customizable profile
-          </p>
         </div>
 
         {/* Animated URL Showcase */}
@@ -90,6 +71,26 @@ export function HeroSection() {
             </Button>
           </div>
         </div>
+
+          <p className="text-sm font-medium  text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            Consolidate all your{" "}
+            <span className="px-2 py-1 bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-md font-medium">
+              social media
+            </span>
+            ,{" "}
+            <span className="px-2 py-1 bg-purple-500/10 text-purple-600 dark:text-purple-400 rounded-md font-medium">
+              portfolio
+            </span>
+            ,{" "}
+            <span className="px-2 py-1 bg-green-500/10 text-green-600 dark:text-green-400 rounded-md font-medium">
+              resume
+            </span>
+            , and{" "}
+            <span className="px-2 py-1 bg-orange-500/10 text-orange-600 dark:text-orange-400 rounded-md font-medium">
+              projects
+            </span>{" "}
+            in one beautiful, customizable profile
+          </p>
 
         {/* Stats */}
         <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto pt-6">

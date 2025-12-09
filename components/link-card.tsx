@@ -51,7 +51,7 @@ export function LinkCard({ link, compact = false }: LinkCardProps) {
         />
       </div>
       <span
-        className={`flex-1 text-left font-medium text-foreground ${
+        className={`flex-1 text-left font-medium text-[#111111] ${
           compact ? "text-sm" : "text-base"
         }`}
       >
@@ -59,13 +59,13 @@ export function LinkCard({ link, compact = false }: LinkCardProps) {
       </span>
       {isDownloadable ? (
         <Download
-          className={`text-muted-foreground group-hover:text-primary transition-colors ${
+          className={`text-[#111111] group-hover:text-primary transition-colors ${
             compact ? "h-3.5 w-3.5" : "h-4 w-4"
           }`}
         />
       ) : (
         <ExternalLink
-          className={`text-muted-foreground group-hover:text-primary transition-colors ${
+          className={`text-[#111111] group-hover:text-primary transition-colors ${
             compact ? "h-3.5 w-3.5" : "h-4 w-4"
           }`}
         />

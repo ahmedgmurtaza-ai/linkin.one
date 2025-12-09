@@ -74,7 +74,7 @@ export function LinkList({
         return (
           <div key={category} className="space-y-2">
             <h3
-              className={`text-muted-foreground font-medium uppercase tracking-wider ${
+              className={`text-[#111111] font-medium uppercase tracking-wider ${
                 compact ? "text-[10px]" : "text-xs"
               }`}
             >
