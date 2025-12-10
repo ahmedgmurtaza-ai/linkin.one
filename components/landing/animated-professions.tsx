@@ -65,7 +65,7 @@ export function AnimatedProfessions() {
             {[...professionsRow2, ...professionsRow2].map((profession, index) => (
               <div
                 key={`row2-${index}`}
-                className="flex-shrink-0 mx-4 px-8 py-4 bg-gradient-to-r from-accent/10 to-accent/5 rounded-full border border-accent/20 backdrop-blur-sm"
+                className="flex-shrink-0 mx-4 px-8 py-4 bg-gradient-to-r from-default/10 to-accent/5 rounded-full border border-accent/20 backdrop-blur-sm"
               >
                 <span className="text-lg font-semibold whitespace-nowrap">
                   {profession}
@@ -75,22 +75,7 @@ export function AnimatedProfessions() {
           </div>
         </div>
 
-        {/* Row 3 - Moving Left to Right (Different speed) */}
-        <div className="relative">
-          <div className="flex animate-scroll-left-slow">
-            {[...professionsRow1.slice(0, 6), ...professionsRow2.slice(0, 6), ...professionsRow1.slice(0, 6), ...professionsRow2.slice(0, 6)].map((profession, index) => (
-              <div
-                key={`row3-${index}`}
-                className="flex-shrink-0 mx-4 px-8 py-4 bg-gradient-to-r from-secondary/10 to-secondary/5 rounded-full border border-secondary/20 backdrop-blur-sm"
-              >
-                <span className="text-lg font-semibold whitespace-nowrap">
-                  {profession}
-                </span>
-              </div>
-            ))}
-          </div>
         </div>
-      </div>
     </section>
   )
 }

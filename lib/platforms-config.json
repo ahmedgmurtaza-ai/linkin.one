@@ -1,298 +1,151 @@
 {
   "categories": [
-    {
-      "id": "social",
-      "title": "Social Media",
-      "description": "Connect your social media profiles"
-    },
-    {
-      "id": "professional",
-      "title": "Professional",
-      "description": "Share your professional profiles"
-    },
-    {
-      "id": "content",
-      "title": "Content & Media",
-      "description": "Showcase your content creation"
-    },
-    {
-      "id": "communication",
-      "title": "Communication",
-      "description": "Direct communication channels"
-    },
-    {
-      "id": "music",
-      "title": "Music & Audio",
-      "description": "Share your music and podcasts"
-    },
-    {
-      "id": "design",
-      "title": "Design & Creative",
-      "description": "Display your creative work"
-    },
-    {
-      "id": "streaming",
-      "title": "Live Streaming",
-      "description": "Share your live streaming channels"
-    },
-    {
-      "id": "documents",
-      "title": "Documents & Files",
-      "description": "Share important documents"
-    },
-    {
-      "id": "other",
-      "title": "Other",
-      "description": "Custom links and websites"
-    }
+    { "id": "social", "title": "Social Media", "description": "Connect your social media profiles" },
+    { "id": "developer", "title": "Developer / Tech", "description": "Developer and tech platforms" },
+    { "id": "professional", "title": "Professional", "description": "Professional and career profiles" },
+    { "id": "creator", "title": "Creator / Influencer", "description": "Creator and influencer platforms" },
+    { "id": "ecommerce", "title": "Business & E-Commerce", "description": "Business and e-commerce platforms" },
+    { "id": "messaging", "title": "Messaging & Contact", "description": "Messaging and contact platforms" },
+    { "id": "learning", "title": "Learning & Portfolio", "description": "Learning and portfolio platforms" },
+    { "id": "music", "title": "Music & Entertainment", "description": "Music and entertainment platforms" },
+    { "id": "finance", "title": "Finance / Payment Links", "description": "Finance and payment platforms" },
+    { "id": "gaming", "title": "Gaming", "description": "Gaming platforms" }
   ],
   "platforms": [
-    {
-      "id": "twitter",
-      "title": "Twitter",
-      "category": "social",
-      "color": "#1DA1F2",
-      "textColor": "#FFFFFF",
-      "icon": "twitter",
-      "urlPattern": "twitter.com",
-      "placeholder": "https://twitter.com/username"
-    },
-    {
-      "id": "x",
-      "title": "X (Twitter)",
-      "category": "social",
-      "color": "#000000",
-      "textColor": "#FFFFFF",
-      "icon": "x",
-      "urlPattern": "x.com",
-      "placeholder": "https://x.com/username"
-    },
-    {
-      "id": "linkedin",
-      "title": "LinkedIn",
-      "category": "professional",
-      "color": "#0A66C2",
-      "textColor": "#FFFFFF",
-      "icon": "linkedin",
-      "urlPattern": "linkedin.com",
-      "placeholder": "https://linkedin.com/in/username"
-    },
-    {
-      "id": "github",
-      "title": "GitHub",
-      "category": "professional",
-      "color": "#181717",
-      "textColor": "#FFFFFF",
-      "icon": "github",
-      "urlPattern": "github.com",
-      "placeholder": "https://github.com/username"
-    },
-    {
-      "id": "instagram",
-      "title": "Instagram",
-      "category": "social",
-      "color": "#E4405F",
-      "gradient": "linear-gradient(45deg, #833AB4, #FD1D1D, #F77737)",
-      "textColor": "#FFFFFF",
-      "icon": "instagram",
-      "urlPattern": "instagram.com",
-      "placeholder": "https://instagram.com/username"
-    },
-    {
-      "id": "youtube",
-      "title": "YouTube",
-      "category": "content",
-      "color": "#FF0000",
-      "textColor": "#FFFFFF",
-      "icon": "youtube",
-      "urlPattern": "youtube.com",
-      "placeholder": "https://youtube.com/@username"
-    },
-    {
-      "id": "facebook",
-      "title": "Facebook",
-      "category": "social",
-      "color": "#1877F2",
-      "textColor": "#FFFFFF",
-      "icon": "facebook",
-      "urlPattern": "facebook.com",
-      "placeholder": "https://facebook.com/username"
-    },
-    {
-      "id": "bluesky",
-      "title": "Bluesky",
-      "category": "social",
-      "color": "#1285FE",
-      "textColor": "#FFFFFF",
-      "icon": "bluesky",
-      "urlPattern": "bsky.app",
-      "placeholder": "https://bsky.app/profile/username"
-    },
-    {
-      "id": "tiktok",
-      "title": "TikTok",
-      "category": "content",
-      "color": "#000000",
-      "textColor": "#FFFFFF",
-      "icon": "tiktok",
-      "urlPattern": "tiktok.com",
-      "placeholder": "https://tiktok.com/@username"
-    },
-    {
-      "id": "discord",
-      "title": "Discord",
-      "category": "communication",
-      "color": "#5865F2",
-      "textColor": "#FFFFFF",
-      "icon": "discord",
-      "urlPattern": "discord.gg",
-      "placeholder": "https://discord.gg/invite"
-    },
-    {
-      "id": "telegram",
-      "title": "Telegram",
-      "category": "communication",
-      "color": "#26A5E4",
-      "textColor": "#FFFFFF",
-      "icon": "telegram",
-      "urlPattern": "t.me",
-      "placeholder": "https://t.me/username"
-    },
-    {
-      "id": "whatsapp",
-      "title": "WhatsApp",
-      "category": "communication",
-      "color": "#25D366",
-      "textColor": "#FFFFFF",
-      "icon": "whatsapp",
-      "urlPattern": "wa.me",
-      "placeholder": "https://wa.me/1234567890"
-    },
-    {
-      "id": "spotify",
-      "title": "Spotify",
-      "category": "music",
-      "color": "#1DB954",
-      "textColor": "#FFFFFF",
-      "icon": "spotify",
-      "urlPattern": "spotify.com",
-      "placeholder": "https://open.spotify.com/artist/..."
-    },
-    {
-      "id": "soundcloud",
-      "title": "SoundCloud",
-      "category": "music",
-      "color": "#FF5500",
-      "textColor": "#FFFFFF",
-      "icon": "soundcloud",
-      "urlPattern": "soundcloud.com",
-      "placeholder": "https://soundcloud.com/username"
-    },
-    {
-      "id": "twitch",
-      "title": "Twitch",
-      "category": "streaming",
-      "color": "#9146FF",
-      "textColor": "#FFFFFF",
-      "icon": "twitch",
-      "urlPattern": "twitch.tv",
-      "placeholder": "https://twitch.tv/username"
-    },
-    {
-      "id": "medium",
-      "title": "Medium",
-      "category": "content",
-      "color": "#000000",
-      "textColor": "#FFFFFF",
-      "icon": "medium",
-      "urlPattern": "medium.com",
-      "placeholder": "https://medium.com/@username"
-    },
-    {
-      "id": "devto",
-      "title": "Dev.to",
-      "category": "professional",
-      "color": "#000000",
-      "textColor": "#FFFFFF",
-      "icon": "devto",
-      "urlPattern": "dev.to",
-      "placeholder": "https://dev.to/username"
-    },
-    {
-      "id": "substack",
-      "title": "Substack",
-      "category": "content",
-      "color": "#FF6719",
-      "textColor": "#FFFFFF",
-      "icon": "substack",
-      "urlPattern": "substack.com",
-      "placeholder": "https://username.substack.com"
-    },
-    {
-      "id": "dribbble",
-      "title": "Dribbble",
-      "category": "design",
-      "color": "#EA4C89",
-      "textColor": "#FFFFFF",
-      "icon": "dribbble",
-      "urlPattern": "dribbble.com",
-      "placeholder": "https://dribbble.com/username"
-    },
-    {
-      "id": "behance",
-      "title": "Behance",
-      "category": "design",
-      "color": "#1769FF",
-      "textColor": "#FFFFFF",
-      "icon": "behance",
-      "urlPattern": "behance.net",
-      "placeholder": "https://behance.net/username"
-    },
-    {
-      "id": "resume",
-      "title": "Resume",
-      "category": "documents",
-      "color": "#6366F1",
-      "textColor": "#FFFFFF",
-      "icon": "resume",
-      "placeholder": "Upload your resume PDF"
-    },
-    {
-      "id": "pdf",
-      "title": "PDF Document",
-      "category": "documents",
-      "color": "#DC2626",
-      "textColor": "#FFFFFF",
-      "icon": "pdf",
-      "placeholder": "Upload a PDF file"
-    },
-    {
-      "id": "email",
-      "title": "Email",
-      "category": "communication",
-      "color": "#6B7280",
-      "textColor": "#FFFFFF",
-      "icon": "email",
-      "urlPattern": "mailto:",
-      "placeholder": "mailto:your@email.com"
-    },
-    {
-      "id": "website",
-      "title": "Website",
-      "category": "other",
-      "color": "#6B7280",
-      "textColor": "#FFFFFF",
-      "icon": "website",
-      "placeholder": "https://yourwebsite.com"
-    },
-    {
-      "id": "default",
-      "title": "Custom Link",
-      "category": "other",
-      "color": "#6B7280",
-      "textColor": "#FFFFFF",
-      "icon": "default",
-      "placeholder": "https://example.com"
-    }
+    
+    { "id": "facebook", "title": "Facebook", "category": "social", "color": "#1877F2", "textColor": "#FFFFFF", "icon": "facebook", "urlPattern": "facebook.com", "placeholder": "https://facebook.com/username" },
+    { "id": "instagram", "title": "Instagram", "category": "social", "color": "#E4405F", "gradient": "linear-gradient(45deg, #833AB4, #FD1D1D, #F77737)", "textColor": "#FFFFFF", "icon": "instagram", "urlPattern": "instagram.com", "placeholder": "https://instagram.com/username" },
+    { "id": "twitter", "title": "Twitter / X", "category": "social", "color": "#1DA1F2", "textColor": "#FFFFFF", "icon": "twitter", "urlPattern": "twitter.com", "placeholder": "https://twitter.com/username" },
+    { "id": "tiktok", "title": "TikTok", "category": "social", "color": "#000000", "textColor": "#FFFFFF", "icon": "tiktok", "urlPattern": "tiktok.com", "placeholder": "https://tiktok.com/@username" },
+    { "id": "snapchat", "title": "Snapchat", "category": "social", "color": "#FFFC00", "textColor": "#000000", "icon": "snapchat", "urlPattern": "snapchat.com", "placeholder": "https://snapchat.com/add/username" },
+    { "id": "pinterest", "title": "Pinterest", "category": "social", "color": "#E60023", "textColor": "#FFFFFF", "icon": "pinterest", "urlPattern": "pinterest.com", "placeholder": "https://pinterest.com/username" },
+    { "id": "threads", "title": "Threads", "category": "social", "color": "#000000", "textColor": "#FFFFFF", "icon": "threads", "urlPattern": "threads.net", "placeholder": "https://threads.net/@username" },
+    { "id": "reddit", "title": "Reddit", "category": "social", "color": "#FF4500", "textColor": "#FFFFFF", "icon": "reddit", "urlPattern": "reddit.com", "placeholder": "https://reddit.com/user/username" },
+    { "id": "tumblr", "title": "Tumblr", "category": "social", "color": "#36465D", "textColor": "#FFFFFF", "icon": "tumblr", "urlPattern": "tumblr.com", "placeholder": "https://username.tumblr.com" },
+    { "id": "quora", "title": "Quora", "category": "social", "color": "#B92B27", "textColor": "#FFFFFF", "icon": "quora", "urlPattern": "quora.com", "placeholder": "https://quora.com/profile/username" },
+    { "id": "mastodon", "title": "Mastodon", "category": "social", "color": "#6364FF", "textColor": "#FFFFFF", "icon": "mastodon", "urlPattern": "mastodon.social", "placeholder": "https://mastodon.social/@username" },
+    { "id": "bluesky", "title": "Bluesky", "category": "social", "color": "#1285FE", "textColor": "#FFFFFF", "icon": "bluesky", "urlPattern": "bsky.app", "placeholder": "https://bsky.app/profile/username" },
+    { "id": "vk", "title": "VK", "category": "social", "color": "#4C75A3", "textColor": "#FFFFFF", "icon": "vk", "urlPattern": "vk.com", "placeholder": "https://vk.com/username" },
+    { "id": "weibo", "title": "Weibo", "category": "social", "color": "#E6162D", "textColor": "#FFFFFF", "icon": "weibo", "urlPattern": "weibo.com", "placeholder": "https://weibo.com/username" },
+
+    
+    { "id": "github", "title": "GitHub", "category": "developer", "color": "#181717", "textColor": "#FFFFFF", "icon": "github", "urlPattern": "github.com", "placeholder": "https://github.com/username" },
+    { "id": "gitlab", "title": "GitLab", "category": "developer", "color": "#FC6D26", "textColor": "#FFFFFF", "icon": "gitlab", "urlPattern": "gitlab.com", "placeholder": "https://gitlab.com/username" },
+    { "id": "bitbucket", "title": "Bitbucket", "category": "developer", "color": "#0052CC", "textColor": "#FFFFFF", "icon": "bitbucket", "urlPattern": "bitbucket.org", "placeholder": "https://bitbucket.org/username" },
+    { "id": "stackoverflow", "title": "StackOverflow", "category": "developer", "color": "#F48024", "textColor": "#FFFFFF", "icon": "stackoverflow", "urlPattern": "stackoverflow.com", "placeholder": "https://stackoverflow.com/users/123456/username" },
+    { "id": "codepen", "title": "CodePen", "category": "developer", "color": "#000000", "textColor": "#FFFFFF", "icon": "codepen", "urlPattern": "codepen.io", "placeholder": "https://codepen.io/username" },
+    { "id": "jsfiddle", "title": "JSFiddle", "category": "developer", "color": "#4679A4", "textColor": "#FFFFFF", "icon": "jsfiddle", "urlPattern": "jsfiddle.net", "placeholder": "https://jsfiddle.net/username" },
+    { "id": "leetcode", "title": "LeetCode", "category": "developer", "color": "#FFA116", "textColor": "#FFFFFF", "icon": "leetcode", "urlPattern": "leetcode.com", "placeholder": "https://leetcode.com/username" },
+    { "id": "hackerrank", "title": "HackerRank", "category": "developer", "color": "#2EC866", "textColor": "#FFFFFF", "icon": "hackerrank", "urlPattern": "hackerrank.com", "placeholder": "https://hackerrank.com/username" },
+    { "id": "codewars", "title": "Codewars", "category": "developer", "color": "#B1361E", "textColor": "#FFFFFF", "icon": "codewars", "urlPattern": "codewars.com", "placeholder": "https://www.codewars.com/users/username" },
+    { "id": "devto", "title": "Dev.to", "category": "developer", "color": "#000000", "textColor": "#FFFFFF", "icon": "devto", "urlPattern": "dev.to", "placeholder": "https://dev.to/username" },
+    { "id": "hashnode", "title": "Hashnode", "category": "developer", "color": "#2962FF", "textColor": "#FFFFFF", "icon": "hashnode", "urlPattern": "hashnode.com", "placeholder": "https://hashnode.com/@username" },
+    { "id": "medium", "title": "Medium", "category": "developer", "color": "#000000", "textColor": "#FFFFFF", "icon": "medium", "urlPattern": "medium.com", "placeholder": "https://medium.com/@username" },
+    { "id": "kaggle", "title": "Kaggle", "category": "developer", "color": "#20BEFF", "textColor": "#FFFFFF", "icon": "kaggle", "urlPattern": "kaggle.com", "placeholder": "https://kaggle.com/username" },
+    { "id": "dockerhub", "title": "Docker Hub", "category": "developer", "color": "#2496ED", "textColor": "#FFFFFF", "icon": "dockerhub", "urlPattern": "hub.docker.com", "placeholder": "https://hub.docker.com/u/username" },
+    { "id": "npm", "title": "npm", "category": "developer", "color": "#CB3837", "textColor": "#FFFFFF", "icon": "npm", "urlPattern": "npmjs.com", "placeholder": "https://npmjs.com/~username" },
+    { "id": "pypi", "title": "PyPI", "category": "developer", "color": "#3775A9", "textColor": "#FFFFFF", "icon": "pypi", "urlPattern": "pypi.org", "placeholder": "https://pypi.org/user/username" },
+    { "id": "godev", "title": "Go.dev", "category": "developer", "color": "#00ADD8", "textColor": "#FFFFFF", "icon": "godev", "urlPattern": "go.dev", "placeholder": "https://pkg.go.dev/github.com/username" },
+    { "id": "replit", "title": "Replit", "category": "developer", "color": "#667881", "textColor": "#FFFFFF", "icon": "replit", "urlPattern": "replit.com", "placeholder": "https://replit.com/@username" },
+    { "id": "vercel", "title": "Vercel", "category": "developer", "color": "#000000", "textColor": "#FFFFFF", "icon": "vercel", "urlPattern": "vercel.com", "placeholder": "https://vercel.com/username" },
+    { "id": "netlify", "title": "Netlify", "category": "developer", "color": "#00C7B7", "textColor": "#FFFFFF", "icon": "netlify", "urlPattern": "netlify.com", "placeholder": "https://app.netlify.com/teams/username" },
+
+    
+    { "id": "linkedin", "title": "LinkedIn", "category": "professional", "color": "#0A66C2", "textColor": "#FFFFFF", "icon": "linkedin", "urlPattern": "linkedin.com", "placeholder": "https://linkedin.com/in/username" },
+    { "id": "indeed", "title": "Indeed Profile", "category": "professional", "color": "#2164F3", "textColor": "#FFFFFF", "icon": "indeed", "urlPattern": "indeed.com", "placeholder": "https://indeed.com/p/username" },
+    { "id": "glassdoor", "title": "Glassdoor Profile", "category": "professional", "color": "#0CAA41", "textColor": "#FFFFFF", "icon": "glassdoor", "urlPattern": "glassdoor.com", "placeholder": "https://glassdoor.com/member/username" },
+    { "id": "upwork", "title": "Upwork", "category": "professional", "color": "#6FDA44", "textColor": "#FFFFFF", "icon": "upwork", "urlPattern": "upwork.com", "placeholder": "https://upwork.com/freelancers/~username" },
+    { "id": "fiverr", "title": "Fiverr", "category": "professional", "color": "#1DBF73", "textColor": "#FFFFFF", "icon": "fiverr", "urlPattern": "fiverr.com", "placeholder": "https://fiverr.com/username" },
+    { "id": "freelancer", "title": "Freelancer.com", "category": "professional", "color": "#29B2FE", "textColor": "#FFFFFF", "icon": "freelancer", "urlPattern": "freelancer.com", "placeholder": "https://freelancer.com/u/username" },
+    { "id": "toptal", "title": "Toptal", "category": "professional", "color": "#3863A0", "textColor": "#FFFFFF", "icon": "toptal", "urlPattern": "toptal.com", "placeholder": "https://toptal.com/resume/username" },
+    { "id": "angellist", "title": "AngelList (Wellfound)", "category": "professional", "color": "#000000", "textColor": "#FFFFFF", "icon": "angellist", "urlPattern": "wellfound.com", "placeholder": "https://wellfound.com/u/username" },
+    { "id": "behance", "title": "Behance", "category": "professional", "color": "#1769FF", "textColor": "#FFFFFF", "icon": "behance", "urlPattern": "behance.net", "placeholder": "https://behance.net/username" },
+    { "id": "dribbble", "title": "Dribbble", "category": "professional", "color": "#EA4C89", "textColor": "#FFFFFF", "icon": "dribbble", "urlPattern": "dribbble.com", "placeholder": "https://dribbble.com/username" },
+    { "id": "aboutme", "title": "About.me", "category": "professional", "color": "#00A9E0", "textColor": "#FFFFFF", "icon": "aboutme", "urlPattern": "about.me", "placeholder": "https://about.me/username" },
+    { "id": "resume", "title": "Résumé / CV", "category": "professional", "color": "#6366F1", "textColor": "#FFFFFF", "icon": "resume", "placeholder": "Upload your résumé or CV" },
+
+    
+    { "id": "youtube", "title": "YouTube", "category": "creator", "color": "#FF0000", "textColor": "#FFFFFF", "icon": "youtube", "urlPattern": "youtube.com", "placeholder": "https://youtube.com/@username" },
+    { "id": "twitch", "title": "Twitch", "category": "creator", "color": "#9146FF", "textColor": "#FFFFFF", "icon": "twitch", "urlPattern": "twitch.tv", "placeholder": "https://twitch.tv/username" },
+    { "id": "kick", "title": "Kick", "category": "creator", "color": "#53FC18", "textColor": "#000000", "icon": "kick", "urlPattern": "kick.com", "placeholder": "https://kick.com/username" },
+    { "id": "vimeo", "title": "Vimeo", "category": "creator", "color": "#1AB7EA", "textColor": "#FFFFFF", "icon": "vimeo", "urlPattern": "vimeo.com", "placeholder": "https://vimeo.com/username" },
+    { "id": "patreon", "title": "Patreon", "category": "creator", "color": "#F96854", "textColor": "#FFFFFF", "icon": "patreon", "urlPattern": "patreon.com", "placeholder": "https://patreon.com/username" },
+    { "id": "substack", "title": "Substack", "category": "creator", "color": "#FF6719", "textColor": "#FFFFFF", "icon": "substack", "urlPattern": "substack.com", "placeholder": "https://username.substack.com" },
+    { "id": "kofi", "title": "Ko-fi", "category": "creator", "color": "#29ABE0", "textColor": "#FFFFFF", "icon": "kofi", "urlPattern": "ko-fi.com", "placeholder": "https://ko-fi.com/username" },
+    { "id": "buymeacoffee", "title": "Buy Me a Coffee", "category": "creator", "color": "#FFDD00", "textColor": "#000000", "icon": "buymeacoffee", "urlPattern": "buymeacoffee.com", "placeholder": "https://buymeacoffee.com/username" },
+    { "id": "soundcloud", "title": "SoundCloud", "category": "creator", "color": "#FF5500", "textColor": "#FFFFFF", "icon": "soundcloud", "urlPattern": "soundcloud.com", "placeholder": "https://soundcloud.com/username" },
+    { "id": "spotifycreator", "title": "Spotify Creator", "category": "creator", "color": "#1DB954", "textColor": "#FFFFFF", "icon": "spotify", "urlPattern": "spotify.com", "placeholder": "https://artists.spotify.com/c/username" },
+    { "id": "applepodcasts", "title": "Apple Podcasts", "category": "creator", "color": "#FA57C1", "textColor": "#FFFFFF", "icon": "applepodcasts", "urlPattern": "podcasts.apple.com", "placeholder": "https://podcasts.apple.com/podcast/username" },
+    { "id": "anchor", "title": "Anchor / Spotify for Podcasters", "category": "creator", "color": "#3FC1C9", "textColor": "#FFFFFF", "icon": "anchor", "urlPattern": "anchor.fm", "placeholder": "https://anchor.fm/username" },
+    { "id": "gumroad", "title": "Gumroad", "category": "creator", "color": "#36A9AE", "textColor": "#FFFFFF", "icon": "gumroad", "urlPattern": "gumroad.com", "placeholder": "https://gumroad.com/username" },
+    { "id": "teachable", "title": "Teachable", "category": "creator", "color": "#3D3D3D", "textColor": "#FFFFFF", "icon": "teachable", "urlPattern": "teachable.com", "placeholder": "https://teachable.com/username" },
+    { "id": "kajabi", "title": "Kajabi", "category": "creator", "color": "#2D9CDB", "textColor": "#FFFFFF", "icon": "kajabi", "urlPattern": "kajabi.com", "placeholder": "https://kajabi.com/username" },
+
+    
+    { "id": "shopify", "title": "Shopify Store", "category": "ecommerce", "color": "#96BF48", "textColor": "#FFFFFF", "icon": "shopify", "urlPattern": "shopify.com", "placeholder": "https://shopify.com/username" },
+    { "id": "etsy", "title": "Etsy", "category": "ecommerce", "color": "#F56400", "textColor": "#FFFFFF", "icon": "etsy", "urlPattern": "etsy.com", "placeholder": "https://etsy.com/shop/username" },
+    { "id": "amazon", "title": "Amazon Storefront", "category": "ecommerce", "color": "#FF9900", "textColor": "#000000", "icon": "amazon", "urlPattern": "amazon.com", "placeholder": "https://amazon.com/shop/username" },
+    { "id": "flipkart", "title": "Flipkart Store", "category": "ecommerce", "color": "#2874F0", "textColor": "#FFFFFF", "icon": "flipkart", "urlPattern": "flipkart.com", "placeholder": "https://flipkart.com/username" },
+    { "id": "ebay", "title": "eBay", "category": "ecommerce", "color": "#E53238", "textColor": "#FFFFFF", "icon": "ebay", "urlPattern": "ebay.com", "placeholder": "https://ebay.com/usr/username" },
+    { "id": "aliexpress", "title": "AliExpress Store", "category": "ecommerce", "color": "#FF4747", "textColor": "#FFFFFF", "icon": "aliexpress", "urlPattern": "aliexpress.com", "placeholder": "https://aliexpress.com/store/username" },
+    { "id": "woocommerce", "title": "WooCommerce", "category": "ecommerce", "color": "#96588A", "textColor": "#FFFFFF", "icon": "woocommerce", "urlPattern": "woocommerce.com", "placeholder": "https://woocommerce.com/username" },
+    { "id": "squarespace", "title": "Squarespace Store", "category": "ecommerce", "color": "#222222", "textColor": "#FFFFFF", "icon": "squarespace", "urlPattern": "squarespace.com", "placeholder": "https://squarespace.com/username" },
+    { "id": "gumroad_ecommerce", "title": "Gumroad", "category": "ecommerce", "color": "#36A9AE", "textColor": "#FFFFFF", "icon": "gumroad", "urlPattern": "gumroad.com", "placeholder": "https://gumroad.com/username" },
+    { "id": "paypalbusiness", "title": "PayPal Business", "category": "ecommerce", "color": "#003087", "textColor": "#FFFFFF", "icon": "paypal", "urlPattern": "paypal.com", "placeholder": "https://paypal.com/business/username" },
+    { "id": "stripepaymentlink", "title": "Stripe Payment Link", "category": "ecommerce", "color": "#635BFF", "textColor": "#FFFFFF", "icon": "stripe", "urlPattern": "stripe.com", "placeholder": "https://buy.stripe.com/username" },
+    { "id": "wisebusiness", "title": "Wise Business", "category": "ecommerce", "color": "#00B9FF", "textColor": "#FFFFFF", "icon": "wise", "urlPattern": "wise.com", "placeholder": "https://wise.com/business/username" },
+    { "id": "revolutbusiness", "title": "Revolut Business", "category": "ecommerce", "color": "#1A1A1A", "textColor": "#FFFFFF", "icon": "revolut", "urlPattern": "revolut.com", "placeholder": "https://revolut.com/business/username" },
+
+    
+    { "id": "whatsapp", "title": "WhatsApp", "category": "messaging", "color": "#25D366", "textColor": "#FFFFFF", "icon": "whatsapp", "urlPattern": "wa.me", "placeholder": "https://wa.me/1234567890" },
+    { "id": "whatsappbusiness", "title": "WhatsApp Business", "category": "messaging", "color": "#075E54", "textColor": "#FFFFFF", "icon": "whatsappbusiness", "urlPattern": "wa.me", "placeholder": "https://wa.me/1234567890" },
+    { "id": "telegram", "title": "Telegram", "category": "messaging", "color": "#26A5E4", "textColor": "#FFFFFF", "icon": "telegram", "urlPattern": "t.me", "placeholder": "https://t.me/username" },
+    { "id": "messenger", "title": "Messenger", "category": "messaging", "color": "#0084FF", "textColor": "#FFFFFF", "icon": "messenger", "urlPattern": "m.me", "placeholder": "https://m.me/username" },
+    { "id": "signal", "title": "Signal", "category": "messaging", "color": "#3A76F0", "textColor": "#FFFFFF", "icon": "signal", "urlPattern": "signal.me", "placeholder": "https://signal.me/#p/1234567890" },
+    { "id": "wechat", "title": "WeChat", "category": "messaging", "color": "#7BB32E", "textColor": "#FFFFFF", "icon": "wechat", "urlPattern": "wechat.com", "placeholder": "https://wechat.com/username" },
+    { "id": "line", "title": "Line", "category": "messaging", "color": "#00C300", "textColor": "#FFFFFF", "icon": "line", "urlPattern": "line.me", "placeholder": "https://line.me/ti/p/@username" },
+    { "id": "viber", "title": "Viber", "category": "messaging", "color": "#665CAC", "textColor": "#FFFFFF", "icon": "viber", "urlPattern": "viber.com", "placeholder": "https://viber.com/username" },
+    { "id": "skype", "title": "Skype", "category": "messaging", "color": "#00AFF0", "textColor": "#FFFFFF", "icon": "skype", "urlPattern": "skype.com", "placeholder": "https://skype.com/username" },
+    { "id": "phone", "title": "Phone Number", "category": "messaging", "color": "#6B7280", "textColor": "#FFFFFF", "icon": "phone", "urlPattern": "tel:", "placeholder": "tel:1234567890" },
+    { "id": "email", "title": "Email", "category": "messaging", "color": "#6B7280", "textColor": "#FFFFFF", "icon": "email", "urlPattern": "mailto:", "placeholder": "mailto:your@email.com" },
+
+    
+    { "id": "coursera", "title": "Coursera", "category": "learning", "color": "#2A73CC", "textColor": "#FFFFFF", "icon": "coursera", "urlPattern": "coursera.org", "placeholder": "https://coursera.org/user/username" },
+    { "id": "udemy", "title": "Udemy", "category": "learning", "color": "#EC5252", "textColor": "#FFFFFF", "icon": "udemy", "urlPattern": "udemy.com", "placeholder": "https://udemy.com/user/username" },
+    { "id": "edx", "title": "edX", "category": "learning", "color": "#002F6C", "textColor": "#FFFFFF", "icon": "edx", "urlPattern": "edx.org", "placeholder": "https://edx.org/user/username" },
+    { "id": "linkedinlearning", "title": "LinkedIn Learning", "category": "learning", "color": "#0A66C2", "textColor": "#FFFFFF", "icon": "linkedinlearning", "urlPattern": "linkedin.com/learning", "placeholder": "https://linkedin.com/learning/username" },
+    { "id": "notionportfolio", "title": "Notion Portfolio", "category": "learning", "color": "#000000", "textColor": "#FFFFFF", "icon": "notion", "urlPattern": "notion.so", "placeholder": "https://notion.so/username" },
+    { "id": "personalwebsite", "title": "Personal Website", "category": "learning", "color": "#6B7280", "textColor": "#FFFFFF", "icon": "website", "placeholder": "https://yourwebsite.com" },
+    { "id": "portfoliowebsite", "title": "Portfolio Website", "category": "learning", "color": "#6366F1", "textColor": "#FFFFFF", "icon": "portfolio", "placeholder": "https://portfolio.com/username" },
+    { "id": "googlescholar", "title": "Google Scholar", "category": "learning", "color": "#4285F4", "textColor": "#FFFFFF", "icon": "googlescholar", "urlPattern": "scholar.google.com", "placeholder": "https://scholar.google.com/citations?user=XXXX" },
+    { "id": "researchgate", "title": "ResearchGate", "category": "learning", "color": "#00CCBB", "textColor": "#FFFFFF", "icon": "researchgate", "urlPattern": "researchgate.net", "placeholder": "https://researchgate.net/profile/username" },
+
+    
+    { "id": "spotify", "title": "Spotify", "category": "music", "color": "#1DB954", "textColor": "#FFFFFF", "icon": "spotify", "urlPattern": "spotify.com", "placeholder": "https://open.spotify.com/artist/username" },
+    { "id": "applemusic", "title": "Apple Music", "category": "music", "color": "#FA57C1", "textColor": "#FFFFFF", "icon": "applemusic", "urlPattern": "music.apple.com", "placeholder": "https://music.apple.com/profile/username" },
+    { "id": "deezer", "title": "Deezer", "category": "music", "color": "#FF0000", "textColor": "#FFFFFF", "icon": "deezer", "urlPattern": "deezer.com", "placeholder": "https://deezer.com/profile/username" },
+    { "id": "youtubemusic", "title": "YouTube Music", "category": "music", "color": "#FF0000", "textColor": "#FFFFFF", "icon": "youtubemusic", "urlPattern": "music.youtube.com", "placeholder": "https://music.youtube.com/channel/username" },
+    { "id": "bandcamp", "title": "Bandcamp", "category": "music", "color": "#629AA9", "textColor": "#FFFFFF", "icon": "bandcamp", "urlPattern": "bandcamp.com", "placeholder": "https://bandcamp.com/username" },
+    { "id": "audiomack", "title": "Audiomack", "category": "music", "color": "#FFA200", "textColor": "#FFFFFF", "icon": "audiomack", "urlPattern": "audiomack.com", "placeholder": "https://audiomack.com/username" },
+    { "id": "mixcloud", "title": "Mixcloud", "category": "music", "color": "#1E1E1E", "textColor": "#FFFFFF", "icon": "mixcloud", "urlPattern": "mixcloud.com", "placeholder": "https://mixcloud.com/username" },
+
+    
+    { "id": "paypal", "title": "PayPal", "category": "finance", "color": "#003087", "textColor": "#FFFFFF", "icon": "paypal", "urlPattern": "paypal.me", "placeholder": "https://paypal.me/username" },
+    { "id": "stripepaymentpage", "title": "Stripe Payment Page", "category": "finance", "color": "#635BFF", "textColor": "#FFFFFF", "icon": "stripe", "urlPattern": "stripe.com", "placeholder": "https://buy.stripe.com/username" },
+    { "id": "wisetransfer", "title": "Wise Transfer Link", "category": "finance", "color": "#00B9FF", "textColor": "#FFFFFF", "icon": "wise", "urlPattern": "wise.com", "placeholder": "https://wise.com/transfer/username" },
+    { "id": "revolut", "title": "Revolut", "category": "finance", "color": "#1A1A1A", "textColor": "#FFFFFF", "icon": "revolut", "urlPattern": "revolut.me", "placeholder": "https://revolut.me/username" },
+    { "id": "cashapp", "title": "CashApp", "category": "finance", "color": "#00D632", "textColor": "#FFFFFF", "icon": "cashapp", "urlPattern": "cash.app", "placeholder": "https://cash.app/$username" },
+    { "id": "venmo", "title": "Venmo", "category": "finance", "color": "#3D95CE", "textColor": "#FFFFFF", "icon": "venmo", "urlPattern": "venmo.com", "placeholder": "https://venmo.com/username" },
+    { "id": "payoneer", "title": "Payoneer", "category": "finance", "color": "#FF4800", "textColor": "#FFFFFF", "icon": "payoneer", "urlPattern": "payoneer.com", "placeholder": "https://payoneer.com/username" },
+    { "id": "zelle", "title": "Zelle", "category": "finance", "color": "#6F2DA8", "textColor": "#FFFFFF", "icon": "zelle", "urlPattern": "zellepay.com", "placeholder": "https://zellepay.com/username" },
+
+    
+    { "id": "steam", "title": "Steam", "category": "gaming", "color": "#171A21", "textColor": "#FFFFFF", "icon": "steam", "urlPattern": "steamcommunity.com", "placeholder": "https://steamcommunity.com/id/username" },
+    { "id": "psn", "title": "PlayStation Network", "category": "gaming", "color": "#003087", "textColor": "#FFFFFF", "icon": "psn", "urlPattern": "playstation.com", "placeholder": "https://playstation.com/username" },
+    { "id": "xbox", "title": "Xbox Live", "category": "gaming", "color": "#107C10", "textColor": "#FFFFFF", "icon": "xbox", "urlPattern": "xbox.com", "placeholder": "https://xbox.com/en-US/profile?gamertag=username" },
+    { "id": "epicgames", "title": "Epic Games", "category": "gaming", "color": "#313131", "textColor": "#FFFFFF", "icon": "epicgames", "urlPattern": "epicgames.com", "placeholder": "https://epicgames.com/id/username" },
+    { "id": "battlenet", "title": "Battle.net", "category": "gaming", "color": "#00AEFF", "textColor": "#FFFFFF", "icon": "battlenet", "urlPattern": "battle.net", "placeholder": "https://battle.net/id/username" },
+    { "id": "discord", "title": "Discord", "category": "gaming", "color": "#5865F2", "textColor": "#FFFFFF", "icon": "discord", "urlPattern": "discord.gg", "placeholder": "https://discord.gg/invite" },
+    { "id": "roblox", "title": "Roblox Profile", "category": "gaming", "color": "#E2231A", "textColor": "#FFFFFF", "icon": "roblox", "urlPattern": "roblox.com", "placeholder": "https://roblox.com/users/username/profile" }
   ]
 }

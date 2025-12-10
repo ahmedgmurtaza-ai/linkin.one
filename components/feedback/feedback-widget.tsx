@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { MessageSquare, X, Send } from "lucide-react";
+import { MessageSquare, X, Send, MessageSquareMore } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -94,9 +94,10 @@ export function FeedbackWidget() {
         <Button
           onClick={() => setIsOpen(true)}
           size="lg"
+          variant="destructive"
           className="h-14 w-14 rounded-full shadow-lg hover:scale-110 transition-transform"
         >
-          <MessageSquare className="h-6 w-6" />
+          <MessageSquareMore   className="h-12 w-12 text-3xl " />
         </Button>
       </div>
 
