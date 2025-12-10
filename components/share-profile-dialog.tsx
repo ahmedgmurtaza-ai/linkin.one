@@ -106,10 +106,7 @@ export function ShareProfileDialog({
       ? `${window.location.origin}/${username}`
       : `https://linkin.one/${username}`;
 
-  const ogImageUrl =
-    typeof window !== "undefined"
-      ? `${window.location.origin}/api/og?username=${username}`
-      : `https://linkin.one/api/og?username=${username}`;
+  const ogImageUrl = 'https://linkin.one/og-background.png';
 
   const shareText = `Check out ${displayName || username}'s profile on linkin.one!`;
 

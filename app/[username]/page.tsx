@@ -94,10 +94,6 @@ export async function generateMetadata({ params }: ProfilePageProps): Promise<Me
   }
 
   const seo = generateProfileSEO(profile);
-  
-  // Generate dynamic OG image URL - use full absolute URL
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://linkin.one';
-  const ogImageUrl = `${baseUrl}/api/og?username=${username}`;
 
   return {
     title: seo.title,
@@ -113,7 +109,7 @@ export async function generateMetadata({ params }: ProfilePageProps): Promise<Me
       type: "profile",
       images: [
         {
-          url: ogImageUrl,
+          url: seo.ogImage,
           width: 1200,
           height: 630,
           alt: `${profile.displayName} (@${profile.username})`,
@@ -124,7 +120,7 @@ export async function generateMetadata({ params }: ProfilePageProps): Promise<Me
       card: "summary_large_image",
       title: seo.title,
       description: seo.description,
-      images: [ogImageUrl],
+      images: [seo.ogImage],
     },
     robots: {
       index: true,

@@ -55,9 +55,7 @@ export async function generateMetadata({ params }: PlatformRedirectProps): Promi
     link?.title
   )
 
-  // Generate dynamic OG image URL for platform - use full absolute URL
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://linkin.one';
-  const ogImageUrl = `${baseUrl}/api/og/platform?username=${username}&platform=${platform}`;
+  const ogImageUrl = 'https://linkin.one/og-background.png';
 
   return {
     title: seo.title,
