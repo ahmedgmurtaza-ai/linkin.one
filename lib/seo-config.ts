@@ -191,7 +191,7 @@ export function generateProfileSEO(profile: {
       "contact info",
     ],
     canonical: profileUrl,
-    ogImage: profile.thumbnailUrl || "https://linkin.one/og-image.jpg",
+    ogImage: "https://linkin.one/og-background.png",
   };
 }
 
