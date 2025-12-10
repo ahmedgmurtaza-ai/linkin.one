@@ -47,7 +47,7 @@ This guide will help you set up Google OAuth authentication for your linkin.one 
 4. Find **Google** and enable it
 5. Copy the **Callback URL (for OAuth)** - it should look like:
    ```
-   https://sroielyuuptxysoqkvkj.supabase.co/auth/v1/callback
+   https://chqdsjxhgwryuvajefpg.supabase.co/auth/v1/callback
    ```
 6. Add this URL to your Google OAuth **Authorized redirect URIs** (from Step 1)
 7. In Supabase, enter your Google **Client ID** and **Client Secret**
@@ -58,8 +58,9 @@ This guide will help you set up Google OAuth authentication for your linkin.one 
 The `.env.local` file has been updated with the necessary configuration:
 
 ```env
-NEXT_PUBLIC_SUPABASE_URL=https://sroielyuuptxysoqkvkj.supabase.co
+NEXT_PUBLIC_SUPABASE_URL=https://chqdsjxhgwryuvajefpg.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
