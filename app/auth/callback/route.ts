@@ -10,33 +10,44 @@ export async function GET(request: Request) {
   if (code) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
+    
     if (!error) {
-      // Get the authenticated user
-      const { data: { user } } = await supabase.auth.getUser();
-      
-      if (user) {
-        // Check if profile already exists
-        const { data: existingProfile } = await supabase
-          .from("profiles")
-          .select("id")
-          .eq("user_id", user.id)
-          .limit(1);
-
-        // Create profile if it doesn't exist
-        if (!existingProfile || existingProfile.length === 0) {
-          const username = user.user_metadata?.username || user.email?.split("@")[0] || "user";
-          const displayName = user.user_metadata?.display_name || user.user_metadata?.full_name || username;
-          
-          await supabase
+      try {
+        // Get the authenticated user
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (user) {
+          // Check if profile already exists
+          const { data: existingProfile } = await supabase
             .from("profiles")
-            .insert({
-              user_id: user.id,
-              username: username,
-              display_name: displayName,
-              description: "Welcome to my linkin.one profile!",
-              layout: "split",
-            });
+            .select("id")
+            .eq("user_id", user.id)
+            .single();
+
+          // Create profile if it doesn't exist
+          if (!existingProfile) {
+            const username = user.user_metadata?.username || user.email?.split("@")[0] || "user";
+            const displayName = user.user_metadata?.display_name || user.user_metadata?.full_name || username;
+            
+            const { error: insertError } = await supabase
+              .from("profiles")
+              .insert({
+                user_id: user.id,
+                username: username,
+                display_name: displayName,
+                description: "Welcome to my linkin.one profile!",
+                layout: "split",
+              });
+            
+            // Don't fail the redirect if profile creation fails
+            if (insertError) {
+              console.error("Profile creation error:", insertError);
+            }
+          }
         }
+      } catch (profileError) {
+        // Don't fail the redirect if profile operations fail
+        console.error("Profile operation error:", profileError);
       }
 
       const forwardedHost = request.headers.get("x-forwarded-host"); // original origin before load balancer
@@ -49,6 +60,8 @@ export async function GET(request: Request) {
       } else {
         return NextResponse.redirect(`${origin}${next}`);
       }
+    } else {
+      console.error("Auth code exchange error:", error);
     }
   }
 
