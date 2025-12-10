@@ -81,8 +81,11 @@ export const runtime = 'edge';  // Fetch profile data directly in edge runtime
 
       const profileImage = profile.thumbnailUrl;
       
-      // Get the background image
-      const backgroundImageUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://linkin.one'}/og-background.png`;
+      // Get the background image from the deployment URL or localhost
+      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL 
+        ? `https://${process.env.VERCEL_URL}` 
+        : 'https://linkin.one';
+      const backgroundImageUrl = `${baseUrl}/og-background.png`;
 
       // Simple layout with background image and large avatar
       return new ImageResponse(
