@@ -55,7 +55,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const supabase = await createClient()
   const { data: profiles } = await supabase
     .from('profiles')
-    .select('username, updated_at, links')
+    .select('username, updated_at')
     .order('updated_at', { ascending: false })
 
   const profilePages: MetadataRoute.Sitemap = []
@@ -71,18 +71,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       })
 
       // Add platform-specific pages if links exist
-      if (profile.links && Array.isArray(profile.links)) {
-        for (const link of profile.links) {
-          if (link.platform) {
-            profilePages.push({
-              url: `${baseUrl}/${profile.username}/${link.platform.toLowerCase()}`,
-              lastModified: new Date(profile.updated_at || new Date()),
-              changeFrequency: 'weekly',
-              priority: 0.8,
-            })
-          }
-        }
-      }
+      // if (profile.links && Array.isArray(profile.links)) {
+      //   for (const link of profile.links) {
+      //     if (link.platform) {
+      //       profilePages.push({
+      //         url: `${baseUrl}/${profile.username}/${link.platform.toLowerCase()}`,
+      //         lastModified: new Date(profile.updated_at || new Date()),
+      //         changeFrequency: 'weekly',
+      //         priority: 0.8,
+      //       })
+      //     }
+      //   }
+      // }
     }
   }
 
