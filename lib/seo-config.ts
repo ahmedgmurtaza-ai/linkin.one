@@ -9,7 +9,7 @@ export const SITE_CONFIG = {
   description:
     "Create your professional profile page with all your important links in one place. Share individual platform links like linkin.one/username/linkedin. Track analytics, upload documents, and customize themes. Free link-in-bio tool for creators, professionals, and businesses.",
   url: "https://linkin.one",
-  ogImage: "https://linkin.one/og-image.jpg",
+  ogImage: "https://linkin.one/og-background.png",
   twitterHandle: "@linkindotone",
   keywords: [
     "link in bio",
