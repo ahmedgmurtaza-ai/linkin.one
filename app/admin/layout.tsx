@@ -1,6 +1,5 @@
 "use client";
 
-import { SidebarProvider } from "@/components/ui/sidebar";
 import type React from "react";
 import { useEffect } from "react";
 
@@ -20,5 +19,10 @@ export default function AdminLayout({
     };
   }, []);
 
-  return <SidebarProvider>{children}</SidebarProvider>;
+  return (
+    <div className="drawer lg:drawer-open">
+      <input id="admin-drawer" type="checkbox" className="drawer-toggle" />
+      {children}
+    </div>
+  );
 }

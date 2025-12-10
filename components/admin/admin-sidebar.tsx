@@ -1,35 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { User, Link2, BarChart3, Layout, LogOut, Home } from "lucide-react";
+import { User, Link2, BarChart3, Layout, LogOut, Home, ChevronDown } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarRail,
-} from "@/components/ui/sidebar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 type AdminTab = "profile" | "links" | "layout" | "analytics";
 
@@ -114,112 +91,95 @@ export function AdminSidebar({ activeTab, onTabChange }: AdminSidebarProps) {
   };
 
   return (
-    <Sidebar collapsible="icon">
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
-              <Link href="/">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                  <Link2 className="h-5 w-5" />
-                </div>
-                <div className="flex flex-col gap-0.5 leading-none group-data-[collapsible=icon]:hidden">
-                  <span className="font-semibold">linkin.one</span>
-                  <span className="text-xs text-muted-foreground">
-                    Dashboard
-                  </span>
-                </div>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarHeader>
+    <div className="drawer-side z-50">
+      <label htmlFor="admin-drawer" className="drawer-overlay"></label>
+      <div className="min-h-screen w-80 bg-base-200 flex flex-col">
+        {/* Header */}
+        <div className="p-4 border-b border-base-300">
+          <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+            <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-primary text-primary-content">
+              <Link2 className="h-6 w-6" />
+            </div>
+            <div className="flex flex-col">
+              <span className="font-semibold text-base">linkin.one</span>
+              <span className="text-xs text-base-content/60">Dashboard</span>
+            </div>
+          </Link>
+        </div>
 
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
+        {/* Navigation */}
+        <div className="flex-1 overflow-y-auto p-4">
+          <div className="mb-6">
+            <h3 className="text-xs font-semibold text-base-content/60 uppercase tracking-wider mb-2 px-2">
+              Navigation
+            </h3>
+            <ul className="menu menu-md bg-base-100 rounded-box space-y-1">
               {tabs.map((tab) => (
-                <SidebarMenuItem key={tab.id}>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={activeTab === tab.id}
-                    tooltip={tab.label}
+                <li key={tab.id}>
+                  <Link
+                    href={tab.href}
+                    className={cn(
+                      "gap-3",
+                      activeTab === tab.id && "active"
+                    )}
                   >
-                    <Link href={tab.href}>
-                      <tab.icon />
-                      <span>{tab.label}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                    <tab.icon className="h-5 w-5" />
+                    <span>{tab.label}</span>
+                  </Link>
+                </li>
               ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+            </ul>
+          </div>
 
-        <SidebarGroup>
-          <SidebarGroupLabel>Quick Links</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="View Profile">
-                  <Link href="/" target="_blank">
-                    <Home />
-                    <span>View Profile</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
+          <div>
+            <h3 className="text-xs font-semibold text-base-content/60 uppercase tracking-wider mb-2 px-2">
+              Quick Links
+            </h3>
+            <ul className="menu menu-md bg-base-100 rounded-box">
+              <li>
+                <Link href="/" target="_blank" className="gap-3">
+                  <Home className="h-5 w-5" />
+                  <span>View Profile</span>
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
 
-      <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuButton size="lg">
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src={user?.user_metadata?.avatar_url} />
-                    <AvatarFallback className="bg-primary text-primary-foreground">
-                      {getUserInitials()}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="flex flex-col gap-0.5 leading-none group-data-[collapsible=icon]:hidden">
-                    <span className="font-medium text-sm">
-                      {getUserDisplayName()}
-                    </span>
-                    <span className="text-xs text-muted-foreground truncate max-w-[150px]">
-                      {user?.email}
-                    </span>
-                  </div>
-                </SidebarMenuButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="end" side="top">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href="/" target="_blank">
-                    <Home className="mr-2 h-4 w-4" />
-                    View Profile
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  onClick={handleSignOut}
-                  className="text-destructive focus:text-destructive"
-                >
-                  <LogOut className="mr-2 h-4 w-4" />
+        {/* Footer - User Menu */}
+        <div className="p-4 border-t border-base-300">
+          <div className="dropdown dropdown-top w-full">
+            <label tabIndex={0} className="btn btn-ghost w-full justify-start gap-3 h-auto py-3 px-3">
+              <div className="avatar placeholder">
+                <div className="w-10 h-10 rounded-full bg-primary text-primary-content">
+                  {user?.user_metadata?.avatar_url ? (
+                    <img src={user.user_metadata.avatar_url} alt="Avatar" />
+                  ) : (
+                    <span className="text-sm font-semibold">{getUserInitials()}</span>
+                  )}
+                </div>
+              </div>
+              <div className="flex flex-col items-start flex-1 min-w-0">
+                <span className="font-medium text-sm truncate max-w-full">
+                  {getUserDisplayName()}
+                </span>
+                <span className="text-xs text-base-content/60 truncate max-w-full">
+                  {user?.email}
+                </span>
+              </div>
+              <ChevronDown className="h-4 w-4 opacity-60" />
+            </label>
+            <ul tabIndex={0} className="dropdown-content menu menu-sm bg-base-100 rounded-box shadow-lg w-full mb-2 p-2 border border-base-300">
+              <li>
+                <button onClick={handleSignOut} className="gap-2 text-error">
+                  <LogOut className="h-4 w-4" />
                   Sign Out
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
-      <SidebarRail />
-    </Sidebar>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

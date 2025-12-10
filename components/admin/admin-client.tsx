@@ -13,17 +13,7 @@ import { ColorThemeSelector } from "@/components/admin/color-theme-selector";
 import { AdminSidebar } from "@/components/admin/admin-sidebar";
 import { AnalyticsPanel } from "@/components/admin/analytics-panel";
 import type { ProfileTheme, ProfileColorTheme } from "@/lib/types";
-import { Skeleton } from "@/components/ui/skeleton";
-import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
-import { Separator } from "@/components/ui/separator";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+import { Menu } from "lucide-react";
 
 type AdminTab = "profile" | "links" | "layout" | "analytics";
 
@@ -78,57 +68,58 @@ export default function AdminClient() {
   if (loading) {
     return (
       <>
-        <AdminSidebar activeTab={activeTab} onTabChange={handleTabChange} />
-        <SidebarInset>
-          <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-            <div className="flex items-center gap-2 px-4">
-              <SidebarTrigger className="-ml-1" />
-              <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
-              <Skeleton className="h-8 w-48" />
+        <div className="drawer-content flex flex-col min-h-screen">
+          <header className="sticky top-0 z-10 bg-base-100 border-b border-base-300">
+            <div className="flex h-16 items-center gap-2 px-4">
+              <label htmlFor="admin-drawer" className="btn btn-ghost btn-square lg:hidden">
+                <Menu className="h-5 w-5" />
+              </label>
+              <div className="breadcrumbs text-sm">
+                <ul>
+                  <li><a href="/admin">Dashboard</a></li>
+                  <li>{getTabTitle()}</li>
+                </ul>
+              </div>
             </div>
           </header>
-          <div className="flex flex-1 flex-col gap-4 p-4 pt-0 bg-muted/20">
+          <div className="flex-1 bg-base-200 p-4">
             <div className="space-y-4 max-w-5xl mx-auto w-full pt-6">
-              <Skeleton className="h-10 w-64" />
-              <Skeleton className="h-6 w-96" />
-              <Skeleton className="h-32 w-full rounded-lg" />
-              <Skeleton className="h-32 w-full rounded-lg" />
-              <Skeleton className="h-32 w-full rounded-lg" />
+              <div className="skeleton h-10 w-64"></div>
+              <div className="skeleton h-6 w-96"></div>
+              <div className="skeleton h-32 w-full"></div>
+              <div className="skeleton h-32 w-full"></div>
+              <div className="skeleton h-32 w-full"></div>
             </div>
           </div>
-        </SidebarInset>
+        </div>
+        <AdminSidebar activeTab={activeTab} onTabChange={handleTabChange} />
       </>
     );
   }
 
   return (
     <>
-      <AdminSidebar activeTab={activeTab} onTabChange={handleTabChange} />
-      <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-          <div className="flex items-center gap-2 px-4">
-            <SidebarTrigger className="-ml-1" />
-            <Separator orientation="vertical" className="mr-2 data-[orientation=vertical]:h-4" />
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="/admin">Dashboard</BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator className="hidden md:block" />
-                <BreadcrumbItem>
-                  <BreadcrumbPage>{getTabTitle()}</BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-          </div>
-          <div className="ml-auto pr-4">
-            <AdminTopBar profile={profile} saving={saving} />
+      <div className="drawer-content flex flex-col min-h-screen">
+        <header className="sticky top-0 z-10 bg-base-100 border-b border-base-300">
+          <div className="flex h-16 items-center gap-2 px-4">
+            <label htmlFor="admin-drawer" className="btn btn-ghost btn-square lg:hidden">
+              <Menu className="h-5 w-5" />
+            </label>
+            <div className="breadcrumbs text-sm">
+              <ul>
+                <li><a href="/admin">Dashboard</a></li>
+                <li>{getTabTitle()}</li>
+              </ul>
+            </div>
+            <div className="ml-auto">
+              <AdminTopBar profile={profile} saving={saving} />
+            </div>
           </div>
         </header>
 
         <div className="flex flex-1 overflow-hidden">
           {/* Main content area */}
-          <div className="flex-1 overflow-y-auto bg-muted/20">
+          <div className="flex-1 overflow-y-auto bg-base-200">
             <div className="flex flex-1 flex-col gap-4 p-4 pt-6 md:p-6 md:pt-8">
               {/* Content Area */}
               <div className="space-y-6 max-w-5xl mx-auto w-full">
@@ -205,13 +196,14 @@ export default function AdminClient() {
           </div>
 
           {/* Preview panel - separate full-height column */}
-          <div className="hidden xl:flex w-[400px] 2xl:w-[500px] bg-muted/30">
+          <div className="hidden xl:flex w-[400px] 2xl:w-[500px] bg-base-300">
             <div className="flex-1 flex items-center justify-center p-8">
               <MobilePreview profile={profile} saving={saving} />
             </div>
           </div>
         </div>
-      </SidebarInset>
+      </div>
+      <AdminSidebar activeTab={activeTab} onTabChange={handleTabChange} />
     </>
   );
 }

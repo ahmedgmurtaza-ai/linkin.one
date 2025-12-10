@@ -103,19 +103,20 @@ export function LoginForm() {
   };
 
   return (
-    <Card className="w-full max-w-md shadow-lg">
-      <CardHeader className="space-y-6 text-center pb-6">
+    <Card className="w-full max-w-md">
+      <CardHeader className="space-y-4 text-center">
         {/* Logo */}
-        <div className="flex justify-center pt-2">
+        <div className="flex justify-center">
           <Logo />
         </div>
 
         {/* Title and Description */}
         <div className="space-y-1">
-          <CardTitle className="text-2xl font-semibold">Welcome back</CardTitle>
+          <CardTitle>Welcome back</CardTitle>
           <CardDescription>Sign in to your account</CardDescription>
         </div>
       </CardHeader>
+      
       <form onSubmit={handleLogin}>
         <CardContent className="space-y-4">
           {message && (
@@ -125,8 +126,11 @@ export function LoginForm() {
               <AlertDescription>{message.text}</AlertDescription>
             </Alert>
           )}
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+          
+          <div className="form-control w-full">
+            <Label htmlFor="email" className="label">
+              <span className="label-text">Email</span>
+            </Label>
             <Input
               id="email"
               type="email"
@@ -137,8 +141,11 @@ export function LoginForm() {
               disabled={loading}
             />
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+          
+          <div className="form-control w-full">
+            <Label htmlFor="password" className="label">
+              <span className="label-text">Password</span>
+            </Label>
             <Input
               id="password"
               type="password"
@@ -150,10 +157,11 @@ export function LoginForm() {
             />
           </div>
         </CardContent>
-        <CardFooter className="flex flex-col gap-4">
+        
+        <CardFooter className="flex-col gap-4">
           <Button
             type="submit"
-            className="mt-4 w-full"
+            className="w-full"
             disabled={loading || googleLoading || githubLoading}
           >
             {loading ? (
@@ -166,14 +174,7 @@ export function LoginForm() {
             )}
           </Button>
 
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <Separator className="w-full" />
-            </div>
-            <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-card px-2 text-muted-foreground">Or</span>
-            </div>
-          </div>
+          <div className="divider text-xs uppercase">or</div>
 
           <Button
             type="button"
@@ -234,9 +235,9 @@ export function LoginForm() {
             )}
           </Button>
 
-          <div className="text-sm text-center text-muted-foreground">
+          <div className="text-sm text-center text-base-content/70 mt-4">
             Don't have an account?{" "}
-            <Link href="/register" className="text-primary hover:underline">
+            <Link href="/register" className="link link-primary">
               Sign up
             </Link>
           </div>

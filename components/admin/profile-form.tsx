@@ -5,12 +5,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import type { Profile } from "@/lib/types";
 import { useState, useRef, useCallback, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { Upload, Link as LinkIcon, Loader2, X } from "lucide-react";
+import { Upload, Link as LinkIcon, Loader2, X, Camera, Image as ImageIcon } from "lucide-react";
 import { ThemeSelector } from "@/components/admin/theme-selector";
 import type { ProfileTheme } from "@/lib/types";
 
@@ -318,92 +317,112 @@ export function ProfileForm({ profile, onUpdate }: ProfileFormProps) {
       </div>
 
       {/* Profile Picture Section */}
-      <div className="bg-card rounded-lg p-6 shadow-sm">
-        <div className="mb-5">
-          <h3 className="text-lg font-semibold text-foreground">Profile Picture</h3>
-          <p className="text-sm text-muted-foreground mt-1">
-            Add a photo to personalize your profile
-          </p>
-        </div>
-        <div className="space-y-4">
-          {/* Image Preview with Remove Button */}
-          <div className="flex items-start gap-6">
-            <Avatar className="h-24 w-24 ring-2 ring-muted ring-offset-4 ring-offset-background">
-              <AvatarImage src={externalUrl} alt={displayName} />
-              <AvatarFallback className="text-2xl font-semibold bg-primary/10">
-                {getUserInitials()}
-              </AvatarFallback>
-            </Avatar>
-
-            <div className="flex-1 space-y-3">
-              {externalUrl && (
-                <div className="flex justify-end">
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleRemoveImage}
-                    className="h-8"
-                  >
-                    <X className="h-3.5 w-3.5 mr-1.5" />
-                    Remove
-                  </Button>
+      <div className="card bg-base-100 shadow-sm border border-base-300">
+        <div className="card-body">
+          <div className="mb-4">
+            <h3 className="card-title text-lg">Profile Picture</h3>
+            <p className="text-sm text-base-content/60 mt-1">
+              Add a photo to personalize your profile
+            </p>
+          </div>
+          
+          <div className="flex flex-col md:flex-row gap-6">
+            {/* Avatar Preview */}
+            <div className="flex flex-col items-center gap-3">
+              <div className="avatar">
+                <div className="w-32 h-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                  {externalUrl ? (
+                    <img src={externalUrl} alt={displayName || "Profile"} />
+                  ) : (
+                    <div className="flex items-center justify-center bg-primary/10 text-primary">
+                      <span className="text-3xl font-bold">{getUserInitials()}</span>
+                    </div>
+                  )}
                 </div>
+              </div>
+              
+              {externalUrl && (
+                <button
+                  type="button"
+                  onClick={handleRemoveImage}
+                  className="btn btn-sm btn-ghost btn-error gap-2"
+                >
+                  <X className="h-4 w-4" />
+                  Remove Photo
+                </button>
               )}
+            </div>
 
-              {/* Upload/URL Tabs */}
-              <Tabs defaultValue="url" className="w-full">
-                <TabsList className="grid w-full grid-cols-2 h-9">
-                  <TabsTrigger value="url" className="text-xs">
-                    <LinkIcon className="h-3.5 w-3.5 mr-1.5" />
-                    URL
-                  </TabsTrigger>
-                  <TabsTrigger value="upload" className="text-xs">
-                    <Upload className="h-3.5 w-3.5 mr-1.5" />
-                    Upload
-                  </TabsTrigger>
-                </TabsList>
-
-                <TabsContent value="url" className="mt-3 space-y-2">
-                  <Label htmlFor="thumbnailUrl" className="text-xs text-muted-foreground">
-                    Image URL
-                  </Label>
-                  <Input
-                    id="thumbnailUrl"
-                    value={externalUrl.includes("data:image") ? "" : externalUrl}
-                    onChange={(e) => handleExternalUrlChange(e.target.value)}
-                    placeholder=""
-                    className="h-9"
-                  />
-                </TabsContent>
-
-                <TabsContent value="upload" className="mt-3 space-y-2">
-                  <Label htmlFor="file-upload" className="text-xs text-muted-foreground">
-                    Choose file (Max 1MB)
-                  </Label>
-                  <div className="flex items-center gap-2">
-                    <Input
-                      id="file-upload"
-                      ref={fileInputRef}
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileUpload}
-                      disabled={uploading}
-                      className="cursor-pointer h-9"
+            {/* Upload/URL Tabs */}
+            <div className="flex-1">
+              <div role="tablist" className="tabs tabs-boxed bg-base-200 mb-4">
+                <input
+                  type="radio"
+                  name="photo_tabs"
+                  role="tab"
+                  className="tab"
+                  aria-label="URL"
+                  defaultChecked
+                />
+                <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6 mt-4">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 mb-3">
+                      <LinkIcon className="h-4 w-4 text-primary" />
+                      <label className="label-text font-medium">Image URL</label>
+                    </div>
+                    <input
+                      type="text"
+                      value={externalUrl.includes("data:image") ? "" : externalUrl}
+                      onChange={(e) => handleExternalUrlChange(e.target.value)}
+                      placeholder="https://example.com/photo.jpg"
+                      className="input input-bordered w-full"
                     />
-                    {uploading && (
-                      <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                    <p className="text-xs text-base-content/60">
+                      Enter a direct link to your profile picture
+                    </p>
+                  </div>
+                </div>
+
+                <input
+                  type="radio"
+                  name="photo_tabs"
+                  role="tab"
+                  className="tab"
+                  aria-label="Upload"
+                />
+                <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6 mt-4">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Upload className="h-4 w-4 text-primary" />
+                      <label className="label-text font-medium">Upload File</label>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileUpload}
+                        disabled={uploading}
+                        className="file-input file-input-bordered w-full"
+                      />
+                      {uploading && (
+                        <span className="loading loading-spinner loading-sm text-primary"></span>
+                      )}
+                    </div>
+                    <p className="text-xs text-base-content/60">
+                      Maximum file size: 1MB. Supported formats: JPG, PNG, GIF, WebP
+                    </p>
+                    {uploadError && (
+                      <div className="alert alert-error py-2 px-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-4 w-4" fill="none" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span className="text-xs">{uploadError}</span>
+                      </div>
                     )}
                   </div>
-                  {uploadError && (
-                    <Alert variant="destructive" className="py-2">
-                      <AlertDescription className="text-xs">
-                        {uploadError}
-                      </AlertDescription>
-                    </Alert>
-                  )}
-                </TabsContent>
-              </Tabs>
+                </div>
+              </div>
             </div>
           </div>
         </div>

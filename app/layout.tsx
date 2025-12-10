@@ -7,6 +7,7 @@ import { FeedbackWidget } from "@/components/feedback/feedback-widget";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SITE_CONFIG } from "@/lib/seo-config";
 import "./globals.css";
+import "leaflet/dist/leaflet.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
@@ -107,9 +108,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
-          <FeedbackWidget />
+          {/* <FeedbackWidget /> */}
         </ThemeProvider>
-        <Analytics />
         <GoogleAnalytics gaId="G-XRZ1BC1QRF" />
       </body>
     </html>
